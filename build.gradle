@@ -32,3 +32,11 @@ repositories {
     mavenCentral()
     xp.enonicRepo()
 }
+
+tasks.withType(Copy) {
+    includeEmptyDirs = false
+}
+
+processResources {
+    exclude '**/.gitkeep'
+}
