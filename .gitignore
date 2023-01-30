@@ -32,6 +32,9 @@ Temporary Items
 .gradle
 build/
 
+# Node
+node_modules/
+
 # Ignore Gradle GUI config
 gradle-app.setting
 
@@ -40,6 +43,9 @@ gradle-app.setting
 
 ### WebStorm ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm
+
+# VSCode
+bin/
 
 *.iml
 
