@@ -2,6 +2,30 @@ import { defineConfig } from 'tsup';
 
 export default defineConfig({
 	external: [
-		'/lib/vanilla'
+		'/lib/vanilla',
+		'/lib/xp/admin',
+		'/lib/xp/app',
+		'/lib/xp/auditlog',
+		'/lib/xp/auth',
+		'/lib/xp/cluster',
+		'/lib/xp/common',
+		'/lib/xp/content',
+		'/lib/xp/context',
+		'/lib/xp/event',
+		'/lib/xp/export',
+		'/lib/xp/grid',
+		'/lib/xp/i18n',
+		'/lib/xp/io',
+		'/lib/xp/mail',
+		'/lib/xp/node',
+		'/lib/xp/portal',
+		'/lib/xp/project',
+		'/lib/xp/repo',
+		'/lib/xp/scheduler',
+		'/lib/xp/schema',
+		'/lib/xp/task',
+		'/lib/xp/value',
+		'/lib/xp/vhost',
+		'/lib/xp/websocket',
 	],
 })
