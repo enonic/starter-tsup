@@ -3,7 +3,10 @@ import {
 	toStr
 } from '@enonic/js-utils';
 import {run as runInContext} from '/lib/xp/context';
-import {connect} from '/lib/xp/node';
+import {
+	connect,
+	Aggregation
+} from '/lib/xp/node';
 import {create as createRepo} from '/lib/xp/repo';
 
 
@@ -59,27 +62,23 @@ export function run() {
 
 		writeConnection.refresh();
 
-		const queryRes = writeConnection.query/*<{
-			// 'nodetypeAggregation': {
-			// 	buckets: {
-			// 		// 'nodetypeNameAggregation': {}
-			// 	}[]
-			// }
-		}>*/({
-			aggregations: {
-				'nodetypeAggregation': {
-					terms: {
-						field: '_nodeType'
-					},
-					aggregations: {
-						'nodetypeNameAggregation': {
-							terms: {
-								field: '_name'
-							}
+		const aggregations = {
+			'nodetypeAggregation': {
+				terms: {
+					field: '_nodeType'
+				},
+				aggregations: {
+					'nodetypeNameAggregation': {
+						terms: {
+							field: '_name'
 						}
 					}
 				}
-			},
+			}
+		} satisfies Record<string, Aggregation>;
+
+		const queryRes = writeConnection.query<typeof aggregations>({
+			aggregations,
 			count: -1,
 			query: {
 				matchAll: {}
