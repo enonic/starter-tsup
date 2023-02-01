@@ -7,10 +7,15 @@
 
 	"paths": {
 		// Development (should be commented out when commiting)
+		"/lib/xp/app": ["../xp/modules/lib/lib-app/src/main/resources/lib/xp/app.ts"],
 		"/lib/xp/content": ["../xp/modules/lib/lib-content/src/main/resources/lib/xp/content.ts"],
 		"/lib/xp/context": ["../xp/modules/lib/lib-context/src/main/resources/lib/xp/context.ts"],
 		"/lib/xp/node": ["../xp/modules/lib/lib-node/src/main/resources/lib/xp/node.ts"],
+		"/lib/xp/portal": ["../xp/modules/lib/lib-portal/src/main/resources/lib/xp/portal.ts"],
+		"/lib/xp/project": ["../xp/modules/lib/lib-project/src/main/resources/lib/xp/project.ts"],
 		"/lib/xp/repo": ["../xp/modules/lib/lib-repo/src/main/resources/lib/xp/repo.ts"],
+		"/lib/xp/schema": ["../xp/modules/lib/lib-schema/src/main/resources/lib/xp/schema.ts"],
+		"/lib/xp/task": ["../xp/modules/lib/lib-task/src/main/resources/lib/xp/task.ts"],
 		// Production (should be commented in when commiting)
 		// "/lib/xp/*": ["node_modules/@enonic-types/lib-*"],
 		"/*": ["src/main/resources/*"], // So one can import local files using absolute path (same as Enonic does during runtime).

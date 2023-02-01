@@ -1,0 +1,12 @@
+<html>
+	<head>
+		<title th:text="${displayName}"/>
+	</head>
+	<body>
+		<main th:data-portal-region="main">
+			<div th:each="component : ${regions.main.components}" th:remove="tag">
+				<div data-portal-component="${component.path}" th:remove="tag"/>
+			</div>
+		</main>
+	</body>
+</html>

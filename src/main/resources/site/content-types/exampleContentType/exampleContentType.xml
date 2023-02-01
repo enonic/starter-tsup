@@ -1,0 +1,10 @@
+<content-type>
+	<description>Example description</description>
+	<display-name>Example displayName</display-name>
+	<super-type>base:structured</super-type>
+	<is-abstract>false</is-abstract>
+	<is-final>true</is-final>
+	<is-built-in>false</is-built-in>
+	<allow-child-content>true</allow-child-content>
+	<form/>
+</content-type>

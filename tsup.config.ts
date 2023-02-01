@@ -3,6 +3,7 @@ import { defineConfig } from 'tsup';
 export default defineConfig({
 	external: [
 		'/lib/vanilla',
+		'/lib/thymeleaf',
 		'/lib/xp/admin',
 		'/lib/xp/app',
 		'/lib/xp/auditlog',

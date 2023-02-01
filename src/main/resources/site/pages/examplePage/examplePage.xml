@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<page>
+	<display-name>Example page</display-name>
+	<description>Example page description</description>
+	<form/>
+	<regions>
+		<region name="main"/>
+	</regions>
+</page>
