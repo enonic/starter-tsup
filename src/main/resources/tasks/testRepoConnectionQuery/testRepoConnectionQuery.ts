@@ -17,7 +17,7 @@ const NAME_TWO = 'Name Two';
 
 
 export function run() {
-	log.info('Hello from transpiled typescript task :)');
+	log.info('Hello from transpiled typescript testRepoConnectionQuery task :)');
 	runInContext({
 		repository: 'system-repo',
 		branch: BRANCH_MASTER,
@@ -32,7 +32,7 @@ export function run() {
 			if (e.class.name !== 'com.enonic.xp.repo.impl.repository.RepositoryAlreadyExistException') {
 				log.error(`e.class.name:${toStr(e.class.name)} e.message:${toStr(e.message)}`, e);
 			}
-		} // try...catch
+		} // try/catch
 
 		const writeConnection = connect({
 			branch: BRANCH_MASTER,
@@ -48,7 +48,7 @@ export function run() {
 			if (e.class.name !== 'com.enonic.xp.node.NodeAlreadyExistAtPathException') {
 				log.error(`e.class.name:${toStr(e.class.name)} e.message:${toStr(e.message)}`, e);
 			}
-		} // try...catch
+		} // try/catch
 
 		try {
 			writeConnection.create({
@@ -58,7 +58,7 @@ export function run() {
 			if (e.class.name !== 'com.enonic.xp.node.NodeAlreadyExistAtPathException') {
 				log.error(`e.class.name:${toStr(e.class.name)} e.message:${toStr(e.message)}`, e);
 			}
-		} // try...catch
+		} // try/catch
 
 		writeConnection.refresh();
 
