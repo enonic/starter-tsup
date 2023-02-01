@@ -5,7 +5,7 @@ import {
 import {run as runInContext} from '/lib/xp/context';
 import {
 	connect,
-	Aggregation
+	Aggregations
 } from '/lib/xp/node';
 import {create as createRepo} from '/lib/xp/repo';
 
@@ -75,9 +75,9 @@ export function run() {
 					}
 				}
 			}
-		} satisfies Record<string, Aggregation>;
+		} satisfies Aggregations;
 
-		const queryRes = writeConnection.query<typeof aggregations>({
+		const queryRes = writeConnection.query({
 			aggregations,
 			count: -1,
 			query: {
@@ -85,7 +85,25 @@ export function run() {
 			}
 		});
 		log.info('queryRes:%s', toStr(queryRes));
-		const {nodetypeAggregation} = queryRes.aggregations;
+		const {
+			nodetypeAggregation: {
+				buckets
+			}
+		} = queryRes.aggregations;
+		for (let index = 0; index < buckets.length; index++) {
+			const element = buckets[index];
+			const {
+				docCount,
+				key,
+				from,
+				to,
+			} = element;
+			// if (isDateRange(element)) {
+
+			// } else if (isNumericRange(element)) {
+
+			// }
+		}
 
 	}) // runInContext
 } // run
