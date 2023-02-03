@@ -32,6 +32,8 @@
     "@enonic/js-utils": "^0",
     "@swc/core": "^1",
     "npm-run-all": "^4",
+    "path": "^0.12.7",
+    "q-i": "^2.0.1",
     "rimraf": "^4",
     "tslib": "^2",
     "tsup": "^6",
@@ -45,8 +47,13 @@
   },
   "scripts": {
     "clean": "rimraf build",
+    "prewatch:browser": "npm run tsup:browser",
+    "prewatch:server": "npm run tsup:server",
     "tsup": "npm-run-all --parallel tsup:browser tsup:server",
-    "tsup:browser": "npx tsup -d build/resources/main/assets --format cjs,esm --minify --platform browser `find src/main/resources/assets -name '*.ts'` --sourcemap",
-    "tsup:server": "npx tsup -d build/resources/main --minify --platform node --shims --target es5 `find src/main/resources -name '*.ts' -not -path 'src/main/resources/assets/*'`"
+    "tsup:browser": "npx tsup -d build/resources/main/assets",
+    "tsup:server": "npx tsup -d build/resources/main",
+    "watch": "npm-run-all --parallel watch:browser watch:server",
+    "watch:browser": "npx tsup -d build/resources/main/assets --watch src/main/resources/assets",
+    "watch:server": "npx tsup -d build/resources/main --watch src/main/resources --ignore-watch src/main/resources/assets"
   }
 }
