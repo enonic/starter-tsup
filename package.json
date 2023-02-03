@@ -31,6 +31,7 @@
     "@enonic-types/lib-websocket": "^7",
     "@enonic/js-utils": "^0",
     "@swc/core": "^1",
+    "browser-sync": "^2.27.11",
     "npm-run-all": "^4",
     "path": "^0.12.7",
     "q-i": "^2.0.1",
@@ -46,6 +47,7 @@
     "url": "git+https://github.com/enonic/starter-tsup"
   },
   "scripts": {
+    "bs": "npx browser-sync start --proxy 'localhost:8080' -f 'src/main/resources/**/*.html' 'src/main/resources/**/*.xml' 'build/resources/main' -w --reload-delay 0",
     "clean": "rimraf build",
     "prewatch:browser": "npm run tsup:browser",
     "prewatch:server": "npm run tsup:server",
@@ -53,7 +55,7 @@
     "tsup:browser": "npx tsup -d build/resources/main/assets",
     "tsup:server": "npx tsup -d build/resources/main",
     "watch": "npm-run-all --parallel watch:browser watch:server",
-    "watch:browser": "npx tsup -d build/resources/main/assets --watch src/main/resources/assets",
-    "watch:server": "npx tsup -d build/resources/main --watch src/main/resources --ignore-watch src/main/resources/assets"
+    "watch:browser": "npx tsup -d build/resources/main/assets --watch",
+    "watch:server": "npx tsup -d build/resources/main --watch"
   }
 }
