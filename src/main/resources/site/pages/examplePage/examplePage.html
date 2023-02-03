@@ -1,6 +1,9 @@
 <html>
 	<head>
+		<script type="text/javascript" th:src="${assetUrl} + '/script/react/react.development.js'"></script>
+		<script type="text/javascript" th:src="${assetUrl} + '/script/react-dom/react-dom.development.js'"></script>
 		<link rel="stylesheet" media="all" th:href="${assetUrl} + '/style/sass/index.css'">
+		<!--script type="module" th:src="${assetUrl} + '/script/index.mjs'"></script-->
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<title th:text="${displayName}"/>
@@ -10,6 +13,12 @@
 			<div th:each="component : ${regions.main.components}" th:remove="tag">
 				<div data-portal-component="${component.path}" th:remove="tag"/>
 			</div>
+			<div id="react-root"></div>
+			<script type='module' defer>
+				import {App} from '[[${assetUrl}]]/script/index.mjs';
+				const root = ReactDOM.createRoot(document.getElementById('react-root'));
+				root.render(React.createElement(App, {}));
+			</script>
 		</main>
 	</body>
 </html>

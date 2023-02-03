@@ -63,6 +63,9 @@ export default defineConfig((options) => {
 	if (options.d === 'build/resources/main/assets') {
 		return {
 			entry: CLIENT_FILES,
+			external: [
+				'react'
+			],
 			format: [
 				'cjs',
 				'esm'
