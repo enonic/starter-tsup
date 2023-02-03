@@ -2,7 +2,7 @@
 	<head>
 		<title th:text="${displayName}"/>
 	</head>
-	<body>
+	<body style="font-size:13px">
 		<main th:data-portal-region="main">
 			<div th:each="component : ${regions.main.components}" th:remove="tag">
 				<div data-portal-component="${component.path}" th:remove="tag"/>
