@@ -56,16 +56,17 @@ tasks.withType(Copy) {
 	includeEmptyDirs = false
 }
 
-task tsup(type: NpmTask) {
+task npmBuild(type: NpmTask) {
 	dependsOn npmInstall
 	mustRunAfter npmInstall
-	args = ['run', 'tsup']
+	args = ['run', 'build']
 	outputs.dir './build/resources/main' // processResources will delete the directory if this is not present
 }
 
 processResources {
-	dependsOn tsup
-	mustRunAfter tsup
+	dependsOn npmBuild
+	mustRunAfter npmBuild
 	exclude '**/.gitkeep'
+	exclude '**/*.sass'
 	exclude '**/*.ts'
 }
