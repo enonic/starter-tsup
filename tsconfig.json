@@ -1,52 +1,73 @@
 { // https://www.typescriptlang.org/tsconfig
 	"compilerOptions": {
-	//──────────────────────────────────────────────────────────────────────────
-	// Modules
-	//──────────────────────────────────────────────────────────────────────────
-	"allowUmdGlobalAccess": true,
-	"baseUrl": "./",
+		//──────────────────────────────────────────────────────────────────────
+		// Modules
+		//──────────────────────────────────────────────────────────────────────
+		"allowUmdGlobalAccess": true,
+		"baseUrl": "./",
 
-	"paths": {
-		// Development (should be commented out when commiting)
-		"/lib/xp/app": ["../xp/modules/lib/lib-app/src/main/resources/lib/xp/app.ts"],
-		"/lib/xp/content": ["../xp/modules/lib/lib-content/src/main/resources/lib/xp/content.ts"],
-		"/lib/xp/context": ["../xp/modules/lib/lib-context/src/main/resources/lib/xp/context.ts"],
-		"/lib/xp/node": ["../xp/modules/lib/lib-node/src/main/resources/lib/xp/node.ts"],
-		"/lib/xp/portal": ["../xp/modules/lib/lib-portal/src/main/resources/lib/xp/portal.ts"],
-		"/lib/xp/project": ["../xp/modules/lib/lib-project/src/main/resources/lib/xp/project.ts"],
-		"/lib/xp/repo": ["../xp/modules/lib/lib-repo/src/main/resources/lib/xp/repo.ts"],
-		"/lib/xp/schema": ["../xp/modules/lib/lib-schema/src/main/resources/lib/xp/schema.ts"],
-		"/lib/xp/task": ["../xp/modules/lib/lib-task/src/main/resources/lib/xp/task.ts"],
-		// Production (should be commented in when commiting)
-		// "/lib/xp/*": ["node_modules/@enonic-types/lib-*"],
-		"/*": ["src/main/resources/*"], // So one can import local files using absolute path (same as Enonic does during runtime).
+		"paths": {
+			// Development (should be commented out when commiting)
+			"@enonic-types/core": ["../xp/modules/lib/core/index.d.ts"],
+			"/lib/xp/app": ["../xp/modules/lib/lib-app/src/main/resources/lib/xp/app.ts"],
+			"/lib/xp/auth": ["../xp/modules/lib/lib-auth/src/main/resources/lib/xp/auth.ts"],
+			"/lib/xp/content": ["../xp/modules/lib/lib-content/src/main/resources/lib/xp/content.ts"],
+			"/lib/xp/context": ["../xp/modules/lib/lib-context/src/main/resources/lib/xp/context.ts"],
+			"/lib/xp/event": ["../xp/modules/lib/lib-event/src/main/resources/lib/xp/event.ts"],
+			"/lib/xp/node": ["../xp/modules/lib/lib-node/src/main/resources/lib/xp/node.ts"],
+			"/lib/xp/portal": ["../xp/modules/lib/lib-portal/src/main/resources/lib/xp/portal.ts"],
+			"/lib/xp/project": ["../xp/modules/lib/lib-project/src/main/resources/lib/xp/project.ts"],
+			"/lib/xp/repo": ["../xp/modules/lib/lib-repo/src/main/resources/lib/xp/repo.ts"],
+			"/lib/xp/schema": ["../xp/modules/lib/lib-schema/src/main/resources/lib/xp/schema.ts"],
+			"/lib/xp/task": ["../xp/modules/lib/lib-task/src/main/resources/lib/xp/task.ts"],
+			// Production (should be commented in when commiting)
+			// "/lib/xp/*": ["node_modules/@enonic-types/lib-*"],
+			"/*": ["src/main/resources/*"], // So one can import local files using absolute path (same as Enonic does during runtime).
+		},
+
+		// By default all visible ”@types” packages are included in your compilation.
+		// Packages in node_modules/@types of any enclosing folder are considered visible.
+		// For example, that means packages within ./node_modules/@types/,
+		// ../node_modules/@types/, ../../node_modules/@types/, and so on.
+		// If typeRoots is specified, only packages under typeRoots will be included.
+		"typeRoots": [
+			"node_modules/@types",
+			"node_modules/@enonic-types"
+		],
+
+		// By default all visible ”@types” packages are included in your compilation.
+		// Packages in node_modules/@types of any enclosing folder are considered visible.
+		// For example, that means packages within ./node_modules/@types/,
+		// ../node_modules/@types/, ../../node_modules/@types/, and so on.
+		// If types is specified, only packages listed will be included in the global scope.
+		// This feature differs from typeRoots in that it is about specifying only the exact
+		// types you want included, whereas typeRoots supports saying you want particular folders.
+		// "types": [
+		// 	"@enonic-types/global", // No point, already added via typeRoots
+		// 	// "@enonic-types/lib-event" // No point, since it doesn't affect global scope
+		// ],
+		//──────────────────────────────────────────────────────────────────────
+		// Language and Environment
+		//──────────────────────────────────────────────────────────────────────
+		"lib": [],
+
+		// We set target in tsup.config.ts instead
+		//"target": "ES3", // tsup WARNING Unrecognized target environment "ES3"
+		//"target": "ES5", // tsup Transforming const to the configured target environment ("ES5") is not supported yet
+
+		//──────────────────────────────────────────────────────────────────────
+		// Completeness
+		//──────────────────────────────────────────────────────────────────────
+		"skipLibCheck": true,
 	},
-
-	// By default all visible ”@types” packages are included in your compilation.
-	// Packages in node_modules/@types of any enclosing folder are considered visible.
-	// For example, that means packages within ./node_modules/@types/,
-	// ../node_modules/@types/, ../../node_modules/@types/, and so on.
-	// If typeRoots is specified, only packages under typeRoots will be included.
-	"typeRoots": [
-		"node_modules/@types",
-		"node_modules/@enonic-types"
+	"exclude": [
+		"src/main/resources/assets/**/*.*",
 	],
+	"include": [
+		// Make sure default types matches Nashorn
+		"node_modules/typescript/lib/lib.es5.d.ts",
 
-	// By default all visible ”@types” packages are included in your compilation.
-	// Packages in node_modules/@types of any enclosing folder are considered visible.
-	// For example, that means packages within ./node_modules/@types/,
-	// ../node_modules/@types/, ../../node_modules/@types/, and so on.
-	// If types is specified, only packages listed will be included in the global scope.
-	// This feature differs from typeRoots in that it is about specifying only the exact
-	// types you want included, whereas typeRoots supports saying you want particular folders.
-	// "types": [
-		// "@enonic-types/global", // No point, already added via typeRoots
-		// "@enonic-types/lib-event" // No point, since it doesn't affect global scope
-		// "@types/react"
-	// ],
-	//──────────────────────────────────────────────────────────────────────────
-	// Language and Environment
-	//──────────────────────────────────────────────────────────────────────────
-	"jsx": "react",
-	}
+		"src/main/resources/**/*.tsx",
+		"src/main/resources/**/*.ts"
+	]
 }

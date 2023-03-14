@@ -54,9 +54,12 @@ export default defineConfig((options) => {
 				'/lib/xp/vhost',
 				'/lib/xp/websocket',
 			],
-			minify: true,
-			platform: 'node',
-			shims: true,
+			format: 'cjs',
+			'main-fields': 'main,module',
+			minify: false, // Minifying server files makes debugging harder
+			platform: 'neutral',
+			shims: false, // https://tsup.egoist.dev/#inject-cjs-and-esm-shims
+			sourcemap: false,
 			target: 'es5'
 		};
 	}
