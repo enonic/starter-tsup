@@ -1,4 +1,4 @@
-// import { submitTask } from '/lib/xp/task';
+import { submitTask } from '/lib/xp/task';
 // import { importedFunction } from '/lib/vanilla'; // Using absolute path, so it will match external in tsup.config.ts
 import { importedFunction } from './lib/vanilla'; // Using relative, so it will be inlined (and tree-shaken).
 
@@ -11,5 +11,12 @@ log.info(prop);
 
 importedFunction();
 
-// submitTask({ descriptor:'testRepoConnectionQuery' });
+submitTask({
+	descriptor: 'testRepoConnectionQuery',
+	name: 'com.acme.example.tsup:testRepoConnectionQuery:nameA'
+});
+submitTask({
+	descriptor: 'testRepoConnectionQuery',
+	name: 'com.acme.example.tsup:testRepoConnectionQuery:nameA'
+});
 // submitTask({ descriptor:'testContentQuery' });
