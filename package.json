@@ -29,7 +29,7 @@
     "@enonic-types/lib-value": "^7",
     "@enonic-types/lib-vhost": "^7",
     "@enonic-types/lib-websocket": "^7",
-    "@enonic/js-utils": "^0",
+    "@enonic/js-utils": "^1",
     "@swc/core": "^1",
     "@types/react": "^18",
     "browser-sync": "^2",
