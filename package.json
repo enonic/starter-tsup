@@ -43,7 +43,7 @@
     "rimraf": "^4",
     "tslib": "^2",
     "tsup": "^6",
-    "typescript": "^4"
+    "typescript": "^5"
   },
   "license": "GPL-3.0",
   "private": true,
