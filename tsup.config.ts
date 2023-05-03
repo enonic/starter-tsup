@@ -1,5 +1,6 @@
 // import { polyfillNode } from 'esbuild-plugin-polyfill-node';
 import GlobalsPlugin from 'esbuild-plugin-globals';
+import {sassPlugin} from 'esbuild-sass-plugin';
 import glob from 'glob';
 // import {print} from 'q-i';
 // import {join} from 'path';
@@ -185,6 +186,7 @@ export default defineConfig((options: MyOptions) => {
 			entry: CLIENT_FILES,
 
 			esbuildPlugins: [
+				sassPlugin(),
 				GlobalsPlugin({
 					react: 'React',
 				})

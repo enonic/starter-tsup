@@ -44,6 +44,7 @@
     "cross-env": "^7",
     "esbuild-plugin-globals": "^0.2.0",
     "esbuild-plugin-polyfill-node": "^0.2.0",
+    "esbuild-sass-plugin": "^2.9.0",
     "node-sass": "^8",
     "path": "^0",
     "q-i": "^2",
