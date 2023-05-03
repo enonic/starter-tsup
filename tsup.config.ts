@@ -108,6 +108,7 @@ export default defineConfig((options: MyOptions) => {
 			],
 			external: [
 				'/lib/cache',
+				'/lib/enonic/static',
 				/^\/lib\/guillotine/,
 				'/lib/graphql',
 				'/lib/graphql-connection',

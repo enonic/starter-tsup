@@ -20,6 +20,7 @@
 			"/lib/xp/repo": ["../xp/modules/lib/lib-repo/src/main/resources/lib/xp/repo.ts"],
 			"/lib/xp/schema": ["../xp/modules/lib/lib-schema/src/main/resources/lib/xp/schema.ts"],
 			"/lib/xp/task": ["../xp/modules/lib/lib-task/src/main/resources/lib/xp/task.ts"],
+			"/lib/xp/vhost": ["../xp/modules/lib/lib-vhost/src/main/resources/lib/xp/vhost.ts"],
 			// Production (should be commented in when commiting)
 			// "/lib/xp/*": ["node_modules/@enonic-types/lib-*"],
 			"/*": ["src/main/resources/*"], // So one can import local files using absolute path (same as Enonic does during runtime).
