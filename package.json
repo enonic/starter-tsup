@@ -4,7 +4,7 @@
     "url": "https://github.com/enonic/starter-tsup/issues"
   },
   "dependencies": {
-    "@enonic/js-utils": "^0",
+    "@enonic/js-utils": "^1",
     "core-js": "^3",
     "dayjs": "^1",
     "react": "^18",
@@ -39,7 +39,7 @@
     "@swc/core": "^1",
     "@types/react": "^18",
     "browser-sync": "^2",
-    "concurrently": "^7",
+    "concurrently": "^8",
     "cpy-cli": "^4",
     "cross-env": "^7",
     "esbuild-plugin-globals": "^0.2.0",
@@ -47,10 +47,10 @@
     "node-sass": "^8",
     "path": "^0",
     "q-i": "^2",
-    "rimraf": "^4",
+    "rimraf": "^5",
     "tslib": "^2",
     "tsup": "^6",
-    "typescript": "^4"
+    "typescript": "^5"
   },
   "license": "GPL-3.0",
   "private": true,
