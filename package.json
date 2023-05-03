@@ -4,7 +4,7 @@
     "url": "https://github.com/enonic/starter-tsup/issues"
   },
   "dependencies": {
-    "@enonic/js-utils": "^0",
+    "@enonic/js-utils": "^1",
     "core-js": "^3",
     "dayjs": "^1",
     "react": "^18",
