@@ -195,8 +195,8 @@ export default defineConfig((options: MyOptions) => {
 				'esm'
 			],
 			minify: true,
-			noExternal: [ // Not loaded into global scope
-				'dayjs',
+			noExternal: [
+				'dayjs', // Not loaded into global scope
 				'react', // WARNING: For GlobalsPlugin to work react MUST be listed here (if react under dependencies or peerDependencies)
 			],
 			platform: 'browser',
