@@ -1,6 +1,8 @@
+// import { polyfillNode } from 'esbuild-plugin-polyfill-node';
+import GlobalsPlugin from 'esbuild-plugin-globals';
 import glob from 'glob';
-import {print} from 'q-i';
-import {join} from 'path';
+// import {print} from 'q-i';
+// import {join} from 'path';
 import { defineConfig, type Options } from 'tsup';
 
 
@@ -29,8 +31,80 @@ export default defineConfig((options: MyOptions) => {
 	// print(options, { maxItems: Infinity });
 	if (options.d === 'build/resources/main') {
 		return {
-			//bundle: true,
+			bundle: false, // Every entry dependency becomes it's own file
 			entry: SERVER_FILES,
+			esbuildOptions(options, context) {
+				// options.alias = {
+				// 	'alias': './src/main/resources/lib/filename.js'
+				// };
+
+				// Some node modules might need globalThis
+				// options.banner = {
+				// 	js: `const globalThis = (1, eval)('this');`
+				// };
+
+				// If you have libs with chunks, use this to avoid collisions
+				options.chunkNames = '_chunks/[name]-[hash]';
+			},
+			esbuildPlugins: [
+				// Some node modules might need parts of Node polyfilled:
+				// polyfillNode({
+				// 	globals: {
+				// 		buffer: false,
+				// 		process: false
+				// 	},
+				// 	polyfills: {
+				// 		_stream_duplex: false,
+				// 		_stream_passthrough: false,
+				// 		_stream_readable: false,
+				// 		_stream_transform: false,
+				// 		_stream_writable: false,
+				// 		assert: false,
+				// 		'assert/strict': false,
+				// 		async_hooks: false,
+				// 		buffer: false,
+				// 		child_process: false,
+				// 		cluster: false,
+				// 		console: false,
+				// 		constants: false,
+				// 		crypto: false,
+				// 		dgram: false,
+				// 		diagnostics_channel: false,
+				// 		dns: false,
+				// 		domain: false,
+				// 		events: false,
+				// 		fs: false,
+				// 		'fs/promises': false,
+				// 		http: false,
+				// 		http2: false,
+				// 		https: false,
+				// 		module: false,
+				// 		net: false,
+				// 		os: false,
+				// 		path: false,
+				// 		perf_hooks: false,
+				// 		process: "empty",
+				// 		punycode: false,
+				// 		querystring: false,
+				// 		readline: false,
+				// 		repl: false,
+				// 		stream: false,
+				// 		string_decoder: false,
+				// 		sys: false,
+				// 		timers: false,
+				// 		'timers/promises': false,
+				// 		tls: false,
+				// 		tty: false,
+				// 		url: false,
+				// 		util: true,
+				// 		v8: false,
+				// 		vm: false,
+				// 		wasi: false,
+				// 		worker_threads: false,
+				// 		zlib: false,
+				// 	}
+				// }) // ReferenceError: "navigator" is not defined
+			],
 			external: [
 				'/lib/cache',
 				/^\/lib\/guillotine/,
@@ -92,7 +166,7 @@ export default defineConfig((options: MyOptions) => {
 			minify: false, // Minifying server files makes debugging harder
 			noExternal: [],
 			platform: 'neutral',
-			silent: true,
+			// silent: true,
 			shims: false, // https://tsup.egoist.dev/#inject-cjs-and-esm-shims
 			splitting: true,
 			sourcemap: false,
@@ -101,16 +175,33 @@ export default defineConfig((options: MyOptions) => {
 	}
 	if (options.d === 'build/resources/main/assets') {
 		return {
+			bundle: true, // Every entry dependency is bundled into the entry
 			entry: CLIENT_FILES,
-			external: [
-				'react'
+
+			esbuildPlugins: [
+				GlobalsPlugin({
+					react: 'React',
+				})
 			],
+
+			// By default tsup bundles all imported modules, but dependencies
+			// and peerDependencies in your packages.json are always excluded
+			external: [ // Must be loaded into global scope instead
+				// 'react' // ERROR: For GlobalsPlugin to work react must NOT be listed here
+			],
+
 			format: [
 				'cjs',
 				'esm'
 			],
 			minify: true,
+			noExternal: [ // Not loaded into global scope
+				'dayjs',
+				'react', // WARNING: For GlobalsPlugin to work react MUST be listed here (if react under dependencies or peerDependencies)
+			],
 			platform: 'browser',
+			// silent: true,
+			splitting: true,
 			sourcemap: true,
 			tsconfig: 'src/main/resources/assets/tsconfig.json',
 		};

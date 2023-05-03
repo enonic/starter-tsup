@@ -46,6 +46,13 @@
 		// 	"@enonic-types/global", // No point, already added via typeRoots
 		// 	// "@enonic-types/lib-event" // No point, since it doesn't affect global scope
 		// ],
+
+		//──────────────────────────────────────────────────────────────────────
+		// Interop Constraints
+		//──────────────────────────────────────────────────────────────────────
+		"allowSyntheticDefaultImports": true,
+		"esModuleInterop": true,
+
 		//──────────────────────────────────────────────────────────────────────
 		// Language and Environment
 		//──────────────────────────────────────────────────────────────────────

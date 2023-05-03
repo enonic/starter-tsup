@@ -3,6 +3,13 @@
   "bugs": {
     "url": "https://github.com/enonic/starter-tsup/issues"
   },
+  "dependencies": {
+    "@enonic/js-utils": "^0",
+    "core-js": "^3",
+    "dayjs": "^1",
+    "react": "^18",
+    "react-dom": "^18"
+  },
   "devDependencies": {
     "@enonic-types/global": "^7",
     "@enonic-types/lib-admin": "^7",
@@ -29,19 +36,17 @@
     "@enonic-types/lib-value": "^7",
     "@enonic-types/lib-vhost": "^7",
     "@enonic-types/lib-websocket": "^7",
-    "@enonic/js-utils": "^0",
     "@swc/core": "^1",
     "@types/react": "^18",
     "browser-sync": "^2",
     "concurrently": "^7",
-    "core-js": "^3",
     "cpy-cli": "^4",
     "cross-env": "^7",
+    "esbuild-plugin-globals": "^0.2.0",
+    "esbuild-plugin-polyfill-node": "^0.2.0",
     "node-sass": "^8",
     "path": "^0",
     "q-i": "^2",
-    "react": "^18",
-    "react-dom": "^18",
     "rimraf": "^4",
     "tslib": "^2",
     "tsup": "^6",

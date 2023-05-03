@@ -84,4 +84,5 @@ processResources {
 	exclude '**/.gitkeep'
 	exclude '**/*.sass'
 	exclude '**/*.ts'
+	exclude '**/*.tsx'
 }
