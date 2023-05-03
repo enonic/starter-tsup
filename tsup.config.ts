@@ -31,7 +31,7 @@ export default defineConfig((options: MyOptions) => {
 	// print(options, { maxItems: Infinity });
 	if (options.d === 'build/resources/main') {
 		return {
-			bundle: false, // Every entry dependency becomes it's own file
+			bundle: true, // Needed to bundle @enonic/js-utils
 			entry: SERVER_FILES,
 			esbuildOptions(options, context) {
 				// options.alias = {
@@ -159,12 +159,18 @@ export default defineConfig((options: MyOptions) => {
 				// 'node_modules/core-js/stable/parse-float.js',       // 59K (15K)
 				// 'node_modules/core-js/stable/reflect/index.js',     // 88K (22K)
 
-				// I used this command to find sizes
+				// TIP: I used this command to find sizes
 				// npm --silent run clean && npm --silent run build:server; ls -lh build/resources/main/empty.js; npm --silent run clean && npm --silent run build:server -- --minify; ls -lh build/resources/main/empty.js
 			],
 			'main-fields': 'main,module',
 			minify: false, // Minifying server files makes debugging harder
-			noExternal: [],
+
+			// TIP: Command to check if there are any bad requires left behind
+			// grep -r 'require("' build/resources/main | grep -v 'require("/'|grep -v chunk
+			noExternal: [
+				/^@enonic\/js-utils.*$/,
+			],
+
 			platform: 'neutral',
 			// silent: true,
 			shims: false, // https://tsup.egoist.dev/#inject-cjs-and-esm-shims
@@ -175,7 +181,7 @@ export default defineConfig((options: MyOptions) => {
 	}
 	if (options.d === 'build/resources/main/assets') {
 		return {
-			bundle: true, // Every entry dependency is bundled into the entry
+			bundle: true, // Needed to bundle @enonic/js-utils and dayjs
 			entry: CLIENT_FILES,
 
 			esbuildPlugins: [
@@ -195,10 +201,15 @@ export default defineConfig((options: MyOptions) => {
 				'esm'
 			],
 			minify: true,
+
+			// TIP: Command to check if there are any bad requires left behind
+			// grep -r 'require("' build/resources/main | grep -v 'require("/'|grep -v chunk
 			noExternal: [
+				/^@enonic\/js-utils/,
 				'dayjs', // Not loaded into global scope
 				'react', // WARNING: For GlobalsPlugin to work react MUST be listed here (if react under dependencies or peerDependencies)
 			],
+
 			platform: 'browser',
 			// silent: true,
 			splitting: true,
