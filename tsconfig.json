@@ -14,6 +14,7 @@
 			"/lib/xp/content": ["../xp/modules/lib/lib-content/src/main/resources/lib/xp/content.ts"],
 			"/lib/xp/context": ["../xp/modules/lib/lib-context/src/main/resources/lib/xp/context.ts"],
 			"/lib/xp/event": ["../xp/modules/lib/lib-event/src/main/resources/lib/xp/event.ts"],
+			"/lib/xp/io": ["../xp/modules/lib/lib-io/src/main/resources/lib/xp/io.ts"],
 			"/lib/xp/node": ["../xp/modules/lib/lib-node/src/main/resources/lib/xp/node.ts"],
 			"/lib/xp/portal": ["../xp/modules/lib/lib-portal/src/main/resources/lib/xp/portal.ts"],
 			"/lib/xp/project": ["../xp/modules/lib/lib-project/src/main/resources/lib/xp/project.ts"],

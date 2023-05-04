@@ -1,4 +1,5 @@
-// import {toStr} from '@enonic/js-utils';
+import {toStr} from '@enonic/js-utils';
+import jsonParseResource from '/lib/jsonParseResource';
 //@ts-ignore
 import {render} from '/lib/thymeleaf';
 import {
@@ -13,6 +14,9 @@ import {
 
 
 const VIEW = resolve('./examplePage.html');
+
+const assets = jsonParseResource('/assets/manifest.json');
+//log.info('assets:%s', toStr(assets));
 
 
 export function get(request) {
@@ -29,6 +33,8 @@ export function get(request) {
 		}
 	} = getCurrentContent();
 	const model = {
+		appComponentUrl: assets['assets/script/index.mjs'].replace('assets/',''),
+		cssUrl: assets['assets/script/index.css'].replace('assets',''),
 		assetUrl: getAssetUrl({
 			path: ''
 		}),

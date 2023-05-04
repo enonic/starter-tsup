@@ -1,13 +1,15 @@
-// import { polyfillNode } from 'esbuild-plugin-polyfill-node';
 import GlobalsPlugin from 'esbuild-plugin-globals';
+import manifestPlugin from 'esbuild-plugin-manifest';
+// import { polyfillNode } from 'esbuild-plugin-polyfill-node';
 import {sassPlugin} from 'esbuild-sass-plugin';
 import glob from 'glob';
-// import {print} from 'q-i';
+import {print} from 'q-i';
 // import {join} from 'path';
 import { defineConfig, type Options } from 'tsup';
 
 
 const RESOURCES_PATH = 'src/main/resources';
+const DST_DIR = 'build/resources/main';
 const ASSETS_PATH = `${RESOURCES_PATH}/assets`;
 const CLIENT_GLOB_EXTENSIONS = '{tsx,ts,jsx,js}';
 const SERVER_GLOB_EXTENSIONS = '{ts,js}';
@@ -30,7 +32,7 @@ interface MyOptions extends Options {
 
 export default defineConfig((options: MyOptions) => {
 	// print(options, { maxItems: Infinity });
-	if (options.d === 'build/resources/main') {
+	if (options.d === DST_DIR) {
 		return {
 			bundle: true, // Needed to bundle @enonic/js-utils
 			entry: SERVER_FILES,
@@ -182,15 +184,31 @@ export default defineConfig((options: MyOptions) => {
 		};
 	}
 	if (options.d === 'build/resources/main/assets') {
+		const obj = {};
 		return {
 			bundle: true, // Needed to bundle @enonic/js-utils and dayjs
 			entry: CLIENT_FILES,
 
 			esbuildPlugins: [
-				sassPlugin(),
 				GlobalsPlugin({
 					react: 'React',
-				})
+				}),
+				manifestPlugin({
+					//filename: '[name]',
+					generate: (entries) => {// Executed once per format
+						// print(entries, { maxItems: Infinity });
+						// const obj = {} as typeof entries;
+						Object.entries(entries).forEach(([k,v]) => {
+							const ext = v.split('.').pop() as string;
+							const parts = k.replace(`${RESOURCES_PATH}/`, '').split('.');
+							parts.pop();
+							parts.push(ext);
+							obj[parts.join('.')] = v.replace(`${DST_DIR}/`, '');
+						});
+						return obj;
+					}
+				}),
+				sassPlugin(),
 			],
 
 			// By default tsup bundles all imported modules, but dependencies
@@ -200,8 +218,8 @@ export default defineConfig((options: MyOptions) => {
 			],
 
 			format: [
-				'cjs',
-				'esm'
+				'cjs', // Legacy browser support, also css in manifest.json
+				'esm', // For some reason doesn't report css files in manifest.json
 			],
 			minify: true,
 
