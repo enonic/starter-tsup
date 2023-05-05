@@ -4,14 +4,14 @@
 // import {toStr} from '@enonic/js-utils';
 // @ts-ignore
 import Router from '/lib/router';
-import etagGetter from './etagGetter';
+import immutableGetter from './immutableGetter';
 
 
 const router = Router();
 
 router.all('/static/{path:.+}', (r: Request) => {
 	// log.info('Request:%s', toStr(r));
-	return etagGetter(r);
+	return immutableGetter(r);
 });
 
 

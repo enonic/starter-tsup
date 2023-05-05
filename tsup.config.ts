@@ -1,10 +1,13 @@
+import { createHash } from 'crypto';
 import GlobalsPlugin from 'esbuild-plugin-globals';
 import manifestPlugin from 'esbuild-plugin-manifest';
 // import { polyfillNode } from 'esbuild-plugin-polyfill-node';
-import {sassPlugin} from 'esbuild-sass-plugin';
+import { sassPlugin } from 'esbuild-sass-plugin';
+import { mkdirSync, readFileSync, writeFileSync } from 'fs';
 import glob from 'glob';
-import {print} from 'q-i';
-// import {join} from 'path';
+import { sha256 } from 'hash36';
+import { print } from 'q-i';
+// import { join } from 'path';
 import { defineConfig, type Options } from 'tsup';
 
 
@@ -221,6 +224,26 @@ export default defineConfig((options: MyOptions) => {
 		};
 	}
 	if (options.d === 'build/resources/main/static') {
+		const fileBuffer = readFileSync('node_modules/react/umd/react.development.js');
+		const digest = sha256(fileBuffer);
+		// print({digest});
+		const fileBuffer2 = readFileSync('node_modules/react-dom/umd/react-dom.development.js');
+		const digest2 = sha256(fileBuffer2);
+		const manifestObj = {
+			'react/react.development.js': `react/react.development-${digest}.js`,
+			'react/react-dom.development.js': `react/react-dom.development-${digest2}.js`
+		}
+		// print({manifestObj});
+		mkdirSync(
+			`${DIR_DST_STATIC}/react`,
+			{
+				recursive: true
+			}
+		);
+		writeFileSync(`${DIR_DST_STATIC}/react/manifest.json`, JSON.stringify(manifestObj,null,4));
+		writeFileSync(`${DIR_DST_STATIC}/react/react.development-${digest}.js`, fileBuffer);
+		writeFileSync(`${DIR_DST_STATIC}/react/react-dom.development-${digest2}.js`, fileBuffer2);
+
 		const FILES_STATIC = glob.sync(`${DIR_SRC_STATIC}/**/*.${GLOB_EXTENSIONS_ASSETS}`);
 		// print(FILES_STATIC, { maxItems: Infinity });
 
@@ -246,7 +269,7 @@ export default defineConfig((options: MyOptions) => {
 				manifestPlugin({
 					//filename: '[name]',
 					generate: (entries) => {// Executed once per format
-						print(entries, { maxItems: Infinity });
+						// print(entries, { maxItems: Infinity });
 						// const obj = {} as typeof entries;
 						Object.entries(entries).forEach(([k,v]) => {
 							const ext = v.split('.').pop() as string;

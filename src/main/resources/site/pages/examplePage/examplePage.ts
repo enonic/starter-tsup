@@ -1,4 +1,4 @@
-// import {toStr} from '@enonic/js-utils';
+import {toStr} from '@enonic/js-utils';
 import jsonParseResource from '/lib/jsonParseResource';
 //@ts-ignore
 import {render} from '/lib/thymeleaf';
@@ -18,10 +18,12 @@ import {
 const VIEW = resolve('./examplePage.html');
 
 const statics = jsonParseResource('/static/manifest.json');
-//log.info('statics:%s', toStr(statics));
+const reacts = jsonParseResource('/static/react/manifest.json');
+// log.info('statics:%s', toStr(statics));
+// log.info('reacts:%s', toStr(reacts));
 
 
-export function get(request) {
+export function get(/*request*/) {
 	const sitePath = getSite()._path;
 	// log.info('sitePath:%s', sitePath);
 
@@ -39,6 +41,10 @@ export function get(request) {
 	const webappVhost = vhosts.filter(({target}) => target.startsWith('/webapp'))[0];
 	// log.info('webappVhost:%s', toStr(webappVhost));
 
+	const webappUrl = vhostsEnabled() && webappVhost
+		? webappVhost.source
+		: `/webapp/${app.name}`;
+
 	const {
 		displayName,
 		page: {
@@ -47,14 +53,13 @@ export function get(request) {
 	} = getCurrentContent();
 	const model = {
 		appComponentUrl: `${sitePageUrl}/static/${statics['react/App.mjs']}` ,
-		cssUrl: `${sitePageUrl}/static/${statics['react/App.css']}`,
 		assetUrl: getAssetUrl({
 			path: ''
 		}),
-		webappUrl: vhostsEnabled() && webappVhost
-			? webappVhost.source
-			: `/webapp/${app.name}`,
+		cssUrl: `${sitePageUrl}/static/${statics['react/App.css']}`,
 		displayName,
+		reactUrl: `${webappUrl}/static/${reacts['react/react.development.js']}` ,
+		reactDomUrl: `${webappUrl}/static/${reacts['react/react-dom.development.js']}` ,
 		regions
 	};
 	return {
