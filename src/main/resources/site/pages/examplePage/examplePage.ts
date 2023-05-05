@@ -1,10 +1,12 @@
-import {toStr} from '@enonic/js-utils';
+// import {toStr} from '@enonic/js-utils';
 import jsonParseResource from '/lib/jsonParseResource';
 //@ts-ignore
 import {render} from '/lib/thymeleaf';
 import {
 	assetUrl as getAssetUrl,
 	getContent as getCurrentContent,
+	getSite,
+	pageUrl as getPageUrl,
 	url as getUrl
 } from '/lib/xp/portal';
 import {
@@ -15,11 +17,22 @@ import {
 
 const VIEW = resolve('./examplePage.html');
 
-const assets = jsonParseResource('/assets/manifest.json');
-//log.info('assets:%s', toStr(assets));
+const statics = jsonParseResource('/static/manifest.json');
+//log.info('statics:%s', toStr(statics));
 
 
 export function get(request) {
+	const sitePath = getSite()._path;
+	// log.info('sitePath:%s', sitePath);
+
+	let sitePageUrl = getPageUrl({
+		path: sitePath
+	});
+	if (sitePageUrl === '/') {
+		sitePageUrl = '';
+	}
+	// log.info('sitePageUrl:%s', sitePageUrl);
+
 	const {vhosts} = getVhosts();
 	// log.info('vhosts:%s', toStr(vhosts));
 
@@ -33,14 +46,14 @@ export function get(request) {
 		}
 	} = getCurrentContent();
 	const model = {
-		appComponentUrl: assets['assets/script/index.mjs'].replace('assets/',''),
-		cssUrl: assets['assets/script/index.css'].replace('assets',''),
+		appComponentUrl: `${sitePageUrl}/static/${statics['react/App.mjs']}` ,
+		cssUrl: `${sitePageUrl}/static/${statics['react/App.css']}`,
 		assetUrl: getAssetUrl({
 			path: ''
 		}),
-		staticUrl: vhostsEnabled() && webappVhost ? webappVhost.source : getUrl({
-			path: `/webapp/${app.name}/static`
-		}),
+		webappUrl: vhostsEnabled() && webappVhost
+			? webappVhost.source
+			: `/webapp/${app.name}`,
 		displayName,
 		regions
 	};

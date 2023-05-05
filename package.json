@@ -63,20 +63,23 @@
   "scripts": {
     "clean": "rimraf build",
     "build": "cross-env-shell FORCE_COLOR=true concurrently -c auto -g --timings npm:build:*",
-    "minify": "cross-env-shell FORCE_COLOR=true concurrently -c auto -g --timings npm:build:cpy:react npm:build:cpy:reactdom 'npm:build:browser -- --minify' npm:build:sass 'npm:build:server -- --minify'",
+    "minify": "cross-env-shell FORCE_COLOR=true concurrently -c auto -g --timings npm:build:cpy:react npm:build:cpy:reactdom 'npm:build:browser -- --minify' npm:build:sass 'npm:build:server -- --minify' 'npm:build:static -- --minify'",
     "build:cpy:react": "npx cpy --cwd=node_modules/react/umd react.development.js ../../../build/resources/main/webapp/static/react",
     "build:cpy:reactdom": "npx cpy --cwd=node_modules/react-dom/umd react-dom.development.js ../../../build/resources/main/webapp/static/react-dom",
-    "build:browser": "npx tsup -d build/resources/main/assets",
+    "build:assets": "npx tsup -d build/resources/main/assets",
     "build:sass": "npx node-sass src/main/resources/assets/style/sass -o build/resources/main/assets/style/sass --output-style compressed --source-map true",
     "build:server": "npx tsup -d build/resources/main",
+    "build:static": "npx tsup -d build/resources/main/static",
     "check:types": "concurrently -c auto -g --timings check:types:*",
     "check:types:assets": "npx tsc --noEmit -p src/main/resources/assets/tsconfig.json",
+    "check:types:static": "npx tsc --noEmit -p src/main/resources/static/tsconfig.json",
     "check:types:resources": "npx tsc --noEmit",
     "prewatch": "concurrently -c auto -g --timings npm:build:cpy:*",
     "watch": "concurrently -c auto -g --timings npm:watch:*",
-    "watch:browser": "npm run build:browser -- --watch",
+    "watch:assets": "npm run build:assets -- --watch",
     "watch:browserSync": "npx browser-sync start --proxy 'localhost:8080' -f 'src/main/resources/**/*.html' 'src/main/resources/**/*.xml' 'build/resources/main' -w --reload-delay 0",
     "watch:sass": "npm run build:sass -- --watch",
-    "watch:server": "npm run build:server -- --watch"
+    "watch:server": "npm run build:server -- --watch",
+    "watch:static": "npm run build:static -- --watch"
   }
 }

@@ -8,23 +8,30 @@ import {print} from 'q-i';
 import { defineConfig, type Options } from 'tsup';
 
 
-const RESOURCES_PATH = 'src/main/resources';
-const DST_DIR = 'build/resources/main';
-const ASSETS_PATH = `${RESOURCES_PATH}/assets`;
-const CLIENT_GLOB_EXTENSIONS = '{tsx,ts,jsx,js}';
-const SERVER_GLOB_EXTENSIONS = '{ts,js}';
+const DIR_SRC = 'src/main/resources';
+const DIR_SRC_ASSETS = `${DIR_SRC}/assets`;
+const DIR_SRC_STATIC = `${DIR_SRC}/static`;
 
-const CLIENT_FILES = glob.sync(`${ASSETS_PATH}/**/*.${CLIENT_GLOB_EXTENSIONS}`);
-// print(CLIENT_FILES, { maxItems: Infinity });
+const DIR_DST = 'build/resources/main';
+const DIR_DST_STATIC = `${DIR_DST}/static`;
 
-const SERVER_FILES = glob.sync(
-	`${RESOURCES_PATH}/**/*.${SERVER_GLOB_EXTENSIONS}`,
+const GLOB_EXTENSIONS_ASSETS = '{tsx,ts,jsx,js}';
+const GLOB_EXTENSIONS_SERVER = '{ts,js}';
+
+const FILES_ASSETS = glob.sync(`${DIR_SRC_ASSETS}/**/*.${GLOB_EXTENSIONS_ASSETS}`);
+// print(FILES_ASSETS, { maxItems: Infinity });
+
+const FILES_SERVER = glob.sync(
+	`${DIR_SRC}/**/*.${GLOB_EXTENSIONS_SERVER}`,
 	{
 		absolute: false,
-		ignore: glob.sync(`${ASSETS_PATH}/**/*.${SERVER_GLOB_EXTENSIONS}`)
+		ignore: [].concat(
+			glob.sync(`${DIR_SRC_ASSETS}/**/*.${GLOB_EXTENSIONS_SERVER}`),
+			glob.sync(`${DIR_SRC_STATIC}/**/*.${GLOB_EXTENSIONS_SERVER}`)
+		)
 	}
 );
-// print(SERVER_FILES, { maxItems: Infinity });
+// print(FILES_SERVER, { maxItems: Infinity });
 
 interface MyOptions extends Options {
 	d?: string
@@ -32,10 +39,10 @@ interface MyOptions extends Options {
 
 export default defineConfig((options: MyOptions) => {
 	// print(options, { maxItems: Infinity });
-	if (options.d === DST_DIR) {
+	if (options.d === DIR_DST) {
 		return {
 			bundle: true, // Needed to bundle @enonic/js-utils
-			entry: SERVER_FILES,
+			entry: FILES_SERVER,
 			esbuildOptions(options, context) {
 				// options.alias = {
 				// 	'alias': './src/main/resources/lib/filename.js'
@@ -184,10 +191,53 @@ export default defineConfig((options: MyOptions) => {
 		};
 	}
 	if (options.d === 'build/resources/main/assets') {
+		return {
+			bundle: true, // Needed to bundle @enonic/js-utils and dayjs
+			entry: FILES_ASSETS,
+			esbuildPlugins: [],
+
+			// By default tsup bundles all imported modules, but dependencies
+			// and peerDependencies in your packages.json are always excluded
+			external: [ // Must be loaded into global scope instead
+			],
+
+			format: [
+				'cjs', // Legacy browser support
+				'esm',
+			],
+			minify: true,
+
+			// TIP: Command to check if there are any bad requires left behind
+			// grep -r 'require("' build/resources/main | grep -v 'require("/'|grep -v chunk
+			noExternal: [
+				/^@enonic\/js-utils/,
+			],
+
+			platform: 'browser',
+			// silent: true,
+			splitting: true,
+			sourcemap: true,
+			tsconfig: 'src/main/resources/assets/tsconfig.json',
+		};
+	}
+	if (options.d === 'build/resources/main/static') {
+		const FILES_STATIC = glob.sync(`${DIR_SRC_STATIC}/**/*.${GLOB_EXTENSIONS_ASSETS}`);
+		// print(FILES_STATIC, { maxItems: Infinity });
+
+		const entry = {};
+		for (let i = 0; i < FILES_STATIC.length; i++) {
+			const element = FILES_STATIC[i];
+			entry[element
+				.replace(`${DIR_SRC_STATIC}/`, '') // Remove path
+				.replace(/\.[^.]+$/, '') // Remove extension
+			] = element;
+		}
+		// print({entry}, { maxItems: Infinity });
+
 		const obj = {};
 		return {
 			bundle: true, // Needed to bundle @enonic/js-utils and dayjs
-			entry: CLIENT_FILES,
+			entry,
 
 			esbuildPlugins: [
 				GlobalsPlugin({
@@ -196,14 +246,14 @@ export default defineConfig((options: MyOptions) => {
 				manifestPlugin({
 					//filename: '[name]',
 					generate: (entries) => {// Executed once per format
-						// print(entries, { maxItems: Infinity });
+						print(entries, { maxItems: Infinity });
 						// const obj = {} as typeof entries;
 						Object.entries(entries).forEach(([k,v]) => {
 							const ext = v.split('.').pop() as string;
-							const parts = k.replace(`${RESOURCES_PATH}/`, '').split('.');
+							const parts = k.replace(`${DIR_SRC_STATIC}/`, '').split('.');
 							parts.pop();
 							parts.push(ext);
-							obj[parts.join('.')] = v.replace(`${DST_DIR}/`, '');
+							obj[parts.join('.')] = v.replace(`${DIR_DST_STATIC}/`, '');
 						});
 						return obj;
 					}
@@ -235,7 +285,7 @@ export default defineConfig((options: MyOptions) => {
 			// silent: true,
 			splitting: true,
 			sourcemap: true,
-			tsconfig: 'src/main/resources/assets/tsconfig.json',
+			tsconfig: 'src/main/resources/static/tsconfig.json',
 		};
 	}
 	throw new Error(`Unconfigured directory:${options.d}!`)
