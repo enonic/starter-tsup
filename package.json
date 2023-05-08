@@ -37,7 +37,7 @@
     "@enonic-types/lib-vhost": "^7",
     "@enonic-types/lib-websocket": "^7",
     "@swc/core": "^1",
-    "@types/node": "^20",
+    "@types/node": "16.18.26",
     "@types/react": "^18",
     "browser-sync": "^2",
     "concurrently": "^8",
