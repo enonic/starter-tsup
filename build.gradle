@@ -66,10 +66,6 @@ node {
 	version = "16.20.0"
 }
 
-wrapper {
-	distributionUrl = 'https://services.gradle.org/distributions/gradle-8.1.1-all.zip'
-}
-
 tasks.withType(Copy) {
 	includeEmptyDirs = false
 }
