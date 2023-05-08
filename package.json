@@ -41,7 +41,6 @@
     "browser-sync": "^2",
     "concurrently": "^8",
     "cpy-cli": "^4",
-    "cross-env": "^7",
     "esbuild-plugin-globals": "^0.2.0",
     "esbuild-plugin-manifest": "^0.6.0",
     "esbuild-plugin-polyfill-node": "^0.2.0",
@@ -63,8 +62,8 @@
   },
   "scripts": {
     "clean": "rimraf build",
-    "build": "cross-env-shell FORCE_COLOR=true concurrently -c auto -g --timings npm:build:*",
-    "minify": "cross-env-shell FORCE_COLOR=true concurrently -c auto -g --timings 'npm:build:browser -- --minify' npm:build:sass 'npm:build:server -- --minify' 'npm:build:static -- --minify'",
+    "build": "concurrently -c auto -g --timings npm:build:*",
+    "minify": "concurrently -c auto -g --timings 'npm:build:browser -- --minify' npm:build:sass 'npm:build:server -- --minify' 'npm:build:static -- --minify'",
     "build:assets": "npx tsup -d build/resources/main/assets",
     "build:sass": "npx node-sass src/main/resources/assets/style/sass -o build/resources/main/assets/style/sass --output-style compressed --source-map true",
     "build:server": "npx tsup -d build/resources/main",

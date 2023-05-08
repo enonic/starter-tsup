@@ -1,4 +1,4 @@
-import { createHash } from 'crypto';
+// import { createHash } from 'crypto';
 import GlobalsPlugin from 'esbuild-plugin-globals';
 import manifestPlugin from 'esbuild-plugin-manifest';
 // import { polyfillNode } from 'esbuild-plugin-polyfill-node';
@@ -6,7 +6,7 @@ import { sassPlugin } from 'esbuild-sass-plugin';
 import { mkdirSync, readFileSync, writeFileSync } from 'fs';
 import glob from 'glob';
 import { sha256 } from 'hash36';
-import { print } from 'q-i';
+// import { print } from 'q-i';
 // import { join } from 'path';
 import { defineConfig, type Options } from 'tsup';
 
@@ -42,6 +42,8 @@ interface MyOptions extends Options {
 
 export default defineConfig((options: MyOptions) => {
 	// print(options, { maxItems: Infinity });
+	// print(process.env, { maxItems: Infinity });
+	// print({ NODE_ENV: process.env.NODE_ENV });
 	if (options.d === DIR_DST) {
 		return {
 			bundle: true, // Needed to bundle @enonic/js-utils
@@ -185,7 +187,7 @@ export default defineConfig((options: MyOptions) => {
 				// 'cjs', // Legacy browser support
 				'esm',
 			],
-			minify: true,
+			minify: process.env.NODE_ENV === 'development' ? false : true,
 
 			// TIP: Command to check if there are any bad requires left behind
 			// grep -r 'require("' build/resources/main | grep -v 'require("/'|grep -v chunk
@@ -196,7 +198,7 @@ export default defineConfig((options: MyOptions) => {
 			platform: 'browser',
 			// silent: true,
 			splitting: true,
-			sourcemap: true,
+			sourcemap: process.env.NODE_ENV === 'development' ? false : true,
 			tsconfig: 'src/main/resources/assets/tsconfig.json',
 		};
 	}
@@ -271,7 +273,7 @@ export default defineConfig((options: MyOptions) => {
 				'cjs', // Legacy browser support, also css in manifest.json
 				'esm', // For some reason doesn't report css files in manifest.json
 			],
-			minify: true,
+			minify: process.env.NODE_ENV === 'development' ? false : true,
 
 			// TIP: Command to check if there are any bad requires left behind
 			// grep -r 'require("' build/resources/main | grep -v 'require("/'|grep -v chunk
@@ -284,7 +286,7 @@ export default defineConfig((options: MyOptions) => {
 			platform: 'browser',
 			// silent: true,
 			splitting: true,
-			sourcemap: true,
+			sourcemap: process.env.NODE_ENV === 'development' ? false : true,
 			tsconfig: 'src/main/resources/static/tsconfig.json',
 		};
 	}

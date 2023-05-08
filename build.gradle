@@ -75,12 +75,19 @@ tasks.withType(Copy) {
 }
 
 task npmBuild(type: NpmTask) {
-	dependsOn npmInstall
-	mustRunAfter npmInstall
 	args = [
 		'run',
 		project.hasProperty('minify') ? 'minify' : 'build'
 	]
+	dependsOn npmInstall
+	environment = [
+		'FORCE_COLOR': 'true',
+		'NODE_ENV': project.hasProperty('dev') || project.hasProperty('development') ? 'development' : 'production'
+	]
+	inputs.dir 'node_modules/react'
+	inputs.dir 'node_modules/react-dom'
+	inputs.dir 'src/main/resources'
+	mustRunAfter npmInstall
 	outputs.dir './build/resources/main' // processResources will delete the directory if this is not present
 }
 
