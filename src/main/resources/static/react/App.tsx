@@ -1,4 +1,4 @@
-import "./App.sass"
+import "./App.sass";
 
 import { toStr } from '@enonic/js-utils';
 import dayjs from 'dayjs';
