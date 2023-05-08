@@ -1,3 +1,9 @@
+import type {
+	// Request,
+	Response,
+} from '/index.d';
+
+
 import {toStr} from '@enonic/js-utils';
 import jsonParseResource from '/lib/jsonParseResource';
 //@ts-ignore
@@ -23,7 +29,7 @@ const reacts = jsonParseResource('/static/react/manifest.json');
 // log.info('reacts:%s', toStr(reacts));
 
 
-export function get(/*request*/) {
+export function get(/*request: Request*/): Response {
 	const sitePath = getSite()._path;
 	// log.info('sitePath:%s', sitePath);
 

@@ -73,6 +73,7 @@ tasks.withType(Copy) {
 task npmBuild(type: NpmTask) {
 	args = [
 		'run',
+		'--silent',
 		project.hasProperty('minify') ? 'minify' : 'build'
 	]
 	dependsOn npmInstall

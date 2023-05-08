@@ -54,6 +54,7 @@ export default function buildStaticConfig(): Options {
 	const obj = {};
 	return {
 		bundle: true, // Needed to bundle @enonic/js-utils and dayjs
+		dts: false, // d.ts files are use useless at runtime
 		entry,
 
 		esbuildPlugins: [

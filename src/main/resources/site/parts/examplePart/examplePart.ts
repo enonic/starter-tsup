@@ -1,3 +1,9 @@
+import type {
+	// Request,
+	Response,
+} from '/index.d';
+
+
 //@ts-ignore
 import {render} from '/lib/thymeleaf';
 import {getComponent} from '/lib/xp/portal';
@@ -6,14 +12,16 @@ import {getComponent} from '/lib/xp/portal';
 const VIEW = resolve('./examplePart.html');
 
 
-export function get(request) {
+export function get(/*request: Request*/): Response {
 	const {
 		config: {
 			myProperty = 'Fallback text'
 		}
-	} = getComponent<{
-		myProperty?: string
-	}>();
+	} = getComponent() as {
+		config: {
+			myProperty?: string
+		}
+	};
 	const model = {
 		myProperty
 	};

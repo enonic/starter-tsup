@@ -1,12 +1,16 @@
-// import type {Request} from '@enonic/js-utils/types/Request';
-// import type {Response} from '@enonic/js-utils/types/Response';
+import type {
+	Request,
+	Response,
+} from '/index.d';
 
 
 import {toStr} from '@enonic/js-utils';
 // @ts-ignore
 import {buildGetter} from '/lib/enonic/static';
 
-const root = 'static';
+
+const ROOT = 'static';
+
 
 const staticGetter = buildGetter({
 	etag: false, // default is true in production and false in development
@@ -24,8 +28,8 @@ const staticGetter = buildGetter({
 		}
 		log.debug('rawPathParts:%s', toStr(rawPathParts));
 
-		const r = rawPathParts.shift(); // Remove root
-		if (r !== root) {
+		const r = rawPathParts.shift(); // Remove ROOT
+		if (r !== ROOT) {
 			throw new Error(`Path outsite root! ${request.rawPath}`);
 		}
 
@@ -34,7 +38,7 @@ const staticGetter = buildGetter({
 
 		return cleanPath;
 	},
-	root,
+	root: ROOT,
 }) as (request: Request) => Response;
 
 

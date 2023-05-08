@@ -1,5 +1,7 @@
-// import type {Request} from '@enonic/js-utils/types/Request';
-// import type {Response} from '@enonic/js-utils/types/Response';
+import type {
+	Request,
+	Response,
+} from '/index.d';
 
 
 // import {toStr} from '@enonic/js-utils';
@@ -7,7 +9,7 @@
 import {buildGetter} from '/lib/enonic/static';
 
 
-const root = 'static';
+const ROOT = 'static';
 
 export const immutableGetter = buildGetter({
 	etag: false, // default is true in production and false in development
@@ -18,11 +20,11 @@ export const immutableGetter = buildGetter({
 		const prefix = request.contextPath;
 		let cleanPath = prefix ? request.rawPath.substring(prefix.length) : request.rawPath;
 		// log.info('cleanPath:%s', cleanPath);
-		cleanPath = cleanPath.replace(`${root}/`, '');
+		cleanPath = cleanPath.replace(`${ROOT}/`, '');
 		// log.info('cleanPath:%s', cleanPath);
 		return cleanPath;
 	},
-	root
+	root: ROOT
 }) as (request: Request) => Response;
 
 

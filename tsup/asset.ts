@@ -12,6 +12,7 @@ export default function buildAssetConfig(): Options {
 		// print(FILES_ASSETS, { maxItems: Infinity });
 		return {
 			bundle: true, // Needed to bundle @enonic/js-utils and dayjs
+			dts: false, // d.ts files are use useless at runtime
 			entry: FILES_ASSETS,
 			esbuildPlugins: [],
 

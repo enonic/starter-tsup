@@ -26,6 +26,7 @@ export default function buildServerConfig(): Options {
 
 	return {
 		bundle: true, // Needed to bundle @enonic/js-utils
+		dts: false, // d.ts files are use useless at runtime
 		entry: FILES_SERVER,
 		esbuildOptions(options, context) {
 			// options.alias = {

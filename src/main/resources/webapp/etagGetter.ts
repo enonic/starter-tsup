@@ -1,12 +1,14 @@
-// import type {Request} from '@enonic/js-utils/types/Request';
-// import type {Response} from '@enonic/js-utils/types/Response';
+import type {
+	Request,
+	Response,
+} from '/index.d';
 
 
 // import {toStr} from '@enonic/js-utils';
 // @ts-ignore
 import {buildGetter} from '/lib/enonic/static';
 
-const root = 'static';
+const ROOT = 'static';
 
 const etagGetter = buildGetter({
 	cacheControl: 'no-cache', // implies must-revalidate after 0 seconds
@@ -18,11 +20,11 @@ const etagGetter = buildGetter({
 		const prefix = request.contextPath;
 		let cleanPath = prefix ? request.rawPath.substring(prefix.length) : request.rawPath;
 		// log.info('cleanPath:%s', cleanPath);
-		cleanPath = cleanPath.replace(`${root}/`, '');
+		cleanPath = cleanPath.replace(`${ROOT}/`, '');
 		// log.info('cleanPath:%s', cleanPath);
 		return cleanPath;
 	},
-	root: root
+	root: ROOT
 }) as (request: Request) => Response;
 
 

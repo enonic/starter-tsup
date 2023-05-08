@@ -1,4 +1,4 @@
-// import type {Request} from '@enonic/js-utils/types/Request';
+import type {Request} from '/index.d';
 
 
 // import {toStr} from '@enonic/js-utils';
