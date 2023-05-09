@@ -1,4 +1,7 @@
-import type {Request} from '/index.d';
+import type {
+	Request,
+	Response,
+} from '/index.d';
 
 
 // import {toStr} from '@enonic/js-utils';
@@ -19,8 +22,7 @@ router.all(`/${GETTER_ROOT}/{path:.+}`, (r: Request) => {
 	return immutableGetter(r);
 });
 
-
-router.get('/', (r: Request) => {
+function htmlResponse(request: Request): Response {
 	const reacts = jsonParseResource('/static/react/manifest.json');
 	return {
 		body: `<html>
@@ -41,8 +43,11 @@ router.get('/', (r: Request) => {
 		</script>
 	</body>
 </html>`
-	}
-});
+	};
+}
+
+router.get('/', (r: Request) => htmlResponse(r));
+router.get('', (r: Request) => htmlResponse(r)); // This doesn't work?
 
 
 export const all = (r: Request) => router.dispatch(r);

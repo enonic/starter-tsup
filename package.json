@@ -77,7 +77,7 @@
     "prebuild:asset": "node -e \"if (process.env.NODE_ENV !== 'development'){process.exit(1)}\" || npm run check:types:asset",
     "prebuild:server": "node -e \"if (process.env.NODE_ENV !== 'development'){process.exit(1)}\" || npm run check:types:server",
     "prebuild:static": "node -e \"if (process.env.NODE_ENV !== 'development'){process.exit(1)}\" || npm run check:types:static",
-    "watch": "concurrently -c auto -g --timings npm:watch:*",
+    "watch": "concurrently -c auto npm:watch:*",
     "watch:asset": "npm run build:asset -- --watch",
     "watch:browserSync": "npx browser-sync start --proxy 'localhost:8080' -f 'src/main/resources/**/*.html' 'src/main/resources/**/*.xml' 'build/resources/main' -w --reload-delay 0",
     "watch:sass": "npm run build:sass -- --watch",
