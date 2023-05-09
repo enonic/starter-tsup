@@ -15,9 +15,10 @@ export interface ComplexCookie {
 export interface Response<
 	Body = string,
 	Headers extends Record<string,string> = {
-		'Content-Type'?: string
-		'Cache-Control'?: string
-		ETag?: string|number
+		'content-type'?: string
+		'cache-control'?: string
+		'content-security-policy'?: string
+		etag?: string|number
 	}
 > {
 	applyFilters?: boolean

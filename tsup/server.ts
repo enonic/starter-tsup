@@ -2,7 +2,7 @@ import type { Options } from '.';
 
 
 import { globSync } from 'glob';
-// import { polyfillNode } from 'esbuild-plugin-polyfill-node';
+import { polyfillNode } from 'esbuild-plugin-polyfill-node';
 // import { print } from 'q-i';
 import {
 	DIR_SRC,
@@ -34,9 +34,9 @@ export default function buildServerConfig(): Options {
 			// };
 
 			// Some node modules might need globalThis
-			// options.banner = {
-			// 	js: `const globalThis = (1, eval)('this');`
-			// };
+			options.banner = {
+				js: `const globalThis = (1, eval)('this');` // buffer polyfill needs this
+			};
 
 			// If you have libs with chunks, use this to avoid collisions
 			options.chunkNames = '_chunks/[name]-[hash]';
@@ -45,62 +45,62 @@ export default function buildServerConfig(): Options {
 		},
 		esbuildPlugins: [
 			// Some node modules might need parts of Node polyfilled:
-			// polyfillNode({
-			// 	globals: {
-			// 		buffer: false,
-			// 		process: false
-			// 	},
-			// 	polyfills: {
-			// 		_stream_duplex: false,
-			// 		_stream_passthrough: false,
-			// 		_stream_readable: false,
-			// 		_stream_transform: false,
-			// 		_stream_writable: false,
-			// 		assert: false,
-			// 		'assert/strict': false,
-			// 		async_hooks: false,
-			// 		buffer: false,
-			// 		child_process: false,
-			// 		cluster: false,
-			// 		console: false,
-			// 		constants: false,
-			// 		crypto: false,
-			// 		dgram: false,
-			// 		diagnostics_channel: false,
-			// 		dns: false,
-			// 		domain: false,
-			// 		events: false,
-			// 		fs: false,
-			// 		'fs/promises': false,
-			// 		http: false,
-			// 		http2: false,
-			// 		https: false,
-			// 		module: false,
-			// 		net: false,
-			// 		os: false,
-			// 		path: false,
-			// 		perf_hooks: false,
-			// 		process: "empty",
-			// 		punycode: false,
-			// 		querystring: false,
-			// 		readline: false,
-			// 		repl: false,
-			// 		stream: false,
-			// 		string_decoder: false,
-			// 		sys: false,
-			// 		timers: false,
-			// 		'timers/promises': false,
-			// 		tls: false,
-			// 		tty: false,
-			// 		url: false,
-			// 		util: true,
-			// 		v8: false,
-			// 		vm: false,
-			// 		wasi: false,
-			// 		worker_threads: false,
-			// 		zlib: false,
-			// 	}
-			// }) // ReferenceError: "navigator" is not defined
+			polyfillNode({
+				globals: {
+					buffer: true, // sha.js needs this
+					process: false
+				},
+				polyfills: {
+					_stream_duplex: false,
+					_stream_passthrough: false,
+					_stream_readable: false,
+					_stream_transform: false,
+					_stream_writable: false,
+					assert: false,
+					'assert/strict': false,
+					async_hooks: false,
+					buffer: true, // sha.js needs this
+					child_process: false,
+					cluster: false,
+					console: false,
+					constants: false,
+					crypto: false,
+					dgram: false,
+					diagnostics_channel: false,
+					dns: false,
+					domain: false,
+					events: false,
+					fs: false,
+					'fs/promises': false,
+					http: false,
+					http2: false,
+					https: false,
+					module: false,
+					net: false,
+					os: false,
+					path: false,
+					perf_hooks: false,
+					process: false, //"empty",
+					punycode: false,
+					querystring: false,
+					readline: false,
+					repl: false,
+					stream: false,
+					string_decoder: false,
+					sys: false,
+					timers: false,
+					'timers/promises': false,
+					tls: false,
+					tty: false,
+					url: false,
+					util: false, // true,
+					v8: false,
+					vm: false,
+					wasi: false,
+					worker_threads: false,
+					zlib: false,
+				}
+			}) // ReferenceError: "navigator" is not defined
 		],
 		external: [
 			'/lib/cache',
@@ -143,6 +143,7 @@ export default function buildServerConfig(): Options {
 		// grep -r 'require("' build/resources/main | grep -v 'require("/'|grep -v chunk
 		noExternal: [
 			/^@enonic\/js-utils.*$/,
+			'sha.js', // requires buffer
 		],
 
 		platform: 'neutral',

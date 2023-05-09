@@ -15,11 +15,7 @@
 				<div data-portal-component="${component.path}" th:remove="tag"/>
 			</div>
 			<div id="react-root"></div>
-			<script type='module' defer>
-import {App} from '[[${appComponentUrl}]]';
-const root = ReactDOM.createRoot(document.getElementById('react-root'));
-root.render(React.createElement(App, {}));
-			</script>
+			<script type='module' defer th:utext="${inlineScript}"></script>
 		</main>
 	</body>
 </html>

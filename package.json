@@ -8,7 +8,8 @@
     "core-js": "^3",
     "dayjs": "^1",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "sha.js": "^2.4.11"
   },
   "devDependencies": {
     "@enonic-types/global": "^7",
