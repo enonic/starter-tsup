@@ -6,7 +6,6 @@ import type {
 
 // import {toStr} from '@enonic/js-utils';
 import shajs from 'sha.js'
-import jsonParseResource from '/lib/jsonParseResource';
 //@ts-ignore
 import {render} from '/lib/thymeleaf';
 import {
@@ -14,13 +13,10 @@ import {
 	getContent as getCurrentContent,
 } from '/lib/xp/portal';
 import getImmuteableSiteUrl from '/lib/getImmuteableSiteUrl';
-import webappUrl from '/webapp/webappUrl';
 
 
 const VIEW = resolve('./examplePage.html');
 
-const reacts = jsonParseResource('/static/react/manifest.json');
-// log.info('reacts:%s', toStr(reacts));
 
 
 export function get(/*request: Request*/): Response {
@@ -44,8 +40,8 @@ export function get(/*request: Request*/): Response {
 		cssUrl: getImmuteableSiteUrl('react/App.css'),
 		displayName,
 		inlineScript,
-		reactUrl: webappUrl(`static/${reacts['react/react.development.js']}`),
-		reactDomUrl: webappUrl(`static/${reacts['react/react-dom.development.js']}`) ,
+		reactUrl: getImmuteableSiteUrl('react/react.development.js'),
+		reactDomUrl: getImmuteableSiteUrl('react/react-dom.development.js') ,
 		regions
 	};
 	return {

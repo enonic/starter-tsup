@@ -34,7 +34,6 @@ export default function buildStaticConfig(): Options {
 			recursive: true
 		}
 	);
-	writeFileSync(`${DIR_DST_STATIC}/react/manifest.json`, JSON.stringify(manifestObj,null,4));
 	writeFileSync(`${DIR_DST_STATIC}/react/react.development-${digest}.js`, fileBuffer);
 	writeFileSync(`${DIR_DST_STATIC}/react/react-dom.development-${digest2}.js`, fileBuffer2);
 
@@ -51,7 +50,6 @@ export default function buildStaticConfig(): Options {
 	}
 	// print({entry}, { maxItems: Infinity });
 
-	const obj = {};
 	return {
 		bundle: true, // Needed to bundle @enonic/js-utils and dayjs
 		dts: false, // d.ts files are use useless at runtime
@@ -65,15 +63,14 @@ export default function buildStaticConfig(): Options {
 				//filename: '[name]',
 				generate: (entries) => {// Executed once per format
 					// print(entries, { maxItems: Infinity });
-					// const obj = {} as typeof entries;
 					Object.entries(entries).forEach(([k,v]) => {
 						const ext = v.split('.').pop() as string;
 						const parts = k.replace(`${DIR_SRC_STATIC}/`, '').split('.');
 						parts.pop();
 						parts.push(ext);
-						obj[parts.join('.')] = v.replace(`${DIR_DST_STATIC}/`, '');
+						manifestObj[parts.join('.')] = v.replace(`${DIR_DST_STATIC}/`, '');
 					});
-					return obj;
+					return manifestObj;
 				}
 			}),
 			sassPlugin(),
