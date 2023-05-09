@@ -93,6 +93,7 @@ processResources {
 	dependsOn npmBuild
 	mustRunAfter npmBuild
 	exclude '**/.gitkeep'
+	exclude '**/*.json'
 	exclude '**/*.sass'
 	exclude '**/*.png'
 	exclude '**/*.ts'
