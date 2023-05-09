@@ -7,8 +7,8 @@ import type {
 // import {toStr} from '@enonic/js-utils';
 // @ts-ignore
 import {buildGetter} from '/lib/enonic/static';
+import { GETTER_ROOT } from '/constants';
 
-const ROOT = 'static';
 
 const etagGetter = buildGetter({
 	cacheControl: 'no-cache', // implies must-revalidate after 0 seconds
@@ -20,11 +20,11 @@ const etagGetter = buildGetter({
 		const prefix = request.contextPath;
 		let cleanPath = prefix ? request.rawPath.substring(prefix.length) : request.rawPath;
 		// log.info('cleanPath:%s', cleanPath);
-		cleanPath = cleanPath.replace(`${ROOT}/`, '');
+		cleanPath = cleanPath.replace(`${GETTER_ROOT}/`, '');
 		// log.info('cleanPath:%s', cleanPath);
 		return cleanPath;
 	},
-	root: ROOT
+	root: GETTER_ROOT
 }) as (request: Request) => Response;
 
 

@@ -7,9 +7,7 @@ import type {
 import {toStr} from '@enonic/js-utils';
 // @ts-ignore
 import {buildGetter} from '/lib/enonic/static';
-
-
-const ROOT = 'static';
+import { GETTER_ROOT } from '/constants';
 
 
 const staticGetter = buildGetter({
@@ -29,7 +27,7 @@ const staticGetter = buildGetter({
 		log.debug('rawPathParts:%s', toStr(rawPathParts));
 
 		const r = rawPathParts.shift(); // Remove ROOT
-		if (r !== ROOT) {
+		if (r !== GETTER_ROOT) {
 			throw new Error(`Path outsite root! ${request.rawPath}`);
 		}
 
@@ -38,7 +36,7 @@ const staticGetter = buildGetter({
 
 		return cleanPath;
 	},
-	root: ROOT,
+	root: GETTER_ROOT,
 }) as (request: Request) => Response;
 
 
