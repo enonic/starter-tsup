@@ -51,7 +51,7 @@
     "esbuild-sass-plugin": "^2.9.0",
     "glob": "^10.2.6",
     "hash36": "^1.0.0",
-    "node-sass": "^8",
+    "node-sass": "^9",
     "path": "^0",
     "q-i": "^2",
     "rimraf": "^5",
