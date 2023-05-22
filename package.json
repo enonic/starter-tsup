@@ -49,7 +49,7 @@
     "esbuild-plugin-manifest": "^0.6.0",
     "esbuild-plugin-polyfill-node": "^0.2.0",
     "esbuild-sass-plugin": "^2.9.0",
-    "glob": "^10.2.2",
+    "glob": "^10.2.6",
     "hash36": "^1.0.0",
     "node-sass": "^8",
     "path": "^0",
