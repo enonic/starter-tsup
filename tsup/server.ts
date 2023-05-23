@@ -114,6 +114,7 @@ export default function buildServerConfig(): Options {
 			'/lib/router',
 			'/lib/util',
 			'/lib/vanilla',
+			'/lib/text-encoding',
 			'/lib/thymeleaf',
 			/^\/lib\/xp\//,
 		],

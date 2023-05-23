@@ -18,6 +18,12 @@ import {
 	getContent as getCurrentContent,
 	serviceUrl as getServiceUrl,
 } from '/lib/xp/portal';
+import {
+	base64Encode,
+	base64UrlEncode,
+	sha256,
+	// @ts-ignore
+} from '/lib/text-encoding';
 import getImmuteableSiteUrl from '/lib/getImmuteableSiteUrl';
 import contentSecurityPolicy from '/lib/contentSecurityPolicy';
 
@@ -48,7 +54,13 @@ console.log(jsonData);
 	// log.info('inlineScript:%s', inlineScript);
 
 	const base64 = shajs('sha256').update(inlineScript).digest('base64');
-	// log.info('base64:%s', base64);
+	log.info('A base64:%s', base64);
+
+	const test = base64Encode(sha256(inlineScript));
+	log.info('B base64:%s', test);
+
+	const test2 = base64UrlEncode(sha256(inlineScript));
+	log.info('C base64:%s', test2);
 
 	const csp: ContentSecurityPolicy = {
 		'default-src': 'none',
