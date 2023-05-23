@@ -1,0 +1,10 @@
+<widget>
+	<display-name>Example menuitem widget</display-name>
+	<description>This widget is for the Content Studio menu</description>
+	<interfaces>
+		<interface>contentstudio.menuitem</interface>
+	</interfaces>
+	<config>
+		<property name="context" value="project"/>
+	</config>
+</widget>

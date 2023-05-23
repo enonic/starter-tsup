@@ -1,0 +1,10 @@
+<widget>
+	<display-name>My dashboard widget</display-name>
+	<description>Description of my dashboard widget</description>
+	<interfaces>
+		<interface>admin.dashboard</interface>
+	</interfaces>
+	<allow>
+		<principal>role:system.admin</principal>
+	</allow>
+</widget>

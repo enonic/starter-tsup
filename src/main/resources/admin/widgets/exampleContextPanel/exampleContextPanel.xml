@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget>
+	<display-name>Example Context Panel</display-name>
+	<description>Example Context Panel Description</description>
+	<interfaces>
+		<interface>contentstudio.contextpanel</interface>
+	</interfaces>
+</widget>
