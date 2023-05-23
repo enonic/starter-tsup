@@ -17,5 +17,12 @@
 			<div id="react-root"></div>
 			<script type='module' defer th:utext="${inlineScript}"></script>
 		</main>
+		<p>The phrase "language" in Norwegian is: "[[${languageInNorwegian}]]"</p>
+		<h6>We support phrases in the following locales:</h6>
+		<ul>
+			<div th:each="locale : ${supportedLocales}" th:remove="tag">
+				<li th:text="${locale}"></li>
+			</div>
+		</ul>
 	</body>
 </html>

@@ -9,11 +9,14 @@ import shajs from 'sha.js'
 //@ts-ignore
 import {render} from '/lib/thymeleaf';
 import {
+	getSupportedLocales,
+	localize,
+} from '/lib/xp/i18n';
+import {
 	assetUrl as getAssetUrl,
 	getContent as getCurrentContent,
 } from '/lib/xp/portal';
 import getImmuteableSiteUrl from '/lib/getImmuteableSiteUrl';
-
 
 const VIEW = resolve('./examplePage.html');
 
@@ -40,9 +43,14 @@ export function get(/*request: Request*/): Response {
 		cssUrl: getImmuteableSiteUrl('react/App.css'),
 		displayName,
 		inlineScript,
+		languageInNorwegian: localize({
+			key: 'language',
+			locale: 'no',
+		}),
 		reactUrl: getImmuteableSiteUrl('react/react.development.js'),
 		reactDomUrl: getImmuteableSiteUrl('react/react-dom.development.js') ,
-		regions
+		regions,
+		supportedLocales: getSupportedLocales(['i18n/phrases'])
 	};
 	return {
 		body: render(VIEW, model),
