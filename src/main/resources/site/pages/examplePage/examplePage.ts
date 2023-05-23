@@ -6,7 +6,6 @@ import type {
 
 
 // import {toStr} from '@enonic/js-utils';
-import shajs from 'sha.js'
 //@ts-ignore
 import {render} from '/lib/thymeleaf';
 import {
@@ -20,8 +19,7 @@ import {
 } from '/lib/xp/portal';
 import {
 	base64Encode,
-	base64UrlEncode,
-	sha256,
+	sha256AsStream,
 	// @ts-ignore
 } from '/lib/text-encoding';
 import getImmuteableSiteUrl from '/lib/getImmuteableSiteUrl';
@@ -49,18 +47,11 @@ root.render(React.createElement(App, {}));
 
 const response = await fetch("${currentTimeMillisServiceUrl}");
 const jsonData = await response.json();
-console.log(jsonData);
-`
+console.log(jsonData);`;
 	// log.info('inlineScript:%s', inlineScript);
 
-	const base64 = shajs('sha256').update(inlineScript).digest('base64');
-	log.info('A base64:%s', base64);
-
-	const test = base64Encode(sha256(inlineScript));
-	log.info('B base64:%s', test);
-
-	const test2 = base64UrlEncode(sha256(inlineScript));
-	log.info('C base64:%s', test2);
+	const base64 = base64Encode(sha256AsStream(inlineScript));
+	// log.info('base64:%s', base64);
 
 	const csp: ContentSecurityPolicy = {
 		'default-src': 'none',
