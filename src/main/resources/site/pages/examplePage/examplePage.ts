@@ -24,6 +24,8 @@ import {
 } from '/lib/text-encoding';
 import getImmuteableSiteUrl from '/lib/getImmuteableSiteUrl';
 import contentSecurityPolicy from '/lib/contentSecurityPolicy';
+import {IS_DEV_MODE} from '/lib/runMode';
+import { FILEPATH_MANIFEST_NODE_MODULES } from '/constants';
 
 
 const VIEW = resolve('./examplePage.html');
@@ -41,7 +43,9 @@ export function get(/*request: Request*/): Response {
 		service: 'currentTimeMillis'
 	});
 
-	const inlineScript = `import {App} from '${getImmuteableSiteUrl('react/App.mjs')}';
+	const inlineScript = `import {App} from '${getImmuteableSiteUrl({
+		path: 'react/App.mjs'
+	})}';
 const root = ReactDOM.createRoot(document.getElementById('react-root'));
 root.render(React.createElement(App, {}));
 
@@ -59,7 +63,9 @@ console.log(jsonData);`;
 		'img-src': 'self',
 		'script-src': [
 			'self',
-			`sha256-${base64}`
+			IS_DEV_MODE
+				? 'unsafe-inline' // browserSync
+				: `sha256-${base64}`
 		],
 		'style-src': [
 			'self',
@@ -69,15 +75,23 @@ console.log(jsonData);`;
 
 	const model = {
 		assetUrl: getAssetUrl({ path: '' }),
-		cssUrl: getImmuteableSiteUrl('react/App.css'),
+		cssUrl: getImmuteableSiteUrl({
+			path: 'react/App.css'
+		}),
 		displayName,
 		inlineScript,
 		languageInNorwegian: localize({
 			key: 'language',
 			locale: 'no',
 		}),
-		reactUrl: getImmuteableSiteUrl('react/react.development.js'),
-		reactDomUrl: getImmuteableSiteUrl('react/react-dom.development.js') ,
+		reactUrl: getImmuteableSiteUrl({
+			manifestPath: FILEPATH_MANIFEST_NODE_MODULES,
+			path: 'react/umd/react.development.js',
+		}),
+		reactDomUrl: getImmuteableSiteUrl({
+			manifestPath: FILEPATH_MANIFEST_NODE_MODULES,
+			path: 'react-dom/umd/react-dom.development.js'
+		}) ,
 		regions,
 		supportedLocales: getSupportedLocales(['i18n/phrases'])
 	};

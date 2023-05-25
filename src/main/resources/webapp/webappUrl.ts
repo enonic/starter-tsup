@@ -1,10 +1,11 @@
+// import {toStr} from '@enonic/js-utils';
 import {
 	isEnabled as vhostsEnabled,
 	list as getVhosts
 } from '/lib/xp/vhost';
 
 
-export default function webappUrl(path: string) {
+export default function webappUrl(path?: string) {
 	const {vhosts} = getVhosts();
 	// log.info('vhosts:%s', toStr(vhosts));
 

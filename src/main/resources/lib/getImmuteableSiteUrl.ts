@@ -6,16 +6,26 @@ import {
 import {IS_DEV_MODE} from '/lib/runMode';
 import {
 	FILEPATH_MANIFEST,
+	FILEPATH_MANIFEST_NODE_MODULES,
 	GETTER_ROOT,
 } from '/constants';
 
 
-let statics = jsonParseResource(FILEPATH_MANIFEST);
+const manifests = {
+	[FILEPATH_MANIFEST]: jsonParseResource(FILEPATH_MANIFEST),
+	[FILEPATH_MANIFEST_NODE_MODULES]: jsonParseResource(FILEPATH_MANIFEST_NODE_MODULES),
+}
 
 
-export default function getImmuteableSiteUrl(path: string) {
+export default function getImmuteableSiteUrl({
+	manifestPath = FILEPATH_MANIFEST,
+	path,
+}: {
+	manifestPath?: string
+	path: string,
+}) {
 	if (IS_DEV_MODE) {
-		statics = jsonParseResource(FILEPATH_MANIFEST);
+		manifests[manifestPath] = jsonParseResource(manifestPath);
 	}
 
 	const sitePath = getSite()._path;
@@ -27,5 +37,5 @@ export default function getImmuteableSiteUrl(path: string) {
 	if (sitePageUrl === '/') {
 		sitePageUrl = '';
 	}
-	return `${sitePageUrl}/${GETTER_ROOT}/${statics[path]}`;
+	return `${sitePageUrl}/${GETTER_ROOT}/${manifests[manifestPath][path]}`;
 }

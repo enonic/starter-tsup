@@ -9,7 +9,10 @@ import type {
 import Router from '/lib/router';
 import immutableGetter from './immutableGetter';
 import getImmuteableWebappUrl from '/webapp/getImmuteableWebappUrl';
-import { GETTER_ROOT } from '/constants';
+import {
+	FILEPATH_MANIFEST_NODE_MODULES,
+	GETTER_ROOT
+} from '/constants';
 
 
 const router = Router();
@@ -24,9 +27,15 @@ function htmlResponse(request: Request): Response {
 	return {
 		body: `<html>
 	<head>
-		<script type="text/javascript" src="${getImmuteableWebappUrl('react/react.development.js')}"></script>
-		<script type="text/javascript" src="${getImmuteableWebappUrl('react/react-dom.development.js')}"></script>
-		<link rel="stylesheet" media="all" href="${getImmuteableWebappUrl('react/App.css')}">
+		<script type="text/javascript" src="${getImmuteableWebappUrl({
+			manifestPath: FILEPATH_MANIFEST_NODE_MODULES,
+			path: 'react/umd/react.development.js'
+		})}"></script>
+		<script type="text/javascript" src="${getImmuteableWebappUrl({
+			manifestPath: FILEPATH_MANIFEST_NODE_MODULES,
+			path: 'react-dom/umd/react-dom.development.js'
+		})}"></script>
+		<link rel="stylesheet" media="all" href="${getImmuteableWebappUrl({ path: 'react/App.css' })}">
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 		<title>Webapp</title>
@@ -34,7 +43,7 @@ function htmlResponse(request: Request): Response {
 	<body style="font-size:13px">
 		<div id="react-root"></div>
 		<script type='module' defer>
-	import {App} from '${getImmuteableWebappUrl('react/App.mjs')}';
+	import {App} from '${getImmuteableWebappUrl({ path: 'react/App.mjs' })}';
 	const root = ReactDOM.createRoot(document.getElementById('react-root'));
 	root.render(React.createElement(App, {}));
 		</script>
