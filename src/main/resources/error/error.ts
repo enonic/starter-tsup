@@ -52,7 +52,7 @@ export function handle404(error: Error): Response {
 
 
 export function handleError(error: Error): Response {
-	let response: Response = {
+	const response: Response = {
 		status: 500
 	};
 	try {

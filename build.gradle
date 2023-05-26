@@ -72,6 +72,34 @@ tasks.withType(Copy) {
 	includeEmptyDirs = false
 }
 
+task npmTest(type: NpmTask) {
+	args = [
+		'run',
+		'test'
+	]
+	dependsOn npmInstall
+	environment = [
+		'FORCE_COLOR': 'true',
+	]
+}
+
+task npmCheck(type: NpmTask) {
+	dependsOn npmInstall
+	args = [
+		'run',
+		'check'
+	]
+	environment = [
+		'FORCE_COLOR': 'true',
+	]
+}
+
+// If you ALWAYS want to SKIP test and check on development build comment in the if
+// if (!(project.hasProperty('dev') || project.hasProperty('development'))) {
+test.dependsOn npmTest
+check.dependsOn npmCheck
+// }
+
 task npmBuild(type: NpmTask) {
 	args = [
 		'run',
@@ -87,13 +115,12 @@ task npmBuild(type: NpmTask) {
 	inputs.dir 'node_modules/react'
 	inputs.dir 'node_modules/react-dom'
 	inputs.dir 'src/main/resources'
-	mustRunAfter npmInstall
-	outputs.dir './build/resources/main' // processResources will delete the directory if this is not present
+	outputs.dir 'build/resources/main'
 }
 
+jar.dependsOn npmBuild
+
 processResources {
-	dependsOn npmBuild
-	mustRunAfter npmBuild
 	exclude '**/.gitkeep'
 	exclude '**/*.json'
 	exclude '**/*.sass'

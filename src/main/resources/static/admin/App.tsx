@@ -14,7 +14,7 @@ export function App() {
 		<>
 			<div className="appbar">
 				<div className="home-button app-icon system-info-button">
-					<img className="app-icon"/>
+					<img alt="Application Icon" className="app-icon"/>
 					<span className="app-name">Admin tool starter</span>
 				</div>
 			</div>

@@ -5,7 +5,7 @@ import type {
 
 
 // import {toStr} from '@enonic/js-utils';
-// @ts-ignore
+// @ts-expect-error TS2307: Cannot find module '/lib/enonic/static' or its corresponding type declarations.
 import {buildGetter} from '/lib/enonic/static';
 import { GETTER_ROOT } from '/constants';
 
@@ -25,7 +25,7 @@ export const immutableGetter = buildGetter({
 		return cleanPath;
 	},
 	root: GETTER_ROOT
-}) as (request: Request) => Response;
+}) as (_request: Request) => Response;
 
 
 export default immutableGetter;

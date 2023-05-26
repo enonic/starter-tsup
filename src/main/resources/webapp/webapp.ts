@@ -5,7 +5,7 @@ import type {
 
 
 // import {toStr} from '@enonic/js-utils';
-// @ts-ignore
+// @ts-expect-error TS2307: Cannot find module '/lib/router' or its corresponding type declarations.
 import Router from '/lib/router';
 import immutableGetter from './immutableGetter';
 import getImmuteableWebappUrl from '/webapp/getImmuteableWebappUrl';
@@ -23,7 +23,7 @@ router.all(`/${GETTER_ROOT}/{path:.+}`, (r: Request) => {
 	return immutableGetter(r);
 });
 
-function htmlResponse(request: Request): Response {
+function htmlResponse(_request: Request): Response {
 	return {
 		body: `<html>
 	<head>
