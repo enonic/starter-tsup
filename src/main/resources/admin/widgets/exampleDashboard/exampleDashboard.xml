@@ -1,5 +1,5 @@
 <widget>
-	<display-name>My dashboard widget</display-name>
+	<display-name>Sample dashboard widget</display-name>
 	<description>Description of my dashboard widget</description>
 	<interfaces>
 		<interface>admin.dashboard</interface>

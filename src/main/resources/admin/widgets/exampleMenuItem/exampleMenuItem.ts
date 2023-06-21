@@ -11,7 +11,7 @@ export function get(
 ): Response {
 	DEBUG_MODE && log.info('request:%s', toStr(request));
 	return {
-		body: '<widget>My menuitem widget</widget>',
+		body: '<widget style="margin-left: 50px;">My menu widget</widget>',
 		contentType: 'text/html'
 	};
 }

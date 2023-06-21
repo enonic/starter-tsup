@@ -9,16 +9,20 @@ import { useId } from 'react';
 
 export function App() {
 	const id = useId();
-	console.debug(toStr({id}));
+	console.debug(`React app id: ${toStr({id})}`);
 	return (
 		<>
 			<div className="appbar">
 				<div className="home-button app-icon system-info-button">
 					<img alt="Application Icon" className="app-icon"/>
-					<span className="app-name">Admin tool starter</span>
+					<span className="app-name">Sample Tool</span>
 				</div>
 			</div>
-			<div className='blue'>{dayjs().format()}</div>
+			<div className="admin-tool-container">
+				<h3 className="darkgray">This is a sample Admin Tool. Note the XP menu icon in the top right corner.</h3>
+				<br/>
+				<h5 className="lightgray">Hello from Day.js! Current time is: {dayjs().format('DD.MM.YYYY')}</h5>
+			</div>
 		</>
 	);
 }

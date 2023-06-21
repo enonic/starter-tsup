@@ -46,6 +46,10 @@ dependencies {
 	include 'com.enonic.lib:lib-static:1.0.3'
 	include 'com.enonic.lib:lib-text-encoding:2.1.1'
 	include 'com.enonic.lib:lib-thymeleaf:2.1.0'
+
+	// Used only for Admin Tool samples (admin/tools), remove if not needed
+	include 'com.enonic.lib:lib-admin-ui:4.6.0'
+
 	// include 'com.enonic.lib:lib-cache:2.2.0'
 	// include 'com.enonic.lib:lib-util:3.0.0'
 }
