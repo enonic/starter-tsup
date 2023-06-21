@@ -1,16 +1,15 @@
 import type {
-	// Request,
+	Request,
 	Response,
 } from '/index.d';
 
-
+import {DEBUG_MODE} from "/constants";
 import {toStr} from '@enonic/js-utils';
 
-
 export function get(
-	// request: Request
+	request: Request
 ): Response {
-	// log.info('request:%s', toStr(request));
+	DEBUG_MODE && log.info('request:%s', toStr(request));
 	return {
 		body: '<widget>My context panel</widget>',
 		contentType: 'text/html'

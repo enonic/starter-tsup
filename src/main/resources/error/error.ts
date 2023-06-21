@@ -3,9 +3,8 @@ import type {
 	Response,
 } from '/index.d';
 
-
 import {toStr} from '@enonic/js-utils';
-
+import {DEBUG_MODE} from "/constants";
 
 interface Error {
 	message: string
@@ -13,13 +12,12 @@ interface Error {
 	status: number
 }
 
-
 export function handle404(error: Error): Response {
 	let response: Response = {
 		status: 404
 	};
 	try {
-		// log.debug('error:%s', toStr(error));
+		DEBUG_MODE && log.debug('error:%s', toStr(error));
 		const {
 			message,
 			request,
@@ -27,7 +25,6 @@ export function handle404(error: Error): Response {
 		} = error;
 		log.warning('status:404 message:%s request:%s', message, toStr(request));
 		response = {
-			// applyFilters: false, // Doesn't work in error controllers
 			body: `<html>
 		<head>
 			<title>404</title>
@@ -36,11 +33,7 @@ export function handle404(error: Error): Response {
 			<p>Not found</p>
 		</body>
 	</html>`,
-			// pageContributions: // Doesn't work without postProcessing
-			// cookies: {},
 			contentType: 'text/html',
-			// headers: {},
-			// postProcess: false, // Doesn't work in error controllers
 			status
 		}
 	} catch (exception) {
@@ -56,7 +49,7 @@ export function handleError(error: Error): Response {
 		status: 500
 	};
 	try {
-		// log.debug('error:%s', toStr(error));
+		DEBUG_MODE && log.debug('error:%s', toStr(error));
 		const {
 			message,
 			request,

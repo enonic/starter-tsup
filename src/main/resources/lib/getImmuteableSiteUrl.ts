@@ -10,12 +10,10 @@ import {
 	GETTER_ROOT,
 } from '/constants';
 
-
 const manifests = {
 	[FILEPATH_MANIFEST]: jsonParseResource(FILEPATH_MANIFEST),
 	[FILEPATH_MANIFEST_NODE_MODULES]: jsonParseResource(FILEPATH_MANIFEST_NODE_MODULES),
 }
-
 
 export default function getImmuteableSiteUrl({
 	manifestPath = FILEPATH_MANIFEST,
@@ -29,7 +27,6 @@ export default function getImmuteableSiteUrl({
 	}
 
 	const sitePath = getSite()._path;
-	// log.info('sitePath:%s', sitePath);
 
 	let sitePageUrl = getPageUrl({
 		path: sitePath

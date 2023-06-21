@@ -15,45 +15,45 @@ dependencies {
 	compileOnly "com.enonic.xp:core-api:${xpVersion}"
 	compileOnly "com.enonic.xp:portal-api:${xpVersion}"
 
-	include "com.enonic.xp:lib-admin:${xpVersion}"
-	include "com.enonic.xp:lib-app:${xpVersion}"
 	// include "com.enonic.xp:lib-auditlog:${xpVersion}"
 	// include "com.enonic.xp:lib-auth:${xpVersion}"
 	// include "com.enonic.xp:lib-cluster:${xpVersion}"
 	// include "com.enonic.xp:lib-common:${xpVersion}"
 	// include "com.enonic.xp:lib-content:${xpVersion}"
-	include "com.enonic.xp:lib-context:${xpVersion}"
 	// include "com.enonic.xp:lib-event:${xpVersion}"
 	// include "com.enonic.xp:lib-export:${xpVersion}"
 	// include "com.enonic.xp:lib-grid:${xpVersion}"
+	// include "com.enonic.xp:lib-mail:${xpVersion}"
+	// include "com.enonic.xp:lib-scheduler:${xpVersion}"
+	// include "com.enonic.xp:lib-value:${xpVersion}"
+	// include "com.enonic.xp:lib-websocket:${xpVersion}"
+
+	include "com.enonic.xp:lib-admin:${xpVersion}"
+	include "com.enonic.xp:lib-app:${xpVersion}"
+	include "com.enonic.xp:lib-context:${xpVersion}"
 	include "com.enonic.xp:lib-i18n:${xpVersion}"
 	include "com.enonic.xp:lib-io:${xpVersion}"
-	// include "com.enonic.xp:lib-mail:${xpVersion}"
 	include "com.enonic.xp:lib-node:${xpVersion}"
 	include "com.enonic.xp:lib-portal:${xpVersion}"
 	include "com.enonic.xp:lib-project:${xpVersion}"
 	include "com.enonic.xp:lib-repo:${xpVersion}"
-	// include "com.enonic.xp:lib-scheduler:${xpVersion}"
 	include "com.enonic.xp:lib-schema:${xpVersion}"
 	include "com.enonic.xp:lib-task:${xpVersion}"
-	// include "com.enonic.xp:lib-value:${xpVersion}"
 	include "com.enonic.xp:lib-vhost:${xpVersion}"
-	// include "com.enonic.xp:lib-websocket:${xpVersion}"
 
-	include 'com.enonic.lib:lib-admin-ui:4.3.4'
-	// include 'com.enonic.lib:lib-cache:2.2.0'
 	include 'com.enonic.lib:lib-mustache:2.1.1'
 	include 'com.enonic.lib:lib-router:3.1.0'
 	include 'com.enonic.lib:lib-static:1.0.3'
 	include 'com.enonic.lib:lib-text-encoding:2.1.1'
 	include 'com.enonic.lib:lib-thymeleaf:2.1.0'
+	// include 'com.enonic.lib:lib-cache:2.2.0'
 	// include 'com.enonic.lib:lib-util:3.0.0'
 }
 
 repositories {
 	mavenLocal()
 	mavenCentral()
-	xp.enonicRepo('dev')
+	xp.enonicRepo()
 }
 
 node {
