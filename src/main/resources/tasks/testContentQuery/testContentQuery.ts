@@ -4,9 +4,6 @@ import {
 } from '@enonic/js-utils';
 import {
 	createVirtualApplication,
-	// get as getApp,
-	// getApplicationMode,
-	// list as listApps
 } from '/lib/xp/app';
 import {run as runInContext} from '/lib/xp/context';
 import {
@@ -15,20 +12,19 @@ import {
 } from '/lib/xp/project';
 import {
 	createSchema,
-	// listSchemas,
+	listSchemas,
 } from '/lib/xp/schema';
+import {DEBUG_MODE} from "/constants";
 
 
 const APP_KEY_VIRTUAL = `${app.name}.virtual` as const;
-const BRANCH_DRAFT = 'draft';
 const BRANCH_MASTER = 'master';
 const CONTENT_TYPE = `${app.name}:test` as const;
 const PROJECT_ID = app.name.replace('com.enonic.app.', '').replace(/\./g, '-');
-const REPO_ID = `com.enonic.cms.${PROJECT_ID}` as const;
-
+const SCHEMA_TYPE = 'CONTENT_TYPE';
 
 export function run() {
-	log.info('Hello from transpiled typescript testContentQuery task :)');
+	DEBUG_MODE && log.info('Hello from transpiled typescript testContentQuery task :)');
 	runInContext({
 		repository: 'system-repo',
 		branch: BRANCH_MASTER,
@@ -39,7 +35,7 @@ export function run() {
 			const vApp = createVirtualApplication({
 				key: APP_KEY_VIRTUAL
 			});
-			log.info('vApp:%s', toStr(vApp));
+			DEBUG_MODE && log.info('vApp:%s', toStr(vApp));
 		} catch (e) {
 			if (e.class.name !== 'com.enonic.xp.node.NodeAlreadyExistAtPathException') {
 				log.error(`e.class.name:${toStr(e.class.name)} e.message:${toStr(e.message)}`, e);
@@ -49,7 +45,7 @@ export function run() {
 		try {
 			const createdSchema = createSchema({
 				name: CONTENT_TYPE,
-				type: 'CONTENT_TYPE',
+				type: SCHEMA_TYPE,
 				resource: `<content-type>
 	<description>Test description</description>
 	<display-name>Test displayName</display-name>
@@ -61,7 +57,10 @@ export function run() {
 	<form/>
 </content-type>`,
 			});
-			log.info('createdSchema:%s', createdSchema);
+			DEBUG_MODE && log.info('createdSchema:%s', createdSchema);
+
+			const schemas = listSchemas({application: `${app.name}`, type: SCHEMA_TYPE} )
+			DEBUG_MODE && log.info('all schemas:%s', schemas);
 		} catch (e) {
 			if (e.class.name !== 'com.enonic.xp.node.NodeAlreadyExistAtPathException') {
 				log.error(`e.class.name:${toStr(e.class.name)} e.message:${toStr(e.message)}`, e);

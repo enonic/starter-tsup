@@ -3,8 +3,6 @@ import type {
 	Response,
 } from '/index.d';
 
-
-// import {toStr} from '@enonic/js-utils';
 // @ts-expect-error TS2307: Cannot find module '/lib/router' or its corresponding type declarations.
 import Router from '/lib/router';
 import immutableGetter from './immutableGetter';
@@ -14,12 +12,9 @@ import {
 	GETTER_ROOT
 } from '/constants';
 
-
 const router = Router();
 
-
 router.all(`/${GETTER_ROOT}/{path:.+}`, (r: Request) => {
-	// log.info('Request:%s', toStr(r));
 	return immutableGetter(r);
 });
 
@@ -54,6 +49,5 @@ function htmlResponse(_request: Request): Response {
 
 router.get('/', (r: Request) => htmlResponse(r));
 router.get('', (r: Request) => htmlResponse(r)); // This doesn't work?
-
 
 export const all = (r: Request) => router.dispatch(r);

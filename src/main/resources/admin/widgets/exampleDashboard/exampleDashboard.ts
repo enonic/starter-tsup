@@ -1,16 +1,15 @@
 import type {
-	// Request,
+	Request,
 	Response,
 } from '/index.d';
 
-
-// import {toStr} from '@enonic/js-utils';
-
+import {toStr} from '@enonic/js-utils';
+import {DEBUG_MODE} from "/constants";
 
 export function get (
-	// request: Request
+	request: Request
 ): Response {
-	// log.info('request:%s', toStr(request));
+	DEBUG_MODE && log.info('request:%s', toStr(request));
 
 	return {
 		body: '<widget>My dashboard widget</widget>',

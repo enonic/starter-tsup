@@ -1,16 +1,17 @@
-// import {toStr} from '@enonic/js-utils';
+import {toStr} from '@enonic/js-utils';
 import {
 	isEnabled as vhostsEnabled,
 	list as getVhosts
 } from '/lib/xp/vhost';
+import {DEBUG_MODE} from "../constants";
 
 
 export default function webappUrl(path?: string) {
 	const {vhosts} = getVhosts();
-	// log.info('vhosts:%s', toStr(vhosts));
+	DEBUG_MODE && log.info('vhosts:%s', toStr(vhosts));
 
 	const webappVhost = vhosts.filter(({target}) => target.startsWith('/webapp'))[0];
-	// log.info('webappVhost:%s', toStr(webappVhost));
+	DEBUG_MODE && log.info('webappVhost:%s', toStr(webappVhost));
 
 	const base = vhostsEnabled() && webappVhost
 		? webappVhost.source

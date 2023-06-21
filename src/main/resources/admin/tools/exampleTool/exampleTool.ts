@@ -4,8 +4,7 @@ import type {
 	Response,
 } from '/index.d';
 
-
-// import {toStr} from '@enonic/js-utils';
+import {toStr} from '@enonic/js-utils';
 // @ts-ignore
 import { render } from '/lib/mustache';
 // @ts-ignore
@@ -19,27 +18,23 @@ import contentSecurityPolicy from '/lib/contentSecurityPolicy';
 import getImmuteableAdminUrl from './getImmuteableAdminUrl';
 import immutableGetter from './immutableGetter';
 import {
+	DEBUG_MODE,
 	FILEPATH_MANIFEST_NODE_MODULES,
 	GETTER_ROOT,
 } from '/constants';
 
-
 const VIEW = resolve('exampleTool.html');
-
-
 const router = Router();
 
-
 router.all(`/${GETTER_ROOT}/{path:.+}`, (r: Request) => {
-	// log.info('Request:%s', toStr(r));
+	DEBUG_MODE && log.info('Request:%s', toStr(r));
 	return immutableGetter(r);
 });
-
 
 function get(
 	request: Request
 ): Response {
-	// log.info('request:%s', toStr(request));
+	DEBUG_MODE && log.info('request:%s', toStr(request));
 
 	const csp: ContentSecurityPolicy = {
 		'default-src': 'none',
@@ -56,7 +51,7 @@ function get(
 		],
 	};
 
-	var params = {
+	const params = {
 		applicationIconUrl: getImmuteableAdminUrl({ path: 'icons/application.svg' }),
 		appUrl: getImmuteableAdminUrl({ path: 'admin/App.mjs' }),
 		cssUrl: getImmuteableAdminUrl({ path: 'admin/App.css' }),

@@ -1,11 +1,9 @@
 import type {
 	ContentSecurityPolicy,
-	// Request,
+	Request,
 	Response,
 } from '/index.d';
 
-
-// import {toStr} from '@enonic/js-utils';
 //@ts-ignore
 import {render} from '/lib/thymeleaf';
 import {
@@ -25,13 +23,13 @@ import {
 import getImmuteableSiteUrl from '/lib/getImmuteableSiteUrl';
 import contentSecurityPolicy from '/lib/contentSecurityPolicy';
 import {IS_DEV_MODE} from '/lib/runMode';
-import { FILEPATH_MANIFEST_NODE_MODULES } from '/constants';
+import {DEBUG_MODE, FILEPATH_MANIFEST_NODE_MODULES} from '/constants';
 
 
 const VIEW = resolve('./examplePage.html');
 
 
-export function get(/*request: Request*/): Response {
+export function get(request: Request): Response {
 	const {
 		displayName,
 		page: {
@@ -52,10 +50,10 @@ root.render(React.createElement(App, {}));
 const response = await fetch("${currentTimeMillisServiceUrl}");
 const jsonData = await response.json();
 console.log(jsonData);`;
-	// log.info('inlineScript:%s', inlineScript);
+	DEBUG_MODE && log.info('inlineScript:%s', inlineScript);
 
 	const base64 = base64Encode(sha256AsStream(inlineScript));
-	// log.info('base64:%s', base64);
+	DEBUG_MODE && log.info('inlineScript in base64:%s', base64);
 
 	const csp: ContentSecurityPolicy = {
 		'default-src': 'none',
