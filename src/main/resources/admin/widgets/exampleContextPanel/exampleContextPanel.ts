@@ -11,7 +11,7 @@ export function get(
 ): Response {
 	DEBUG_MODE && log.info('request:%s', toStr(request));
 	return {
-		body: '<widget>My context panel</widget>',
+		body: '<widget>My context widget</widget>',
 		contentType: 'text/html'
 	};
 }

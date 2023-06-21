@@ -1,5 +1,5 @@
 <widget>
-	<display-name>Example menuitem widget</display-name>
+	<display-name>Sample menu widget</display-name>
 	<description>This widget is for the Content Studio menu</description>
 	<interfaces>
 		<interface>contentstudio.menuitem</interface>

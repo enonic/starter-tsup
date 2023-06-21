@@ -5,10 +5,10 @@
 		<script type="text/javascript" src="{{reactDomUrl}}"></script>
 		<link rel="stylesheet" type="text/css" href="{{cssUrl}}">
 		<meta charset="UTF-8">
-		<title>Admin tool starter</title>
+		<title>Admin Tool</title>
 		<link rel="stylesheet" type="text/css" href="{{assetsUrl}}/admin/common/styles/lib.css">
 		<!--
-			Not used for anything in this starter yet.
+			Uncomment to hydrate UI components from lib-admin-ui
 			<script defer src="{{assetsUrl}}/admin/common/js/lib.js" type="text/javascript"></script>
 		-->
 	</head>
@@ -19,11 +19,6 @@
 			const root = ReactDOM.createRoot(document.getElementById('react-root'));
 			root.render(React.createElement(App, {}));
 		</script>
-		<script>
-			var CONFIG = {
-				launcherUrl: '{{launcherUrl}}', // Required for launcher
-			};
-		</script>
-		<script defer src="{{launcherPath}}" type="text/javascript"></script>
+		<script defer src="{{launcherPath}}" type="text/javascript" data-config-theme="dark"></script>
 	</body>
 </html>
