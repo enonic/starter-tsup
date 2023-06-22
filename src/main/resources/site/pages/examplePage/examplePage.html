@@ -3,7 +3,7 @@
 		<script type="text/javascript" th:src="${reactUrl}"></script>
 		<script type="text/javascript" th:src="${reactDomUrl}"></script>
 		<link rel="stylesheet" media="all" th:href="${cssUrl}">
-		<link rel="stylesheet" media="all" th:href="${assetUrl} + '/style/sass/index.css'">
+		<link rel="stylesheet" media="all" th:href="${assetUrl} + '/styles/index.css'">
 		<!--script type="module" th:src="${assetUrl} + '/' + ${appComponentUrl}'"></script-->
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -17,7 +17,8 @@
 			<div id="react-root"></div>
 			<script type='module' defer th:utext="${inlineScript}"></script>
 		</main>
-		<p>The phrase "language" in Norwegian is: "[[${languageInNorwegian}]]"</p>
+		<p>This is a page template that can be edited at <pre>site/pages/examplePage</pre></p>
+		<p>Word "language" localised to Norwegian with i18n library: "[[${languageInNorwegian}]]"</p>
 		<h6>We support phrases in the following locales:</h6>
 		<ul>
 			<div th:each="locale : ${supportedLocales}" th:remove="tag">
