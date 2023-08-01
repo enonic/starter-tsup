@@ -15,7 +15,7 @@ import {
 	test
 } from '@jest/globals';
 // import mockConsole from 'jest-mock-console';
-import readResource from '../../src/main/resources/lib/readResource';
+import { readResource } from '../../src/main/resources/lib/ioResource';
 
 // mockConsole();
 

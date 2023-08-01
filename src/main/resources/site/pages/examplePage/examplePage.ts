@@ -20,7 +20,7 @@ import {
 	sha256AsStream,
 	// @ts-ignore
 } from '/lib/text-encoding';
-import getImmuteableSiteUrl from '/lib/getImmuteableSiteUrl';
+import { getSiteUrl } from '/lib/getImmuteableUrl';
 import contentSecurityPolicy from '/lib/contentSecurityPolicy';
 import {IS_DEV_MODE} from '/lib/runMode';
 import {DEBUG_MODE, FILEPATH_MANIFEST_NODE_MODULES} from '/constants';
@@ -41,7 +41,7 @@ export function get(request: Request): Response {
 		service: 'currentTimeMillis'
 	});
 
-	const inlineScript = `import {App} from '${getImmuteableSiteUrl({
+	const inlineScript = `import {App} from '${getSiteUrl({
 		path: 'react/App.mjs'
 	})}';
 const root = ReactDOM.createRoot(document.getElementById('react-root'));
@@ -73,7 +73,7 @@ console.log(jsonData);`;
 
 	const model = {
 		assetUrl: getAssetUrl({ path: '' }),
-		cssUrl: getImmuteableSiteUrl({
+		cssUrl: getSiteUrl({
 			path: 'react/App.css'
 		}),
 		displayName,
@@ -82,11 +82,11 @@ console.log(jsonData);`;
 			key: 'language',
 			locale: 'no',
 		}),
-		reactUrl: getImmuteableSiteUrl({
+		reactUrl: getSiteUrl({
 			manifestPath: FILEPATH_MANIFEST_NODE_MODULES,
 			path: 'react/umd/react.development.js',
 		}),
-		reactDomUrl: getImmuteableSiteUrl({
+		reactDomUrl: getSiteUrl({
 			manifestPath: FILEPATH_MANIFEST_NODE_MODULES,
 			path: 'react-dom/umd/react-dom.development.js'
 		}) ,

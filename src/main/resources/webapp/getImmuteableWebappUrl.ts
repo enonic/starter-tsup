@@ -1,4 +1,4 @@
-import jsonParseResource from '/lib/jsonParseResource';
+import ioResource from '/lib/ioResource';
 import {IS_DEV_MODE} from '/lib/runMode';
 import {
 	FILEPATH_MANIFEST,
@@ -9,8 +9,8 @@ import webappUrl from '/webapp/webappUrl';
 
 
 const manifests = {
-	[FILEPATH_MANIFEST]: jsonParseResource(FILEPATH_MANIFEST),
-	[FILEPATH_MANIFEST_NODE_MODULES]: jsonParseResource(FILEPATH_MANIFEST_NODE_MODULES),
+	[FILEPATH_MANIFEST]: ioResource(FILEPATH_MANIFEST),
+	[FILEPATH_MANIFEST_NODE_MODULES]: ioResource(FILEPATH_MANIFEST_NODE_MODULES),
 }
 
 
@@ -22,7 +22,7 @@ export default function getImmuteableWebappUrl({
 	path: string,
 }) {
 	if (IS_DEV_MODE) {
-		manifests[manifestPath] = jsonParseResource(manifestPath);
+		manifests[manifestPath] = ioResource(manifestPath);
 	}
 	return webappUrl(`${GETTER_ROOT}/${manifests[manifestPath][path]}`);
 }
