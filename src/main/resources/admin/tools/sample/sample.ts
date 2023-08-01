@@ -15,7 +15,7 @@ import {
 } from '/lib/xp/admin';
 import { assetUrl } from '/lib/xp/portal';
 import contentSecurityPolicy from '/lib/contentSecurityPolicy';
-import getImmuteableAdminUrl from './getImmuteableAdminUrl';
+import { getAdminUrl } from '/lib/getImmuteableUrl';
 import immutableGetter from './immutableGetter';
 import {
 	DEBUG_MODE,
@@ -23,7 +23,7 @@ import {
 	GETTER_ROOT,
 } from '/constants';
 
-const VIEW = resolve('exampleTool.html');
+const VIEW = resolve('sample.html');
 const router = Router();
 
 router.all(`/${GETTER_ROOT}/{path:.+}`, (r: Request) => {
@@ -51,21 +51,22 @@ function get(
 		],
 	};
 
+	const toolName = 'sample';
 	const params = {
-		applicationIconUrl: getImmuteableAdminUrl({ path: 'icons/application.svg' }),
-		appUrl: getImmuteableAdminUrl({ path: 'admin/App.mjs' }),
-		cssUrl: getImmuteableAdminUrl({ path: 'admin/App.css' }),
+		applicationIconUrl: getAdminUrl({ path: 'icons/application.svg' }, toolName),
+		appUrl: getAdminUrl({ path: 'admin/App.mjs' }, toolName),
+		cssUrl: getAdminUrl({ path: 'admin/App.css' }, toolName),
 		assetsUrl: assetUrl({ path: '' }),
 		launcherPath: getLauncherPath(),
 		launcherUrl: getLauncherUrl(),
-		reactDomUrl: getImmuteableAdminUrl({
+		reactDomUrl: getAdminUrl({
 			manifestPath: FILEPATH_MANIFEST_NODE_MODULES,
 			path: 'react-dom/umd/react-dom.development.js'
-		}),
-		reactUrl: getImmuteableAdminUrl({
+		}, toolName),
+		reactUrl: getAdminUrl({
 			manifestPath: FILEPATH_MANIFEST_NODE_MODULES,
 			path: 'react/umd/react.development.js',
-		}),
+		}, toolName),
 	};
 
 	return {

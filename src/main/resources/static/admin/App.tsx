@@ -9,7 +9,7 @@ import { useId } from 'react';
 
 export function App() {
 	const id = useId();
-	console.debug(`React app id: ${toStr({id})}`);
+	console.debug(`Hello from App.tsx. React app id: ${toStr({id})}`);
 	return (
 		<>
 			<div className="appbar">
@@ -21,7 +21,7 @@ export function App() {
 			<div className="admin-tool-container">
 				<h3 className="darkgray">This is a sample Admin Tool. Note the XP menu icon in the top right corner.</h3>
 				<br/>
-				<h5 className="lightgray">Hello from Day.js! Current time is: {dayjs().format('DD.MM.YYYY')}</h5>
+				<h5 className="lightgray">Hello from Day.js! Current time is: {dayjs().format('DD.MM.YYYY HH:MM:ss')}</h5>
 			</div>
 		</>
 	);
