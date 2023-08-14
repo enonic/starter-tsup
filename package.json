@@ -39,7 +39,7 @@
     "@enonic/esbuild-plugin-copy-with-hash": "^0.0.1",
     "@enonic/mock-xp": "^0.10.0",
     "@jest/globals": "^29.6.2",
-    "@node-rs/xxhash": "^1.4.0",
+    "@node-rs/xxhash": "^1.4.2",
     "@swc/core": "^1",
     "@types/node": "20.4.8",
     "@types/react": "^18",
