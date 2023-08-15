@@ -12,12 +12,12 @@ import {
 import {DEBUG_MODE} from "/constants";
 
 export function run(config, taskId) {
-	DEBUG_MODE && log.info('Hello from transpiled typescript testRepoConnectionQuery task :)');
-	DEBUG_MODE && log.info('config:%s', toStr(config));
-	DEBUG_MODE && log.info('taskId:%s', taskId);
+	DEBUG_MODE && log.info('Submitting task from "tasks/testRepoConnectionQuery/testRepoConnectionQuery.ts"...');
+	//DEBUG_MODE && log.info('Task config: %s', toStr(config));
+	//DEBUG_MODE && log.info('Task Id: %s', taskId);
 
 	const task = getTask(taskId);
-	DEBUG_MODE && log.info('task:%s', toStr(task));
+	DEBUG_MODE && log.info('Task details (lib-task.get): %s', toStr(task));
 
 	const {
 		startTime: myStartTime,
@@ -28,7 +28,7 @@ export function run(config, taskId) {
 		// name: `${app.name}.test-task`,
 		// state: 'RUNNING'
 	});
-	DEBUG_MODE && log.info('taskId:%s taskList:%s', taskId, toStr(taskList));
+	DEBUG_MODE && log.info('List of tasks (lib-task.list): %s', toStr(taskList));
 
 	for (let index = 0; index < taskList.length; index++) {
 		const {state} = taskList[index];
@@ -41,15 +41,15 @@ export function run(config, taskId) {
 			startTime: aStartTime,
 		} = taskList[index];
 		if (aTaskName === myTaskName && aTaskId !== taskId) {
-			DEBUG_MODE && log.info('Another task:%s with the same name:%s found taskId:%s', aTaskId, myTaskName, taskId);
+			DEBUG_MODE && log.info('Found two tasks with the same name (%s) and different ids (%s, %s)', myTaskName, aTaskId, taskId);
 			if (myStartTime > aStartTime) {
-				log.warning('Another task:%s with the same name:%s found, aborting task:%s with newest startTime:%s', aTaskId, myTaskName, taskId, myStartTime);
+				log.warning('Aborting task %s with newest startTime: %s', taskId, myStartTime);
 				return;
 			} else if (aStartTime === myStartTime && taskId > aTaskId) {
-				log.warning('Another task:%s with the same name:%s, and the same startTime:%s found, aborting task:%s with largest taskId:%s', aTaskId, myStartTime, taskId);
+				log.warning('Both tasks have the same startTime (%s). Aborting the task with largest taskId: %s', myStartTime, taskId);
 				return;
 			}
 		}
 	} // for
-	DEBUG_MODE && log.info('Task with id:%s allowed to run :)', taskId);
+	DEBUG_MODE && log.info('Task with id %s is allowed to run :)', taskId);
 } // run
