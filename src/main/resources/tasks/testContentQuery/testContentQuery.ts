@@ -19,12 +19,12 @@ import {DEBUG_MODE} from "/constants";
 
 const APP_KEY_VIRTUAL = `${app.name}.virtual` as const;
 const BRANCH_MASTER = 'master';
-const CONTENT_TYPE = `${app.name}:test` as const;
+const CONTENT_TYPE = `${APP_KEY_VIRTUAL}:test` as const;
 const PROJECT_ID = app.name.replace('com.enonic.app.', '').replace(/\./g, '-');
 const SCHEMA_TYPE = 'CONTENT_TYPE';
 
 export function run() {
-	DEBUG_MODE && log.info('Hello from transpiled typescript testContentQuery task :)');
+	DEBUG_MODE && log.info('Submitting task from "tasks/testContentQuery/testContentQuery.ts"...');
 	runInContext({
 		repository: 'system-repo',
 		branch: BRANCH_MASTER,
@@ -35,7 +35,7 @@ export function run() {
 			const vApp = createVirtualApplication({
 				key: APP_KEY_VIRTUAL
 			});
-			DEBUG_MODE && log.info('vApp:%s', toStr(vApp));
+			DEBUG_MODE && log.info('Created a virtual app (lib-app.createVirtualApplication): %s', toStr(vApp));
 		} catch (e) {
 			if (e.class.name !== 'com.enonic.xp.node.NodeAlreadyExistAtPathException') {
 				log.error(`e.class.name:${toStr(e.class.name)} e.message:${toStr(e.message)}`, e);
@@ -57,10 +57,10 @@ export function run() {
 	<form/>
 </content-type>`,
 			});
-			DEBUG_MODE && log.info('createdSchema:%s', createdSchema);
+			DEBUG_MODE && log.info('Created a content type descriptor (lib-schema.createSchema): %s', toStr(createdSchema));
 
 			const schemas = listSchemas({application: `${app.name}`, type: SCHEMA_TYPE} )
-			DEBUG_MODE && log.info('all schemas:%s', schemas);
+			DEBUG_MODE && log.info('List of all descriptors with type "%s" (lib.schema.listSchemas): %s', SCHEMA_TYPE, toStr(schemas));
 		} catch (e) {
 			if (e.class.name !== 'com.enonic.xp.node.NodeAlreadyExistAtPathException') {
 				log.error(`e.class.name:${toStr(e.class.name)} e.message:${toStr(e.message)}`, e);
@@ -68,6 +68,8 @@ export function run() {
 		} // try/catch
 
 		try {
+			DEBUG_MODE && log.info('Trying to delete a project (lib-project.delete) with Id "%s"', PROJECT_ID);
+
 			deleteProject({
 				id: PROJECT_ID,
 			});
@@ -76,14 +78,16 @@ export function run() {
 		} // try/catch
 
 		try {
-			createProject({
-				displayName: 'Content Tests',
+			DEBUG_MODE && log.info('Trying to create a project (lib-project.create) with Id "%s"', PROJECT_ID);
+			const createdProject = createProject({
+				displayName: 'XP Starter',
 				id: PROJECT_ID,
 				readAccess: {
 					public: true
 				},
 				siteConfig: {},
 			});
+			DEBUG_MODE && log.info('Project successfully created: %s', toStr(createdProject));
 		} catch (e) {
 			if (e.class.name !== 'com.enonic.xp.core.impl.project.ProjectAlreadyExistsException') {
 				log.error(`e.class.name:${toStr(e.class.name)} e.message:${toStr(e.message)}`, e);
