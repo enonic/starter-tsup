@@ -8,7 +8,7 @@ import { useId } from 'react';
 
 export function App() {
 	const id = useId();
-	console.debug(`Hello from App.tsx. React app id: ${toStr({id})}`);
+	console.debug(`Hello from React component inside an Admin Tool. React app id: ${toStr({id})}`);
 	return (
 		<>
 			<div className="appbar">
