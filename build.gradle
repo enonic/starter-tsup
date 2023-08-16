@@ -1,4 +1,5 @@
 plugins {
+	id 'java'
 	id 'com.enonic.xp.app' version '3.4.0'
 	id 'com.github.node-gradle.node' version '7.0.0'
 }
@@ -40,17 +41,19 @@ dependencies {
 	include "com.enonic.xp:lib-websocket:${xpVersion}"
 	include "com.enonic.xp:lib-vhost:${xpVersion}"
 
+	// include 'com.enonic.lib:lib-cache:2.2.0'
 	include 'com.enonic.lib:lib-mustache:2.1.1'
 	include 'com.enonic.lib:lib-router:3.1.0'
 	include 'com.enonic.lib:lib-static:1.0.3'
 	include 'com.enonic.lib:lib-text-encoding:2.1.1'
 	include 'com.enonic.lib:lib-thymeleaf:2.1.0'
+	// include 'com.enonic.lib:lib-util:3.0.0'
 
 	// Used only for Admin Tool samples (admin/tools), remove if not needed
-	include 'com.enonic.lib:lib-admin-ui:4.6.0'
+	include 'com.enonic.lib:lib-admin-ui:4.7.0'
 
-	// include 'com.enonic.lib:lib-cache:2.2.0'
-	// include 'com.enonic.lib:lib-util:3.0.0'
+	// Uncomment if you want to add tests using Enonic test framework
+	testImplementation "com.enonic.xp:testing:${xpVersion}"
 }
 
 repositories {
@@ -68,7 +71,7 @@ node {
 
 	// Version of node to download and install (only used if download is true)
 	// It will be unpacked in the workDir
-	version = "18.17.1"
+	version = '18.17.1'
 }
 
 tasks.withType(Copy).configureEach {
@@ -97,7 +100,7 @@ tasks.register('npmCheck', NpmTask) {
 	]
 }
 
-// If you ALWAYS want to SKIP test and check on development build comment in the if
+// If you ALWAYS want to SKIP `test` and `check` tasks on development build, wrap this inside an 'if...'
 // if (!(project.hasProperty('dev') || project.hasProperty('development'))) {
 test.dependsOn npmTest
 check.dependsOn npmCheck
