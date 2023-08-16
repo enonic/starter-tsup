@@ -1,5 +1,7 @@
 .admin-tool-container
-	padding: 50px
+	position: absolute
+	top: 44px
+	padding: 20px 30px
 
 	.darkgray
 		color: darkgray
@@ -7,8 +9,15 @@
 	.lightgray
 		color: lightgray
 
-img.app-icon
-	background-color: orange
-	display: block
-	-webkit-mask: url('./application.svg') no-repeat center / contain
-	mask: url('./application.svg') no-repeat center / contain
+.appbar
+	.home-button
+		&.app-icon
+			display: block
+			background-image: url('./application.svg')
+			background-repeat: no-repeat
+			background-size: 37px
+			background-position: 10px 4px
+
+			.app-name
+				padding-left: 45px
+
