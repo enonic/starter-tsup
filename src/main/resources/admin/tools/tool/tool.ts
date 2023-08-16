@@ -10,31 +10,26 @@ import { render } from '/lib/mustache';
 // @ts-ignore
 import Router from '/lib/router';
 import {
-	getLauncherPath,
-	getLauncherUrl,
+	getLauncherPath
 } from '/lib/xp/admin';
 import { assetUrl } from '/lib/xp/portal';
 import contentSecurityPolicy from '/lib/contentSecurityPolicy';
 import { getAdminUrl } from '/lib/getImmuteableUrl';
 import immutableGetter from './immutableGetter';
 import {
-	DEBUG_MODE,
 	FILEPATH_MANIFEST_NODE_MODULES,
 	GETTER_ROOT,
 } from '/constants';
 
-const VIEW = resolve('sample.html');
+const toolName = 'tool';
+const VIEW = resolve(`${toolName}.html`);
 const router = Router();
 
 router.all(`/${GETTER_ROOT}/{path:.+}`, (r: Request) => {
-	DEBUG_MODE && log.info('Request:%s', toStr(r));
 	return immutableGetter(r);
 });
 
-function get(
-	request: Request
-): Response {
-	DEBUG_MODE && log.info('request:%s', toStr(request));
+function get(r: Request): Response {
 
 	const csp: ContentSecurityPolicy = {
 		'default-src': 'none',
@@ -51,14 +46,12 @@ function get(
 		],
 	};
 
-	const toolName = 'sample';
 	const params = {
 		applicationIconUrl: getAdminUrl({ path: 'icons/application.svg' }, toolName),
 		appUrl: getAdminUrl({ path: 'admin/App.mjs' }, toolName),
 		cssUrl: getAdminUrl({ path: 'admin/App.css' }, toolName),
 		assetsUrl: assetUrl({ path: '' }),
 		launcherPath: getLauncherPath(),
-		launcherUrl: getLauncherUrl(),
 		reactDomUrl: getAdminUrl({
 			manifestPath: FILEPATH_MANIFEST_NODE_MODULES,
 			path: 'react-dom/umd/react-dom.development.js'
