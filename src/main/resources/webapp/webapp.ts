@@ -5,8 +5,7 @@ import type {
 
 // @ts-expect-error TS2307: Cannot find module '/lib/router' or its corresponding type declarations.
 import Router from '/lib/router';
-import immutableGetter from './immutableGetter';
-import getImmuteableWebappUrl from '/webapp/getImmuteableWebappUrl';
+import { immutableGetter, getImmutableWebappUrl as getWebappUrl } from '/lib/urlHelper';
 import {
 	FILEPATH_MANIFEST_CJS,
 	FILEPATH_MANIFEST_NODE_MODULES,
@@ -23,15 +22,15 @@ function htmlResponse(_request: Request): Response {
 	return {
 		body: `<html>
 	<head>
-		<script type="text/javascript" src="${getImmuteableWebappUrl({
+		<script type="text/javascript" src="${getWebappUrl({
 			manifestPath: FILEPATH_MANIFEST_NODE_MODULES,
 			path: 'react/umd/react.development.js'
 		})}"></script>
-		<script type="text/javascript" src="${getImmuteableWebappUrl({
+		<script type="text/javascript" src="${getWebappUrl({
 			manifestPath: FILEPATH_MANIFEST_NODE_MODULES,
 			path: 'react-dom/umd/react-dom.development.js'
 		})}"></script>
-		<link rel="stylesheet" media="all" href="${getImmuteableWebappUrl({
+		<link rel="stylesheet" media="all" href="${getWebappUrl({
 			manifestPath: FILEPATH_MANIFEST_CJS,
 			path: 'react/App.css'
 		})}">
@@ -42,7 +41,7 @@ function htmlResponse(_request: Request): Response {
 	<body style="font-size:13px">
 		<div id="react-root"></div>
 		<script type='module' defer>
-	import {App} from '${getImmuteableWebappUrl({ path: 'react/App.mjs' })}';
+	import {App} from '${getWebappUrl({ path: 'react/App.mjs' })}';
 	const root = ReactDOM.createRoot(document.getElementById('react-root'));
 	root.render(React.createElement(App, {}));
 		</script>
@@ -53,5 +52,3 @@ function htmlResponse(_request: Request): Response {
 
 router.get('/', (r: Request) => htmlResponse(r));
 router.get('', (r: Request) => htmlResponse(r)); // This doesn't work?
-
-export const all = (r: Request) => router.dispatch(r);

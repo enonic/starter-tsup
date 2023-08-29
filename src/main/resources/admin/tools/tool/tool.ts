@@ -14,8 +14,7 @@ import {
 } from '/lib/xp/admin';
 import { assetUrl } from '/lib/xp/portal';
 import contentSecurityPolicy from '/lib/contentSecurityPolicy';
-import { getAdminUrl } from '/lib/getImmuteableUrl';
-import immutableGetter from './immutableGetter';
+import { immutableGetter, getAdminUrl } from '/lib/urlHelper';
 import {
 	FILEPATH_MANIFEST_NODE_MODULES,
 	GETTER_ROOT,
