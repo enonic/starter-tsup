@@ -4,7 +4,7 @@ import {
 	jest,
 	test
 } from '@jest/globals';
-import webappUrl from '../../src/main/resources/webapp/webappUrl';
+import { getWebappUrl } from '../../src/main/resources/lib/urlHelper';
 import {VHOST_LIST} from './testData';
 import Log from '@enonic/mock-xp/dist/Log';
 
@@ -19,6 +19,21 @@ global.log = Log.createLogger({
 	loglevel: 'warn'
 });
 
+jest.mock('../../src/main/resources/lib/ioResource', () => ({
+	__esModule: true,
+	default: jest.fn((filename: string) => ''),
+}), { virtual: true });
+
+jest.mock('../../src/main/resources/lib/runMode', () => ({
+	__esModule: true,
+	IS_DEV_MODE: jest.fn(() => false),
+}), { virtual: true });
+
+jest.mock('/lib/enonic/static', () => ({
+	__esModule: true,
+	buildGetter: jest.fn(() => {})
+}), { virtual: true });
+
 jest.mock('/lib/xp/vhost', () => ({
 	__esModule: true,
 	isEnabled: () => false,
@@ -27,11 +42,22 @@ jest.mock('/lib/xp/vhost', () => ({
 	}),
 }), { virtual: true });
 
+jest.mock('/lib/xp/portal', () => ({
+	__esModule: true,
+	getSite: () => jest.fn(),
+	pageUrl: () => jest.fn(),
+}), { virtual: true });
+
+jest.mock('/lib/xp/admin', () => ({
+	__esModule: true,
+	getToolUrl: () => jest.fn(() => 'tool/com.my.app/mytool'),
+}), { virtual: true });
+
 describe('webappUrl', () => {
 	test('it works with vhost disabled', () => {
-		expect(webappUrl('filename.ext')).toBe('/webapp/com.acme.example.tsup/filename.ext');
+		expect(getWebappUrl('filename.ext')).toBe('/webapp/com.acme.example.tsup/filename.ext');
 	});
 	test('it works without path and vhost enabled', () => {
-		expect(webappUrl()).toBe('/webapp/com.acme.example.tsup');
+		expect(getWebappUrl()).toBe('/webapp/com.acme.example.tsup');
 	});
 });

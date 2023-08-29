@@ -20,7 +20,7 @@ import {
 	sha256AsStream,
 	// @ts-ignore
 } from '/lib/text-encoding';
-import { getSiteUrl } from '/lib/getImmuteableUrl';
+import { getSiteUrl } from '/lib/urlHelper';
 import contentSecurityPolicy from '/lib/contentSecurityPolicy';
 import {IS_DEV_MODE} from '/lib/runMode';
 import {
