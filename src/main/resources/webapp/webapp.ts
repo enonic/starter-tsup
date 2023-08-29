@@ -52,3 +52,5 @@ function htmlResponse(_request: Request): Response {
 
 router.get('/', (r: Request) => htmlResponse(r));
 router.get('', (r: Request) => htmlResponse(r)); // This doesn't work?
+
+export const all = (r: Request) => router.dispatch(r);
