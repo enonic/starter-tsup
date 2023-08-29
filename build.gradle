@@ -53,7 +53,7 @@ dependencies {
 	include 'com.enonic.lib:lib-admin-ui:4.7.0'
 
 	// Uncomment if you want to add tests using Enonic test framework
-	testImplementation "com.enonic.xp:testing:${xpVersion}"
+	// testImplementation "com.enonic.xp:testing:${xpVersion}"
 }
 
 repositories {
