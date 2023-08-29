@@ -46,6 +46,8 @@ gradle-app.setting
 
 # VSCode
 bin/
+/settings.gradle
+/.vscode
 
 *.iml
 
@@ -98,3 +100,6 @@ crashlytics-build.properties
 
 # Jest
 /coverage
+
+# ES lint
+/.eslintcache

@@ -1,7 +1,7 @@
 import type { Options } from '.';
 
 import GlobalsPlugin from 'esbuild-plugin-globals';
-import manifestPlugin from 'esbuild-plugin-manifest';
+import TsupPluginManifest from '@enonic/tsup-plugin-manifest';
 import { sassPlugin } from 'esbuild-sass-plugin';
 import CopyWithHashPlugin from '@enonic/esbuild-plugin-copy-with-hash';
 
@@ -16,7 +16,6 @@ import {
 export default function buildStaticConfig(): Options {
 	const DIR_DST_STATIC = `${DIR_DST}/static`;
 	const GLOB_EXTENSIONS_STATIC = '{tsx,ts,jsx,js}';
-	const manifestObj = {};
 	const FILES_STATIC = globSync(`${DIR_SRC_STATIC}/**/*.${GLOB_EXTENSIONS_STATIC}`);
 	// print(FILES_STATIC, { maxItems: Infinity });
 
@@ -47,23 +46,18 @@ export default function buildStaticConfig(): Options {
 			GlobalsPlugin({
 				react: 'React',
 			}),
-			manifestPlugin({
-				// filename: `../../../tmp/manifest.json`,
-				// filename: (options) => {
-				// 	// print({TSUP_FORMAT: options?.define?.['TSUP_FORMAT']}, { maxItems: Infinity });
-				// 	const format = options?.define?.['TSUP_FORMAT'].replace(/"/g,'')
-				// 	return `manifest.${format}.json`;
-				// },
+			TsupPluginManifest({
 				generate: (entries) => {// Executed once per format
-					// print(entries, { maxItems: Infinity });
+					const newEntries = {};
 					Object.entries(entries).forEach(([k,v]) => {
+						console.log(k,v);
 						const ext = v.split('.').pop() as string;
 						const parts = k.replace(`${DIR_SRC_STATIC}/`, '').split('.');
 						parts.pop();
 						parts.push(ext);
-						manifestObj[parts.join('.')] = v.replace(`${DIR_DST_STATIC}/`, '');
+						newEntries[parts.join('.')] = v.replace(`${DIR_DST_STATIC}/`, '');
 					});
-					return manifestObj;
+					return newEntries;
 				}
 			}),
 			sassPlugin(),
@@ -76,8 +70,8 @@ export default function buildStaticConfig(): Options {
 		],
 
 		format: [
-			'cjs', // Legacy browser support, also css in manifest.json
-			'esm', // For some reason doesn't report css files in manifest.json
+			'cjs', // Legacy browser support, also css in manifest.cjs.json
+			'esm', // cjs needed because css files are not reported in manifest.esm.json
 		],
 		minify: process.env.NODE_ENV === 'development' ? false : true,
 

@@ -23,7 +23,11 @@ import {
 import { getSiteUrl } from '/lib/getImmuteableUrl';
 import contentSecurityPolicy from '/lib/contentSecurityPolicy';
 import {IS_DEV_MODE} from '/lib/runMode';
-import {DEBUG_MODE, FILEPATH_MANIFEST_NODE_MODULES} from '/constants';
+import {
+	DEBUG_MODE,
+	FILEPATH_MANIFEST_CJS,
+	FILEPATH_MANIFEST_NODE_MODULES
+} from '/constants';
 
 
 const VIEW = resolve('./examplePage.html');
@@ -74,6 +78,7 @@ console.log(jsonData);`;
 	const model = {
 		assetUrl: getAssetUrl({ path: '' }),
 		cssUrl: getSiteUrl({
+			manifestPath: FILEPATH_MANIFEST_CJS,
 			path: 'react/App.css'
 		}),
 		displayName,

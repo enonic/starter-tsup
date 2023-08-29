@@ -8,6 +8,7 @@ import Router from '/lib/router';
 import immutableGetter from './immutableGetter';
 import getImmuteableWebappUrl from '/webapp/getImmuteableWebappUrl';
 import {
+	FILEPATH_MANIFEST_CJS,
 	FILEPATH_MANIFEST_NODE_MODULES,
 	GETTER_ROOT
 } from '/constants';
@@ -30,7 +31,10 @@ function htmlResponse(_request: Request): Response {
 			manifestPath: FILEPATH_MANIFEST_NODE_MODULES,
 			path: 'react-dom/umd/react-dom.development.js'
 		})}"></script>
-		<link rel="stylesheet" media="all" href="${getImmuteableWebappUrl({ path: 'react/App.css' })}">
+		<link rel="stylesheet" media="all" href="${getImmuteableWebappUrl({
+			manifestPath: FILEPATH_MANIFEST_CJS,
+			path: 'react/App.css'
+		})}">
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 		<title>Webapp</title>

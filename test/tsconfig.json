@@ -4,7 +4,7 @@
 		// Modules
 		//──────────────────────────────────────────────────────────────────────
 		"allowUmdGlobalAccess": true,
-		"baseUrl": "./",
+		"baseUrl": "../",
 		"moduleResolution": "node",
 
 		"paths": {
@@ -48,6 +48,7 @@
 		"types": [
 			// "@enonic-types/global", // When typeRoots is set the prefix @enonic-types/ must be removed.
 			// "@enonic-types/lib-event" // No point, since it doesn't affect global scope
+			"jest",
 			"global" // Already added via typeRoots? nope, doesn't work that way
 		],
 
@@ -78,14 +79,12 @@
 		"skipLibCheck": true,
 	},
 	"exclude": [
-		"src/main/resources/assets/**/*.*",
-		"src/main/resources/static/**/*.*",
+		"..src/**/*.*",
 	],
 	"include": [
 		// Make sure default types matches Nashorn
-		"node_modules/typescript/lib/lib.es5.d.ts",
-
-		"src/main/resources/**/*.tsx",
-		"src/main/resources/**/*.ts"
+		// "node_modules/typescript/lib/lib.es5.d.ts",
+		"./**/*.tsx",
+		"./**/*.ts"
 	]
 }
