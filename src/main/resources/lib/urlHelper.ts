@@ -7,19 +7,22 @@ import { getToolUrl } from '/lib/xp/admin';
 import {IS_DEV_MODE} from './runMode';
 import {
 	DEBUG_MODE,
-	FILEPATH_MANIFEST,
+	FILEPATH_MANIFEST_CJS,
+	FILEPATH_MANIFEST_ESM,
 	FILEPATH_MANIFEST_NODE_MODULES,
 	GETTER_ROOT,
 } from '../constants';
 import {isEnabled as vhostsEnabled, list as getVhosts} from '/lib/xp/vhost';
 import {Request, Response} from '/types';
 import {toStr} from '@enonic/js-utils';
+import {startsWith} from '@enonic/js-utils/string/startsWith';
 
 // @ts-expect-error TS2307: Cannot find module '/lib/enonic/static' or its corresponding type declarations.
 import {buildGetter} from '/lib/enonic/static';
 
 const manifests = {
-	[FILEPATH_MANIFEST]: ioResource(FILEPATH_MANIFEST),
+	[FILEPATH_MANIFEST_CJS]: ioResource(FILEPATH_MANIFEST_CJS),
+	[FILEPATH_MANIFEST_ESM]: ioResource(FILEPATH_MANIFEST_ESM),
 	[FILEPATH_MANIFEST_NODE_MODULES]: ioResource(FILEPATH_MANIFEST_NODE_MODULES),
 }
 
@@ -28,12 +31,12 @@ type UrlPostfixParams = {
 	path: string,
 };
 
-type UrlParams = {urlPrefix: string} & UrlPostfixParams;
+type UrlParams = UrlPostfixParams & {urlPrefix: string};
 
-const urlHelper = ({
-	manifestPath = FILEPATH_MANIFEST,
+const getImmutableUrl = ({
+	manifestPath = FILEPATH_MANIFEST_ESM,
 	path,
-	urlPrefix,
+	urlPrefix
 }: UrlParams) => {
 	if (IS_DEV_MODE) {
 		manifests[manifestPath] = ioResource(manifestPath);
@@ -44,7 +47,7 @@ const urlHelper = ({
 
 export const getWebappUrl = (path?: string) => {
 	const {vhosts} = getVhosts();
-	const webappVhost = vhosts.filter(({target}) => target.startsWith('/webapp'))[0];
+	const webappVhost = vhosts.filter(({target}) => startsWith(target, '/webapp'))[0];
 
 	const base = vhostsEnabled() && webappVhost
 		? webappVhost.source
@@ -54,7 +57,7 @@ export const getWebappUrl = (path?: string) => {
 }
 
 export const getSiteUrl = ({
-	manifestPath = FILEPATH_MANIFEST,
+	manifestPath = FILEPATH_MANIFEST_ESM,
 	path,
 }: UrlPostfixParams) => {
 	const sitePath = getSite()._path;
@@ -65,28 +68,28 @@ export const getSiteUrl = ({
 		urlPrefix = '';
 	}
 
-	return urlHelper({
-		urlPrefix,
+	return getImmutableUrl({
 		manifestPath,
 		path,
+		urlPrefix
 	});
 }
 
 export const getAdminUrl = ({
-	manifestPath = FILEPATH_MANIFEST,
+	manifestPath = FILEPATH_MANIFEST_ESM,
 	path,
 }: UrlPostfixParams, tool: string) => {
 	const urlPrefix = getToolUrl(app.name, tool);
 
-	return urlHelper({
-		urlPrefix,
+	return getImmutableUrl({
 		manifestPath,
 		path,
+		urlPrefix
 	});
 }
 
 export const getImmutableWebappUrl = ({
-	   manifestPath = FILEPATH_MANIFEST,
+	   manifestPath = FILEPATH_MANIFEST_ESM,
 	   path,
    }: UrlPostfixParams) => {
 	if (IS_DEV_MODE) {
