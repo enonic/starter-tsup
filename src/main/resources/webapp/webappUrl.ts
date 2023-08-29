@@ -1,4 +1,5 @@
 import {toStr} from '@enonic/js-utils';
+import {startsWith} from '@enonic/js-utils/string/startsWith';
 import {
 	isEnabled as vhostsEnabled,
 	list as getVhosts
@@ -10,7 +11,7 @@ export default function webappUrl(path?: string) {
 	const {vhosts} = getVhosts();
 	DEBUG_MODE && log.info('vhosts:%s', toStr(vhosts));
 
-	const webappVhost = vhosts.filter(({target}) => target.startsWith('/webapp'))[0];
+	const webappVhost = vhosts.filter(({target}) => startsWith(target, '/webapp'))[0];
 	DEBUG_MODE && log.info('webappVhost:%s', toStr(webappVhost));
 
 	const base = vhostsEnabled() && webappVhost

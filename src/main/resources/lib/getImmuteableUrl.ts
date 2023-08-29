@@ -6,13 +6,15 @@ import {
 import { getToolUrl } from '/lib/xp/admin';
 import {IS_DEV_MODE} from '/lib/runMode';
 import {
-	FILEPATH_MANIFEST,
+	FILEPATH_MANIFEST_CJS,
+	FILEPATH_MANIFEST_ESM,
 	FILEPATH_MANIFEST_NODE_MODULES,
 	GETTER_ROOT,
 } from '/constants';
 
 const manifests = {
-	[FILEPATH_MANIFEST]: ioResource(FILEPATH_MANIFEST),
+	[FILEPATH_MANIFEST_CJS]: ioResource(FILEPATH_MANIFEST_CJS),
+	[FILEPATH_MANIFEST_ESM]: ioResource(FILEPATH_MANIFEST_ESM),
 	[FILEPATH_MANIFEST_NODE_MODULES]: ioResource(FILEPATH_MANIFEST_NODE_MODULES),
 }
 
@@ -24,7 +26,7 @@ type UrlPostfixParams = {
 type UrlParams = {urlPrefix: string} & UrlPostfixParams;
 
 function getImmuteableUrl({
-	manifestPath = FILEPATH_MANIFEST,
+	manifestPath = FILEPATH_MANIFEST_ESM,
 	path,
 	urlPrefix,
 }: UrlParams) {
@@ -36,7 +38,7 @@ function getImmuteableUrl({
 }
 
 export function getSiteUrl({
-	manifestPath = FILEPATH_MANIFEST,
+	manifestPath = FILEPATH_MANIFEST_ESM,
 	path,
 }: UrlPostfixParams) {
 	const sitePath = getSite()._path;
@@ -55,7 +57,7 @@ export function getSiteUrl({
 }
 
 export function getAdminUrl({
-	manifestPath = FILEPATH_MANIFEST,
+	manifestPath = FILEPATH_MANIFEST_ESM,
 	path,
 }: UrlPostfixParams, tool: string) {
 	// log.debug('getAdminUrl path:%s', path);
