@@ -1,6 +1,7 @@
 module.exports = {
 	collectCoverageFrom: [
-		'src/main/resources/**/*.{ts,tsx}'
+		'src/main/resources/**/*.{ts,tsx}',
+		'!src/**/*.d.ts',
 	],
 	coverageProvider: 'v8',
 	preset: 'ts-jest/presets/js-with-babel-legacy',
