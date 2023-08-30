@@ -30,10 +30,10 @@ import {
 } from '/constants';
 
 
-const VIEW = resolve('./examplePage.html');
+const VIEW = resolve('./sample-page.html');
 
 
-export function get(): Response {
+export function get(r: Request): Response {
 	DEBUG_MODE && log.info('Hello from the page template controller!');
 
 	const {
@@ -80,10 +80,6 @@ root.render(React.createElement(App, { header: "Hello from React inside a site p
 
 	const model = {
 		assetUrl: getAssetUrl({ path: '' }),
-		cssUrl: getSiteUrl({
-			manifestPath: FILEPATH_MANIFEST_CJS,
-			path: 'react/App.css'
-		}),
 		displayName,
 		inlineScript,
 		languageInNorwegian: localize({
@@ -97,9 +93,14 @@ root.render(React.createElement(App, { header: "Hello from React inside a site p
 		reactDomUrl: getSiteUrl({
 			manifestPath: FILEPATH_MANIFEST_NODE_MODULES,
 			path: 'react-dom/umd/react-dom.development.js'
-		}) ,
+		}),
+		reactCssUrl: getSiteUrl({
+			manifestPath: FILEPATH_MANIFEST_CJS,
+			path: 'react/App.css'
+		}),
 		regions,
-		supportedLocales: getSupportedLocales(['i18n/phrases'])
+		supportedLocales: getSupportedLocales(['i18n/phrases']),
+		liveMode: r.mode !== 'edit'
 	};
 
 	return {

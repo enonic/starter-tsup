@@ -1,0 +1,21 @@
+<content-type>
+	<description>Sample content type description</description>
+	<display-name>Sample content type</display-name>
+	<super-type>base:structured</super-type>
+	<is-abstract>false</is-abstract>
+	<is-final>true</is-final>
+	<is-built-in>false</is-built-in>
+	<allow-child-content>true</allow-child-content>
+	<form>
+		<input name="textLine" type="TextLine">
+			<label>TextLine (required)</label>
+			<occurrences minimum="1" maximum="1"/>
+			<help-text>Help text for TextLine</help-text>
+		</input>
+		<input name="textArea" type="TextArea">
+			<label>TextArea (optional)</label>
+			<occurrences minimum="0" maximum="1"/>
+			<help-text>Help text for TextArea</help-text>
+		</input>
+	</form>
+</content-type>

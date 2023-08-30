@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <part>
-	<display-name>Example part</display-name>
+	<display-name>Sample part</display-name>
 	<form>
-		<input name="myProperty" type="Textline">
-			<label>An example property</label>
+		<input name="myProperty" type="TextLine">
+			<label>Sample config property</label>
 			<occurrences minimum="0" maximum="1"/>
 		</input>
 	</form>
