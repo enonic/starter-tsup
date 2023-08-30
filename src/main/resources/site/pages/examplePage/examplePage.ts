@@ -33,7 +33,9 @@ import {
 const VIEW = resolve('./examplePage.html');
 
 
-export function get(request: Request): Response {
+export function get(): Response {
+	DEBUG_MODE && log.info('Hello from the page template controller!');
+
 	const {
 		displayName,
 		page: {
@@ -48,13 +50,14 @@ export function get(request: Request): Response {
 	const inlineScript = `import {App} from '${getSiteUrl({
 		path: 'react/App.mjs'
 	})}';
-const root = ReactDOM.createRoot(document.getElementById('react-root'));
-root.render(React.createElement(App, {}));
 
 const response = await fetch("${currentTimeMillisServiceUrl}");
 const jsonData = await response.json();
-console.log(jsonData);`;
-	DEBUG_MODE && log.info('inlineScript:%s', inlineScript);
+
+const root = ReactDOM.createRoot(document.getElementById('react-root'));
+const dateTime = new Date(jsonData.currentTimeMillis);
+root.render(React.createElement(App, { header: "Hello from React inside a site page!", message: "Current server-side date/time is: " + dateTime }));
+`;
 
 	const base64 = base64Encode(sha256AsStream(inlineScript));
 	DEBUG_MODE && log.info('inlineScript in base64:%s', base64);
@@ -98,8 +101,10 @@ console.log(jsonData);`;
 		regions,
 		supportedLocales: getSupportedLocales(['i18n/phrases'])
 	};
+
 	return {
 		body: render(VIEW, model),
+		// This header should only be sent if you want to soften the default browser policy!
 		headers: {
 			'content-security-policy': contentSecurityPolicy(csp)
 		}

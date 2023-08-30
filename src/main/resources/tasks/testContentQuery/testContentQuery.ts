@@ -68,16 +68,6 @@ export function run() {
 		} // try/catch
 
 		try {
-			DEBUG_MODE && log.info('Trying to delete a project (lib-project.delete) with Id "%s"', PROJECT_ID);
-
-			deleteProject({
-				id: PROJECT_ID,
-			});
-		} catch (e) {
-				log.error(`e.class.name:${toStr(e.class.name)} e.message:${toStr(e.message)}`, e);
-		} // try/catch
-
-		try {
 			DEBUG_MODE && log.info('Trying to create a project (lib-project.create) with Id "%s"', PROJECT_ID);
 			const createdProject = createProject({
 				displayName: 'XP Starter',

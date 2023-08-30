@@ -1,3 +1,29 @@
-.blue
-	color: blue
-	background-image: url('../images/enonic-xp-logo.png')
+.container
+	height: 100vh
+	display: flex
+	flex-direction: column
+	padding: 10px
+
+	.header
+		background-image: url('../images/enonic-logo.svg')
+		background-size: 150px
+		background-repeat: no-repeat
+		flex-basis: 50px
+		background-position: 15px
+		background-color: lightgray
+		padding: 5px 10px
+
+		.message
+			color: black
+			text-align: right
+			font-size: 12px
+			line-height: 15px
+
+	.body
+		padding: 15px
+
+		.title
+			color: blue
+
+		.message
+			color: darkgray

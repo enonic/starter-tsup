@@ -13,31 +13,30 @@ interface Error {
 }
 
 export function handle404(error: Error): Response {
+	DEBUG_MODE && log.info('Hello from the 404 error handler!');
 	let response: Response = {
 		status: 404
 	};
 	try {
-		DEBUG_MODE && log.debug('error:%s', toStr(error));
 		const {
 			message,
 			request,
 			status,
 		} = error;
-		log.warning('status:404 message:%s request:%s', message, toStr(request));
 		response = {
 			body: `<html>
 		<head>
 			<title>404</title>
 		</head>
 		<body>
-			<p>Not found</p>
+			<p>Custom 404 handler: ${toStr(message)}</p>
 		</body>
 	</html>`,
 			contentType: 'text/html',
 			status
 		}
 	} catch (exception) {
-		log.error(`exception:${toStr(exception)}`, exception); // Logs stacktrace
+		log.error(`Exception: ${toStr(exception)}`, exception); // Logs stacktrace
 	} finally {
 		return response;
 	}
@@ -45,24 +44,23 @@ export function handle404(error: Error): Response {
 
 
 export function handleError(error: Error): Response {
+	DEBUG_MODE && log.info('Hello from the default error handler!');
 	const response: Response = {
 		status: 500
 	};
 	try {
-		DEBUG_MODE && log.debug('error:%s', toStr(error));
 		const {
 			message,
 			request,
 			status
 		} = error;
-		log.error('status:%s message:%s request:%s', status, message, toStr(request));
 		response.status = status;
 		response.body = `<html>
 		<head>
 			<title>${status}</title>
 		</head>
 		<body>
-			<p>Something went wrong</p>
+			<p>Custom error handler: ${toStr(message)}</p>
 		</body>
 	</html>`;
 		response.contentType = 'text/html';
