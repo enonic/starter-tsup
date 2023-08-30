@@ -1,0 +1,41 @@
+<html>
+<head>
+	<script type="text/javascript" th:if="${liveMode}" th:src="${reactUrl}"></script>
+	<script type="text/javascript" th:if="${liveMode}" th:src="${reactDomUrl}"></script>
+	<link rel="stylesheet" media="all" th:if="${liveMode}" th:href="${reactCssUrl}">
+	<link rel="stylesheet" media="all" th:href="${assetUrl} + '/styles/index.css'">
+	<!--script type="module" th:src="${assetUrl} + '/' + ${appComponentUrl}'"></script-->
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title th:text="${displayName}"/>
+</head>
+<body>
+<h2>Page Template</h2>
+<p>This is a page template that can be edited at <pre>site/pages/sample/</pre></p>
+
+<h3>Page Components</h3>
+<p>Components that you added to the page will be shown here:</p>
+<main th:if="${regions.main.components} and ${#lists.size(regions.main.components) > 0}" th:data-portal-region="main" class="component-page">
+	<h4>Sample Page</h4>
+	<div th:each="component : ${regions.main.components}" th:remove="tag">
+		<div data-portal-component="${component.path}" th:remove="tag"/>
+	</div>
+</main>
+
+<h3>Localisation</h3>
+<p>Word "<i>language</i>" localised to Norwegian with i18n library: <i>"[[${languageInNorwegian}]]"</i></p>
+<p>Your browser supports phrases in the following locales:</p>
+<ul>
+	<div th:each="locale : ${supportedLocales}" th:remove="tag">
+		<li th:text="${locale}"></li>
+	</div>
+</ul>
+
+<div th:if="${liveMode}" th:remove="tag">
+	<h3>React app</h3>
+	<p>This page template contains inline script which will inject a React app, but only in preview/live mode.</p>
+	<div id="react-root"></div>
+	<script type='module' defer th:utext="${inlineScript}"></script>
+</div>
+</body>
+</html>

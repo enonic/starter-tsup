@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <layout>
-	<display-name>Example layout</display-name>
-	<description>Example layout description</description>
+	<display-name>Sample layout</display-name>
+	<description>Sample layout description</description>
 	<form/>
 	<regions>
 		<region name="left"/>

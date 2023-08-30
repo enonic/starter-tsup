@@ -1,0 +1,15 @@
+<div class="component-layout">
+	<h4>Sample Layout</h4>
+	<div class="component-layout-container">
+		<div class="component-region" data-portal-region="left">
+			<div th:each="component : ${regions.left.components}" th:remove="tag">
+				<div data-portal-component="${component.path}" th:remove="tag" />
+			</div>
+		</div>
+		<div class="component-region" data-portal-region="right">
+			<div th:each="component : ${regions.right.components}" th:remove="tag">
+				<div data-portal-component="${component.path}" th:remove="tag" />
+			</div>
+		</div>
+	</div>
+</div>
