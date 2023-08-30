@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+
 import "./App.sass";
 
 import { toStr } from '@enonic/js-utils';
@@ -5,17 +7,21 @@ import dayjs from 'dayjs';
 import React from 'react';
 import { useId } from 'react';
 
-
-export function App() {
+export function App(props) {
 	const id = useId();
-	console.debug(`Hello from React inside a site page. React app id: ${toStr({id})}`);
+
+	console.debug(`React app id: ${toStr({id})}`);
 
 	return (
 		<>
-			<div className='blue'>{dayjs().format()}
-				<h3>This is a React app inside a site page.</h3>
-				<br/>
-				<h5>Hello from Day.js! Current date/time is: {dayjs().format('DD.MM.YYYY H:mm:ss [GMT]Z')}</h5>
+			<div className='container'>
+				<div className='header'>
+					<h3 className='message'>Current client-side date/time is:<br/> {dayjs().format('DD.MM.YYYY H:mm:ss [GMT]Z')}</h3>
+				</div>
+				<div className='body'>
+					<h1 className='title'>{props.header}</h1>
+					<h3 className='message'>{props.message}</h3>
+				</div>
 			</div>
 		</>
 	);

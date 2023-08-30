@@ -7,6 +7,7 @@ import type {
 import Router from '/lib/router';
 import { immutableGetter, getImmutableWebappUrl as getWebappUrl } from '/lib/urlHelper';
 import {
+	DEBUG_MODE,
 	FILEPATH_MANIFEST_CJS,
 	FILEPATH_MANIFEST_NODE_MODULES,
 	GETTER_ROOT
@@ -18,7 +19,8 @@ router.all(`/${GETTER_ROOT}/{path:.+}`, (r: Request) => {
 	return immutableGetter(r);
 });
 
-function htmlResponse(_request: Request): Response {
+const htmlResponse = (_request: Request): Response => {
+	DEBUG_MODE && log.info('Hello from the webapp controller!');
 	return {
 		body: `<html>
 	<head>
@@ -43,7 +45,7 @@ function htmlResponse(_request: Request): Response {
 		<script type='module' defer>
 	import {App} from '${getWebappUrl({ path: 'react/App.mjs' })}';
 	const root = ReactDOM.createRoot(document.getElementById('react-root'));
-	root.render(React.createElement(App, {}));
+	root.render(React.createElement(App, { header: 'Hello from React inside a web app!' }));
 		</script>
 	</body>
 </html>`
