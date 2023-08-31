@@ -1,5 +1,13 @@
 <!-- Delete this file if you are building a web app -->
 <site>
+	<form>
+		<input name="sampleProperty" type="TextLine">
+			<label>Site-wide property</label>
+		</input>
+	</form>
+	<processors>
+		<response-processor name="sample-processor" order="10"/>
+	</processors>
 	<mappings>
 		<mapping controller="/site/static.js" order="50">
 			<pattern>/static/.+</pattern>

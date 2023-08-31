@@ -27,7 +27,7 @@ router.all(`/${GETTER_ROOT}/{path:.+}`, (r: Request) => {
 });
 
 const get = (r: Request): Response => {
-	const toolName = 'main';
+	const toolName = 'sample';
 	const VIEW = resolve(`${toolName}.html`);
 
 	const csp: ContentSecurityPolicy = {
