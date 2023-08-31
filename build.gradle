@@ -30,13 +30,16 @@ dependencies {
 	include "com.enonic.xp:lib-i18n:${xpVersion}"
 	include "com.enonic.xp:lib-io:${xpVersion}"
 	// include "com.enonic.xp:lib-mail:${xpVersion}"
-	include "com.enonic.xp:lib-node:${xpVersion}"
+	// include "com.enonic.xp:lib-node:${xpVersion}"
 	include "com.enonic.xp:lib-portal:${xpVersion}"
 	include "com.enonic.xp:lib-project:${xpVersion}"
 	include "com.enonic.xp:lib-repo:${xpVersion}"
 	include "com.enonic.xp:lib-schema:${xpVersion}"
+	include "com.enonic.xp:lib-scheduler:${xpVersion}"
 	include "com.enonic.xp:lib-task:${xpVersion}"
+	// include "com.enonic.xp:lib-value:${xpVersion}"
 	include "com.enonic.xp:lib-vhost:${xpVersion}"
+	// include "com.enonic.xp:lib-websocket:${xpVersion}"
 
 	// include 'com.enonic.lib:lib-cache:2.2.0'
 	include 'com.enonic.lib:lib-mustache:2.1.1'
@@ -73,6 +76,17 @@ node {
 
 tasks.withType(Copy).configureEach {
 	includeEmptyDirs = false
+}
+
+tasks.register('dev', NpmTask) {
+	args = [
+		'run',
+		'watch'
+	]
+	dependsOn npmInstall
+	environment = [
+		'FORCE_COLOR': 'true',
+	]
 }
 
 tasks.register('npmTest', NpmTask) {
