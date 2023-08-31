@@ -99,6 +99,7 @@ root.render(React.createElement(App, { header: "Hello from React inside a site p
 			path: 'react/App.css'
 		}),
 		regions,
+		emptyRegion: regions.main.components.length === 0,
 		supportedLocales: getSupportedLocales(['i18n/phrases']),
 		liveMode: r.mode !== 'edit'
 	};
