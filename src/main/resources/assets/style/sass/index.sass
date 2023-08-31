@@ -6,20 +6,21 @@ body
 		color: black
 
 .component-page
-	border: 3px dashed lightgray
-	padding: 5px
-
-	.component-layout
-		border: 2px dashed lightgray
+	&:not(.empty)
+		border: 3px dashed lightgray
 		padding: 5px
-
-		.component-layout-container
-			display: flex
-			justify-content: space-evenly
-			gap: 1rem
 
 .component-region
 	flex: 1
+
+.component-layout
+	border: 2px dashed lightgray
+	padding: 5px
+
+	.component-layout-container
+		display: flex
+		justify-content: space-evenly
+		gap: 1rem
 
 .component-part
 	border: 1px dashed lightgray
