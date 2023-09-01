@@ -15,7 +15,7 @@
 
 <h3>Page Components</h3>
 <p>Components added to the page will be shown here:</p>
-<main th:data-portal-region="main"th:class="'component-page' + (${emptyRegion ? ' empty' : ''})">
+<main th:data-portal-region="main" th:class="'component-page' + (${emptyRegion ? ' empty' : ''})">
 	<h4 th:if="${!emptyRegion}">Sample Page</h4>
 	<div th:each="component : ${regions.main.components}" th:remove="tag">
 		<div data-portal-component="${component.path}" th:remove="tag"/>
