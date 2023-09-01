@@ -45,17 +45,6 @@ const getImmutableUrl = ({
 	return `${urlPrefix}/${GETTER_ROOT}/${manifests[manifestPath][path]}`;
 }
 
-export const getWebappUrl = (path?: string) => {
-	const {vhosts} = getVhosts();
-	const webappVhost = vhosts.filter(({target}) => startsWith(target, '/webapp'))[0];
-
-	const base = vhostsEnabled() && webappVhost
-		? webappVhost.source
-		: `/webapp/${app.name}`;
-
-	return path ? `${base}/${path}` : base;
-}
-
 export const getSiteUrl = ({
 	manifestPath = FILEPATH_MANIFEST_ESM,
 	path,
@@ -88,14 +77,25 @@ export const getAdminUrl = ({
 	});
 }
 
-export const getImmutableWebappUrl = ({
+export const getBaseWebappUrl = (path?: string) => {
+	const {vhosts} = getVhosts();
+	const webappVhost = vhosts.filter(({target}) => startsWith(target, '/webapp'))[0];
+
+	const base = vhostsEnabled() && webappVhost
+		? webappVhost.source
+		: `/webapp/${app.name}`;
+
+	return path ? `${base}/${path}` : base;
+}
+
+export const getWebappUrl = ({
 	   manifestPath = FILEPATH_MANIFEST_ESM,
 	   path,
    }: UrlPostfixParams) => {
 	if (IS_DEV_MODE) {
 		manifests[manifestPath] = ioResource(manifestPath);
 	}
-	return getWebappUrl(`${GETTER_ROOT}/${manifests[manifestPath][path]}`);
+	return getBaseWebappUrl(`${GETTER_ROOT}/${manifests[manifestPath][path]}`);
 }
 
 export const immutableGetter = buildGetter({

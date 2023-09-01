@@ -5,7 +5,7 @@ import type {
 
 // @ts-expect-error TS2307: Cannot find module '/lib/router' or its corresponding type declarations.
 import Router from '/lib/router';
-import { immutableGetter, getImmutableWebappUrl as getWebappUrl } from '/lib/urlHelper';
+import { immutableGetter, getWebappUrl } from '/lib/urlHelper';
 import {
 	DEBUG_MODE,
 	FILEPATH_MANIFEST_CJS,

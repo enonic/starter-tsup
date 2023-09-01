@@ -4,7 +4,7 @@ import {
 	jest,
 	test
 } from '@jest/globals';
-import { getWebappUrl } from '../../src/main/resources/lib/urlHelper';
+import { getBaseWebappUrl } from '../../src/main/resources/lib/urlHelper';
 import {VHOST_LIST} from './testData';
 import Log from '@enonic/mock-xp/dist/Log';
 
@@ -55,9 +55,9 @@ jest.mock('/lib/xp/admin', () => ({
 
 describe('webappUrl', () => {
 	test('it works with vhost disabled', () => {
-		expect(getWebappUrl('filename.ext')).toBe('/webapp/com.acme.example.tsup/filename.ext');
+		expect(getBaseWebappUrl('filename.ext')).toBe('/webapp/com.acme.example.tsup/filename.ext');
 	});
 	test('it works without path and vhost enabled', () => {
-		expect(getWebappUrl()).toBe('/webapp/com.acme.example.tsup');
+		expect(getBaseWebappUrl()).toBe('/webapp/com.acme.example.tsup');
 	});
 });
