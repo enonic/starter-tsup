@@ -1,5 +1,4 @@
 import type {
-	ContentSecurityPolicy,
 	Request,
 	Response,
 } from '/index.d';
@@ -21,7 +20,13 @@ import {
 	// @ts-ignore
 } from '/lib/text-encoding';
 import { getSiteUrl } from '/lib/urlHelper';
-import contentSecurityPolicy from '/lib/contentSecurityPolicy';
+import {
+	CSP_DEFAULT,
+	CSP_PERMISSIVE,
+	UNSAFE_INLINE,
+	contentSecurityPolicy,
+	q
+} from '/lib/contentSecurityPolicy';
 import { IS_PROD_MODE } from '/lib/runMode';
 import {
 	DEBUG_MODE,
@@ -93,25 +98,15 @@ root.render(React.createElement(App, { header: "Hello from React inside a site p
 		const base64 = base64Encode(sha256AsStream(inlineScript));
 		DEBUG_MODE && log.info('inlineScript in base64:%s', base64);
 
-		const csp: ContentSecurityPolicy = {
-			'default-src': 'none',
-			'connect-src': 'self',
-			'img-src': 'self',
-			'script-src': [
-				'self',
-				`sha256-${base64}`
-			],
-			'style-src': [
-				'self',
-				'unsafe-inline'
-			],
-		};
+		const csp = CSP_DEFAULT;
+		(csp['script-src'] as string[]).push(q(`sha256-${base64}`));
+		(csp['style-src'] as string[]).push(UNSAFE_INLINE);
 
 		// This header should only be sent if you want to soften the default browser policy!
 		response.headers = {'content-security-policy': contentSecurityPolicy(csp)};
 	} else {
 		// Everything allowed in when running Enonic XP in development mode:
-		response.headers = {'content-security-policy': `default-src * 'unsafe-eval' 'unsafe-inline' data: filesystem: about: blob: ws: wss:`};
+		response.headers = {'content-security-policy': contentSecurityPolicy(CSP_PERMISSIVE)};
 	}
 
 	return response;

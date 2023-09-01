@@ -1,5 +1,4 @@
 import type {
-	ContentSecurityPolicy,
 	Request,
 	Response,
 } from '/index.d';
@@ -12,7 +11,13 @@ import {
 	getLauncherPath
 } from '/lib/xp/admin';
 import { assetUrl } from '/lib/xp/portal';
-import contentSecurityPolicy from '/lib/contentSecurityPolicy';
+import {
+	CSP_DEFAULT,
+	CSP_PERMISSIVE,
+	UNSAFE_INLINE,
+	contentSecurityPolicy,
+} from '/lib/contentSecurityPolicy';
+import { IS_DEV_MODE } from '/lib/runMode';
 import { immutableGetter, getAdminUrl } from '/lib/urlHelper';
 import {
 	FILEPATH_MANIFEST_CJS,
@@ -26,24 +31,18 @@ router.all(`/${GETTER_ROOT}/{path:.+}`, (r: Request) => {
 	return immutableGetter(r);
 });
 
-const get = (r: Request): Response => {
+const get = (request: Request): Response => {
 	const toolName = 'sample';
 	const VIEW = resolve(`${toolName}.html`);
 
-	const csp: ContentSecurityPolicy = {
-		'default-src': 'none',
-		'connect-src': 'self',
-		'font-src': 'self',
-		'img-src': 'self',
-		'script-src': [
-			'self',
-			'unsafe-inline'
-		],
-		'style-src': [
-			'self',
-			'unsafe-inline'
-		],
-	};
+	const {
+		host,
+		scheme
+	} = request;
+
+	const csp = CSP_DEFAULT;
+	(csp['script-src'] as string[]).push(UNSAFE_INLINE);
+	(csp['style-src'] as string[]).push(UNSAFE_INLINE);
 
 	const params = {
 		applicationIconUrl: getAdminUrl({
@@ -52,6 +51,10 @@ const get = (r: Request): Response => {
 		appUrl: getAdminUrl({
 			path: 'admin/App.mjs'
 		}, toolName),
+		browserSyncUrl: `${scheme}://${host}:${
+			// @ts-expect-error Is replaced at build time by tsup:
+			process.env.BROWSER_SYNC_PORT
+		}/browser-sync/browser-sync-client.js`,
 		cssUrl: getAdminUrl({
 			manifestPath: FILEPATH_MANIFEST_CJS,
 			path: 'admin/App.css'
@@ -66,12 +69,13 @@ const get = (r: Request): Response => {
 			manifestPath: FILEPATH_MANIFEST_NODE_MODULES,
 			path: 'react/umd/react.development.js',
 		}, toolName),
+		xpRunDevMode: IS_DEV_MODE
 	};
 
 	return {
 		body: render(VIEW, params),
 		headers: {
-			'content-security-policy': contentSecurityPolicy(csp)
+			'content-security-policy': contentSecurityPolicy(IS_DEV_MODE ? CSP_PERMISSIVE : csp)
 		}
 	};
 };

@@ -5,6 +5,11 @@ import type {
 
 // @ts-expect-error TS2307: Cannot find module '/lib/router' or its corresponding type declarations.
 import Router from '/lib/router';
+import {
+	CSP_PERMISSIVE,
+	contentSecurityPolicy
+} from '/lib/contentSecurityPolicy';
+import { IS_DEV_MODE } from '/lib/runMode';
 import { immutableGetter, getWebappUrl } from '/lib/urlHelper';
 import {
 	DEBUG_MODE,
@@ -19,9 +24,13 @@ router.all(`/${GETTER_ROOT}/{path:.+}`, (r: Request) => {
 	return immutableGetter(r);
 });
 
-const htmlResponse = (_request: Request): Response => {
+const htmlResponse = (request: Request): Response => {
 	DEBUG_MODE && log.info('Hello from the webapp controller!');
-	return {
+	const {
+		host,
+		scheme
+	} = request;
+	const response: Response = {
 		body: `<html>
 	<head>
 		<script type="text/javascript" src="${getWebappUrl({
@@ -47,9 +56,21 @@ const htmlResponse = (_request: Request): Response => {
 	const root = ReactDOM.createRoot(document.getElementById('react-root'));
 	root.render(React.createElement(App, { header: 'Hello from React inside a web app!' }));
 		</script>
+		${IS_DEV_MODE ? `<script src="${scheme}://${host}:${
+			// @ts-expect-error Is replaced at build time by tsup:
+			process.env.BROWSER_SYNC_PORT
+		}/browser-sync/browser-sync-client.js"></script>`: ''}
 	</body>
 </html>`
 	};
+
+	if(IS_DEV_MODE) {
+		response.headers = {
+			'content-security-policy': contentSecurityPolicy(CSP_PERMISSIVE)
+		};
+	}
+
+	return response;
 }
 
 router.get('/', (r: Request) => htmlResponse(r));
