@@ -7,6 +7,10 @@ import type {
 // import { toStr } from '@enonic/js-utils/value/toStr';
 import lcKeys from '@enonic/js-utils/object/lcKeys';
 import { IS_PROD_MODE } from '/lib/runMode';
+import {
+	CSP_PERMISSIVE,
+	contentSecurityPolicy
+} from '/lib/contentSecurityPolicy';
 
 
 export function responseProcessor(req: Request, res: Response) {
@@ -27,7 +31,7 @@ export function responseProcessor(req: Request, res: Response) {
 	} = req;
 
 	const lcHeaders = lcKeys(res.headers || {});
-	lcHeaders['content-security-policy'] = `default-src * 'unsafe-eval' 'unsafe-inline' data: filesystem: about: blob: ws: wss:`;
+	lcHeaders['content-security-policy'] = contentSecurityPolicy(CSP_PERMISSIVE);
 	res.headers = lcHeaders;
 
 	const contribution = `<script src="${scheme}://${host}:${
