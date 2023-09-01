@@ -28,6 +28,9 @@ export default function buildServerConfig(): Options {
 		bundle: true, // Needed to bundle @enonic/js-utils
 		dts: false, // d.ts files are use useless at runtime
 		entry: FILES_SERVER,
+		env: {
+			BROWSER_SYNC_PORT: '3000',
+		},
 		esbuildOptions(options, context) {
 			// options.alias = {
 			// 	'alias': './src/main/resources/lib/filename.js'

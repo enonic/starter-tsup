@@ -5,6 +5,7 @@ function q(s: string) {
 	return `'${s}'`;
 }
 
+// TODO: Actually urls must be unqouted, so the code below is wrong!
 
 export default function contentSecurityPolicy(csp: ContentSecurityPolicy) {
 	return Object.keys(csp).map(k => {
