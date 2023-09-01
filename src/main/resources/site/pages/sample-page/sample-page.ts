@@ -22,7 +22,7 @@ import {
 } from '/lib/text-encoding';
 import { getSiteUrl } from '/lib/urlHelper';
 import contentSecurityPolicy from '/lib/contentSecurityPolicy';
-import {IS_DEV_MODE} from '/lib/runMode';
+import { IS_PROD_MODE } from '/lib/runMode';
 import {
 	DEBUG_MODE,
 	FILEPATH_MANIFEST_CJS,
@@ -59,25 +59,6 @@ const dateTime = new Date(jsonData.currentTimeMillis);
 root.render(React.createElement(App, { header: "Hello from React inside a site page!", message: "Current server-side date/time is: " + dateTime }));
 `;
 
-	const base64 = base64Encode(sha256AsStream(inlineScript));
-	DEBUG_MODE && log.info('inlineScript in base64:%s', base64);
-
-	const csp: ContentSecurityPolicy = {
-		'default-src': 'none',
-		'connect-src': 'self',
-		'img-src': 'self',
-		'script-src': [
-			'self',
-			IS_DEV_MODE
-				? 'unsafe-inline' // browserSync
-				: `sha256-${base64}`
-		],
-		'style-src': [
-			'self',
-			'unsafe-inline'
-		],
-	};
-
 	const model = {
 		assetUrl: getAssetUrl({ path: '' }),
 		displayName,
@@ -104,11 +85,34 @@ root.render(React.createElement(App, { header: "Hello from React inside a site p
 		liveMode: r.mode !== 'edit'
 	};
 
-	return {
-		body: render(VIEW, model),
+	const response: Response = {
+		body: render(VIEW, model)
+	};
+
+	if (IS_PROD_MODE) {
+		const base64 = base64Encode(sha256AsStream(inlineScript));
+		DEBUG_MODE && log.info('inlineScript in base64:%s', base64);
+
+		const csp: ContentSecurityPolicy = {
+			'default-src': 'none',
+			'connect-src': 'self',
+			'img-src': 'self',
+			'script-src': [
+				'self',
+				`sha256-${base64}`
+			],
+			'style-src': [
+				'self',
+				'unsafe-inline'
+			],
+		};
+
 		// This header should only be sent if you want to soften the default browser policy!
-		headers: {
-			'content-security-policy': contentSecurityPolicy(csp)
-		}
+		response.headers = {'content-security-policy': contentSecurityPolicy(csp)};
+	} else {
+		// Everything allowed in when running Enonic XP in development mode:
+		response.headers = {'content-security-policy': `default-src * 'unsafe-eval' 'unsafe-inline' data: filesystem: about: blob: ws: wss:`};
 	}
+
+	return response;
 }
