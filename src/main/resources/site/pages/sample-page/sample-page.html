@@ -31,9 +31,10 @@
 	</div>
 </ul>
 
+<h3>React app</h3>
+<p>This page template contains an inline script which will inject a React app, but NOT in edit mode.</p>
+
 <div th:if="${liveMode}" th:remove="tag">
-	<h3>React app</h3>
-	<p>This page template contains inline script which will inject a React app, but only in preview/live mode.</p>
 	<div id="react-root"></div>
 	<script type='module' defer th:utext="${inlineScript}"></script>
 </div>
