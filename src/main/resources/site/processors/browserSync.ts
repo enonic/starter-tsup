@@ -6,7 +6,10 @@ import type {
 
 // import { toStr } from '@enonic/js-utils/value/toStr';
 import lcKeys from '@enonic/js-utils/object/lcKeys';
-import { getBrowserSyncScript } from '/lib/browserSync';
+import {
+	getBrowserSyncScript,
+	isRunning
+} from '/lib/browserSync';
 import { IS_PROD_MODE } from '/lib/runMode';
 import {
 	CSP_PERMISSIVE,
@@ -23,6 +26,11 @@ export function responseProcessor(request: Request, res: Response) {
 	} = request;
 
 	if (IS_PROD_MODE || mode === 'inline' || mode === 'edit') {
+		return res;
+	}
+
+	if (!isRunning({ request })) {
+		log.info('TIP: You are running Enonic XP in development mode, however, BrowserSync is not running. You can run `npm run watch` in a separate terminal to enable watch mode :)');
 		return res;
 	}
 
