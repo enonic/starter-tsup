@@ -3,6 +3,7 @@ import type {
 	Response,
 } from '/index.d';
 
+
 //@ts-ignore
 import {render} from '/lib/thymeleaf';
 import {
@@ -25,7 +26,8 @@ import {
 	CSP_PERMISSIVE,
 	UNSAFE_INLINE,
 	contentSecurityPolicy,
-	q
+	pushUniq,
+	sha256
 } from '/lib/contentSecurityPolicy';
 import { IS_PROD_MODE } from '/lib/runMode';
 import {
@@ -99,8 +101,8 @@ root.render(React.createElement(App, { header: "Hello from React inside a site p
 		DEBUG_MODE && log.info('inlineScript in base64:%s', base64);
 
 		const csp = CSP_DEFAULT;
-		(csp['script-src'] as string[]).push(q(`sha256-${base64}`));
-		(csp['style-src'] as string[]).push(UNSAFE_INLINE);
+		pushUniq(csp['script-src'], sha256(base64));
+		pushUniq(csp['style-src'], UNSAFE_INLINE);
 
 		// This header should only be sent if you want to soften the default browser policy!
 		response.headers = {'content-security-policy': contentSecurityPolicy(csp)};

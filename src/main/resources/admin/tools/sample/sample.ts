@@ -3,6 +3,7 @@ import type {
 	Response,
 } from '/index.d';
 
+
 // @ts-ignore
 import { render } from '/lib/mustache';
 // @ts-ignore
@@ -20,6 +21,7 @@ import {
 	CSP_PERMISSIVE,
 	UNSAFE_INLINE,
 	contentSecurityPolicy,
+	pushUniq,
 } from '/lib/contentSecurityPolicy';
 import { IS_DEV_MODE } from '/lib/runMode';
 import { immutableGetter, getAdminUrl } from '/lib/urlHelper';
@@ -28,6 +30,7 @@ import {
 	FILEPATH_MANIFEST_NODE_MODULES,
 	GETTER_ROOT,
 } from '/constants';
+
 
 const router = Router();
 
@@ -40,8 +43,8 @@ const get = (request: Request): Response => {
 	const VIEW = resolve(`${toolName}.html`);
 
 	const csp = CSP_DEFAULT;
-	(csp['script-src'] as string[]).push(UNSAFE_INLINE);
-	(csp['style-src'] as string[]).push(UNSAFE_INLINE);
+	pushUniq(csp['script-src'], UNSAFE_INLINE);
+	pushUniq(csp['style-src'], UNSAFE_INLINE);
 
 	let browserSyncUrl = '';
 	if (IS_DEV_MODE) {
