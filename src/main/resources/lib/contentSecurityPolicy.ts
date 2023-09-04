@@ -45,7 +45,7 @@ export function nonce(s: string) {
 	return `'nonce-${s}'`;
 }
 
-export function pushUniq(stringArray: string[], string: string): number {
+export function pushUniqueValue(stringArray: string[], string: string): number {
 	if (!arrayIncludes(stringArray, string)) {
 		return stringArray.push(string);
 	}
