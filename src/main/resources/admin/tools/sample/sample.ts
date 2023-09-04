@@ -11,6 +11,7 @@ import {
 	getLauncherPath
 } from '/lib/xp/admin';
 import { assetUrl } from '/lib/xp/portal';
+import { getBrowserSyncUrl } from '/lib/browserSync';
 import {
 	CSP_DEFAULT,
 	CSP_PERMISSIVE,
@@ -35,11 +36,6 @@ const get = (request: Request): Response => {
 	const toolName = 'sample';
 	const VIEW = resolve(`${toolName}.html`);
 
-	const {
-		host,
-		scheme
-	} = request;
-
 	const csp = CSP_DEFAULT;
 	(csp['script-src'] as string[]).push(UNSAFE_INLINE);
 	(csp['style-src'] as string[]).push(UNSAFE_INLINE);
@@ -51,10 +47,7 @@ const get = (request: Request): Response => {
 		appUrl: getAdminUrl({
 			path: 'admin/App.mjs'
 		}, toolName),
-		browserSyncUrl: `${scheme}://${host}:${
-			// @ts-expect-error Is replaced at build time by tsup:
-			process.env.BROWSER_SYNC_PORT
-		}/browser-sync/browser-sync-client.js`,
+		browserSyncUrl: getBrowserSyncUrl({ request }),
 		cssUrl: getAdminUrl({
 			manifestPath: FILEPATH_MANIFEST_CJS,
 			path: 'admin/App.css'

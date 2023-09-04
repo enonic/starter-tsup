@@ -6,6 +6,7 @@ import type {
 
 // import { toStr } from '@enonic/js-utils/value/toStr';
 import lcKeys from '@enonic/js-utils/object/lcKeys';
+import { getBrowserSyncScript } from '/lib/browserSync';
 import { IS_PROD_MODE } from '/lib/runMode';
 import {
 	CSP_PERMISSIVE,
@@ -13,31 +14,23 @@ import {
 } from '/lib/contentSecurityPolicy';
 
 
-export function responseProcessor(req: Request, res: Response) {
+export function responseProcessor(request: Request, res: Response) {
 	// log.info('req:%s', toStr(req));
 	// log.info('res:%s', toStr(res));
 
 	const {
 		mode,
-	} = req;
+	} = request;
 
 	if (IS_PROD_MODE || mode === 'inline' || mode === 'edit') {
 		return res;
 	}
 
-	const {
-		host,
-		scheme
-	} = req;
-
 	const lcHeaders = lcKeys(res.headers || {});
 	lcHeaders['content-security-policy'] = contentSecurityPolicy(CSP_PERMISSIVE);
 	res.headers = lcHeaders;
 
-	const contribution = `<script src="${scheme}://${host}:${
-		// @ts-expect-error Is replaced at build time by tsup:
-		process.env.BROWSER_SYNC_PORT
-	}/browser-sync/browser-sync-client.js"></script>`
+	const contribution = getBrowserSyncScript({ request });
 
 	if (!res.pageContributions.bodyEnd) {
 		res.pageContributions.bodyEnd = [contribution];
