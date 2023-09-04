@@ -7,8 +7,7 @@ import {
 } from '/lib/xp/app';
 import {run as runInContext} from '/lib/xp/context';
 import {
-	create as createProject,
-	delete as deleteProject
+	create as createProject
 } from '/lib/xp/project';
 import {
 	createSchema,
@@ -24,7 +23,7 @@ const PROJECT_ID = app.name.replace('com.enonic.app.', '').replace(/\./g, '-');
 const SCHEMA_TYPE = 'CONTENT_TYPE';
 
 export function run() {
-	DEBUG_MODE && log.info('Submitting task from "tasks/testContentQuery/testContentQuery.ts"...');
+	DEBUG_MODE && log.info('Submitting task from "tasks/task1/task1.ts"...');
 	runInContext({
 		repository: 'system-repo',
 		branch: BRANCH_MASTER,

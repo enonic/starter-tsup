@@ -11,8 +11,8 @@ DEBUG_MODE && log.info(prop);
 
 const submitTasks = () => {
 	const taskConfig = {
-		descriptor: 'testRepoConnectionQuery',
-		name: `${app.name}:testRepoConnectionQuery:nameA`
+		descriptor: 'task2',
+		name: `${app.name}:task2:nameA`
 	};
 
 	// Submit (lib.task.submitTask) two named tasks with identical names to showcase how to intercept duplicate task runs
@@ -20,7 +20,7 @@ const submitTasks = () => {
 	submitTask(taskConfig);
 
 	// Submit (lib.task.submitTask) an unnamed task to showcase App, Schema and Project APIs
-	submitTask({ descriptor:'testContentQuery' });
+	submitTask({ descriptor:'task1' });
 }
 
 // Call an imported function

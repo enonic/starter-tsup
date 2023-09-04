@@ -7,7 +7,6 @@ import type {
 // @ts-expect-error TS2307: Cannot find module '/lib/enonic/static' or its corresponding type declarations.
 import {buildGetter} from '/lib/enonic/static';
 import { GETTER_ROOT } from '/constants';
-import {DEBUG_MODE} from "/constants";
 
 
 const staticGetter = buildGetter({

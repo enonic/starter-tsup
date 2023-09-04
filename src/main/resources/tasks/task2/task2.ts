@@ -12,7 +12,7 @@ import {
 import {DEBUG_MODE} from "/constants";
 
 export function run(config, taskId) {
-	DEBUG_MODE && log.info('Submitting task from "tasks/testRepoConnectionQuery/testRepoConnectionQuery.ts"...');
+	DEBUG_MODE && log.info('Submitting task from "tasks/task2/task2.ts"...');
 	//DEBUG_MODE && log.info('Task config: %s', toStr(config));
 	//DEBUG_MODE && log.info('Task Id: %s', taskId);
 
