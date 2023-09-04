@@ -48,7 +48,7 @@ const get = (request: Request): Response => {
 		if (isRunning({ request })) {
 			browserSyncUrl = getBrowserSyncUrl({ request });
 		} else {
-			log.info('TIP: You are running Enonic XP in development mode, however, BrowserSync is not running. You can run `npm run watch` in a separate terminal to enable watch mode :)');
+			log.info('HINT: You are running Enonic XP in development mode, however, BrowserSync is not running.');
 		}
 	}
 

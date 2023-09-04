@@ -30,7 +30,7 @@ export function responseProcessor(request: Request, res: Response) {
 	}
 
 	if (!isRunning({ request })) {
-		log.info('TIP: You are running Enonic XP in development mode, however, BrowserSync is not running. You can run `npm run watch` in a separate terminal to enable watch mode :)');
+		log.info('HINT: You are running Enonic XP in development mode, however, BrowserSync is not running.');
 		return res;
 	}
 
