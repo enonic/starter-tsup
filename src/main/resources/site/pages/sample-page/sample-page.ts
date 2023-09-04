@@ -26,7 +26,7 @@ import {
 	CSP_PERMISSIVE,
 	UNSAFE_INLINE,
 	contentSecurityPolicy,
-	pushUniq,
+	pushUniqueValue,
 	sha256
 } from '/lib/contentSecurityPolicy';
 import { IS_PROD_MODE } from '/lib/runMode';
@@ -101,8 +101,8 @@ root.render(React.createElement(App, { header: "Hello from React inside a site p
 		DEBUG_MODE && log.info('inlineScript in base64:%s', base64);
 
 		const csp = CSP_DEFAULT;
-		pushUniq(csp['script-src'], sha256(base64));
-		pushUniq(csp['style-src'], UNSAFE_INLINE);
+		pushUniqueValue(csp['script-src'], sha256(base64));
+		pushUniqueValue(csp['style-src'], UNSAFE_INLINE);
 
 		// This header should only be sent if you want to soften the default browser policy!
 		response.headers = {'content-security-policy': contentSecurityPolicy(csp)};

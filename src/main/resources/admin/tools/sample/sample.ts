@@ -21,7 +21,7 @@ import {
 	CSP_PERMISSIVE,
 	UNSAFE_INLINE,
 	contentSecurityPolicy,
-	pushUniq,
+	pushUniqueValue,
 } from '/lib/contentSecurityPolicy';
 import { IS_DEV_MODE } from '/lib/runMode';
 import { immutableGetter, getAdminUrl } from '/lib/urlHelper';
@@ -43,8 +43,8 @@ const get = (request: Request): Response => {
 	const VIEW = resolve(`${toolName}.html`);
 
 	const csp = CSP_DEFAULT;
-	pushUniq(csp['script-src'], UNSAFE_INLINE);
-	pushUniq(csp['style-src'], UNSAFE_INLINE);
+	pushUniqueValue(csp['script-src'], UNSAFE_INLINE);
+	pushUniqueValue(csp['style-src'], UNSAFE_INLINE);
 
 	let browserSyncUrl = '';
 	if (IS_DEV_MODE) {
