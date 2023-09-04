@@ -31,4 +31,4 @@ export type Directive =
 	| 'trusted-types'
 	| 'upgrade-insecure-requests';
 
-export type ContentSecurityPolicy = Partial<Record<Directive, string| string[]>>
+export type ContentSecurityPolicy = Partial<Record<Directive, string[]>>
