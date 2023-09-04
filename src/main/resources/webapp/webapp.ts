@@ -5,6 +5,7 @@ import type {
 
 // @ts-expect-error TS2307: Cannot find module '/lib/router' or its corresponding type declarations.
 import Router from '/lib/router';
+import { getBrowserSyncScript } from '/lib/browserSync';
 import {
 	CSP_PERMISSIVE,
 	contentSecurityPolicy
@@ -26,10 +27,6 @@ router.all(`/${GETTER_ROOT}/{path:.+}`, (r: Request) => {
 
 const htmlResponse = (request: Request): Response => {
 	DEBUG_MODE && log.info('Hello from the webapp controller!');
-	const {
-		host,
-		scheme
-	} = request;
 	const response: Response = {
 		body: `<html>
 	<head>
@@ -56,10 +53,7 @@ const htmlResponse = (request: Request): Response => {
 	const root = ReactDOM.createRoot(document.getElementById('react-root'));
 	root.render(React.createElement(App, { header: 'Hello from React inside a web app!' }));
 		</script>
-		${IS_DEV_MODE ? `<script src="${scheme}://${host}:${
-			// @ts-expect-error Is replaced at build time by tsup:
-			process.env.BROWSER_SYNC_PORT
-		}/browser-sync/browser-sync-client.js"></script>`: ''}
+		${getBrowserSyncScript({ request })}
 	</body>
 </html>`
 	};
