@@ -84,7 +84,7 @@ tasks.register('dev', NpmTask) {
 		'run',
 		'watch'
 	]
-	dependsOn npmInstall
+	dependsOn npmInstall, deploy
 	environment = [
 		'FORCE_COLOR': 'true',
 	]
