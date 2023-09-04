@@ -20,8 +20,8 @@
 			root.render(React.createElement(App, {}));
 		</script>
 		<script defer src="{{launcherPath}}" type="text/javascript" data-config-theme="dark"></script>
-		{{#xpRunDevMode}}
+		{{#browserSyncUrl}}
 		<script src="{{browserSyncUrl}}"></script>
-		{{/xpRunDevMode}}
+		{{/browserSyncUrl}}
 	</body>
 </html>

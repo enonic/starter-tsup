@@ -11,7 +11,10 @@ import {
 	getLauncherPath
 } from '/lib/xp/admin';
 import { assetUrl } from '/lib/xp/portal';
-import { getBrowserSyncUrl } from '/lib/browserSync';
+import {
+	getBrowserSyncUrl,
+	isRunning
+} from '/lib/browserSync';
 import {
 	CSP_DEFAULT,
 	CSP_PERMISSIVE,
@@ -40,6 +43,15 @@ const get = (request: Request): Response => {
 	(csp['script-src'] as string[]).push(UNSAFE_INLINE);
 	(csp['style-src'] as string[]).push(UNSAFE_INLINE);
 
+	let browserSyncUrl = '';
+	if (IS_DEV_MODE) {
+		if (isRunning({ request })) {
+			browserSyncUrl = getBrowserSyncUrl({ request });
+		} else {
+			log.info('TIP: You are running Enonic XP in development mode, however, BrowserSync is not running. You can run `npm run watch` in a separate terminal to enable watch mode :)');
+		}
+	}
+
 	const params = {
 		applicationIconUrl: getAdminUrl({
 			path: 'icons/application.svg'
@@ -47,7 +59,7 @@ const get = (request: Request): Response => {
 		appUrl: getAdminUrl({
 			path: 'admin/App.mjs'
 		}, toolName),
-		browserSyncUrl: getBrowserSyncUrl({ request }),
+		browserSyncUrl,
 		cssUrl: getAdminUrl({
 			manifestPath: FILEPATH_MANIFEST_CJS,
 			path: 'admin/App.css'
@@ -62,7 +74,6 @@ const get = (request: Request): Response => {
 			manifestPath: FILEPATH_MANIFEST_NODE_MODULES,
 			path: 'react/umd/react.development.js',
 		}, toolName),
-		xpRunDevMode: IS_DEV_MODE
 	};
 
 	return {

@@ -1,7 +1,19 @@
 import type { Request } from '/index.d';
 
 
-import { IS_PROD_MODE } from '/lib/runMode';
+import { toStr } from '@enonic/js-utils/value/toStr';
+// @ts-expect-error TS2307: Cannot find module '/lib/cache' or its corresponding type declarations.
+import { newCache } from '/lib/cache';
+// @ts-expect-error TS2307: Cannot find module '/lib/http-client' or its corresponding type declarations.
+import { request as httpClientRequest } from '/lib/http-client';
+
+
+const A_SECOND = 1000;
+
+const isRunningCache = newCache({
+	size: 1,
+	expire: 10 * A_SECOND
+});
 
 
 export function getBrowserSyncUrl({request}: {request: Request}): string {
@@ -16,9 +28,31 @@ export function getBrowserSyncUrl({request}: {request: Request}): string {
 }
 
 
+export function isRunning({request}: {request: Request}): boolean {
+	return isRunningCache.get('hardcoded-cache-key', () => {
+		try {
+			const requestParameters = {
+				url: getBrowserSyncUrl({request}),
+				method: 'HEAD',
+				// headers: {
+				// 	'Cache-Control': 'no-cache'
+				// },
+				connectionTimeout: 1000,
+				readTimeout: 1000
+			};
+			const response = httpClientRequest(requestParameters);
+			if (response.status !== 200) {
+				log.info('Response status not 200 when checking for BrowserSync request:%s response:%s', toStr(requestParameters), toStr(response));
+				return false;
+			}
+			return true
+		} catch (e) {
+			return false;
+		}
+	});
+}
+
+
 export function getBrowserSyncScript({request}: {request: Request}): string {
-	if (IS_PROD_MODE) {
-		return '';
-	}
 	return `<script src="${getBrowserSyncUrl({request})}"></script>`;
 }

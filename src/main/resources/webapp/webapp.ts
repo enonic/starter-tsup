@@ -5,7 +5,10 @@ import type {
 
 // @ts-expect-error TS2307: Cannot find module '/lib/router' or its corresponding type declarations.
 import Router from '/lib/router';
-import { getBrowserSyncScript } from '/lib/browserSync';
+import {
+	getBrowserSyncScript,
+	isRunning
+} from '/lib/browserSync';
 import {
 	CSP_PERMISSIVE,
 	contentSecurityPolicy
@@ -27,6 +30,16 @@ router.all(`/${GETTER_ROOT}/{path:.+}`, (r: Request) => {
 
 const htmlResponse = (request: Request): Response => {
 	DEBUG_MODE && log.info('Hello from the webapp controller!');
+
+	let browserSyncScript = '';
+	if (IS_DEV_MODE) {
+		if (isRunning({ request })) {
+			browserSyncScript = getBrowserSyncScript({ request });
+		} else {
+			log.info('TIP: You are running Enonic XP in development mode, however, BrowserSync is not running. You can run `npm run watch` in a separate terminal to enable watch mode :)');
+		}
+	}
+
 	const response: Response = {
 		body: `<html>
 	<head>
@@ -53,7 +66,7 @@ const htmlResponse = (request: Request): Response => {
 	const root = ReactDOM.createRoot(document.getElementById('react-root'));
 	root.render(React.createElement(App, { header: 'Hello from React inside a web app!' }));
 		</script>
-		${getBrowserSyncScript({ request })}
+		${browserSyncScript}
 	</body>
 </html>`
 	};
