@@ -17,12 +17,13 @@ import {
 	isRunning
 } from '/lib/browserSync';
 import {
-	CSP_DEFAULT,
-	CSP_PERMISSIVE,
+	DIRECTIVES_DEFAULT,
+	DIRECTIVES_PERMISSIVE,
+	SCRIPT_SRC,
+	STYLE_SRC,
 	UNSAFE_INLINE,
-	contentSecurityPolicy,
-	pushUniqueValue,
-} from '/lib/contentSecurityPolicy';
+	ContentSecurityPolicy,
+} from '/lib/csp';
 import { IS_DEV_MODE } from '/lib/runMode';
 import { immutableGetter, getAdminUrl } from '/lib/urlHelper';
 import {
@@ -41,10 +42,6 @@ router.all(`/${GETTER_ROOT}/{path:.+}`, (r: Request) => {
 const get = (request: Request): Response => {
 	const toolName = 'sample';
 	const VIEW = resolve(`${toolName}.html`);
-
-	const csp = CSP_DEFAULT;
-	pushUniqueValue(csp['script-src'], UNSAFE_INLINE);
-	pushUniqueValue(csp['style-src'], UNSAFE_INLINE);
 
 	let browserSyncUrl = '';
 	if (IS_DEV_MODE) {
@@ -82,7 +79,13 @@ const get = (request: Request): Response => {
 	return {
 		body: render(VIEW, params),
 		headers: {
-			'content-security-policy': contentSecurityPolicy(IS_DEV_MODE ? CSP_PERMISSIVE : csp)
+			'content-security-policy': (
+					IS_DEV_MODE
+						? new ContentSecurityPolicy(DIRECTIVES_PERMISSIVE)
+						: new ContentSecurityPolicy(DIRECTIVES_DEFAULT)
+							.append(SCRIPT_SRC, UNSAFE_INLINE)
+							.append(STYLE_SRC, UNSAFE_INLINE)
+				).toString(),
 		}
 	};
 };

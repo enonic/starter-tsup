@@ -12,10 +12,9 @@ import {
 } from '/lib/browserSync';
 import { IS_PROD_MODE } from '/lib/runMode';
 import {
-	CSP_PERMISSIVE,
-	contentSecurityPolicy
-} from '/lib/contentSecurityPolicy';
-
+	DIRECTIVES_PERMISSIVE,
+	ContentSecurityPolicy,
+} from '/lib/csp';
 
 export function responseProcessor(request: Request, res: Response) {
 	// log.info('req:%s', toStr(req));
@@ -35,7 +34,7 @@ export function responseProcessor(request: Request, res: Response) {
 	}
 
 	const lcHeaders = lcKeys(res.headers || {});
-	lcHeaders['content-security-policy'] = contentSecurityPolicy(CSP_PERMISSIVE);
+	lcHeaders['content-security-policy'] = new ContentSecurityPolicy(DIRECTIVES_PERMISSIVE).toString();
 	res.headers = lcHeaders;
 
 	const contribution = getBrowserSyncScript({ request });

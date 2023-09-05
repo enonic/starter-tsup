@@ -20,7 +20,7 @@ export function handle404(error: Error): Response {
 	try {
 		const {
 			message,
-			request,
+			// request,
 			status,
 		} = error;
 		response = {
@@ -51,7 +51,7 @@ export function handleError(error: Error): Response {
 	try {
 		const {
 			message,
-			request,
+			// request,
 			status
 		} = error;
 		response.status = status;

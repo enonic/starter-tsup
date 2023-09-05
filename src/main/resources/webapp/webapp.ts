@@ -10,9 +10,9 @@ import {
 	isRunning
 } from '/lib/browserSync';
 import {
-	CSP_PERMISSIVE,
-	contentSecurityPolicy
-} from '/lib/contentSecurityPolicy';
+	DIRECTIVES_PERMISSIVE,
+	ContentSecurityPolicy,
+} from '/lib/csp';
 import { IS_DEV_MODE } from '/lib/runMode';
 import { immutableGetter, getWebappUrl } from '/lib/urlHelper';
 import {
@@ -73,7 +73,7 @@ const htmlResponse = (request: Request): Response => {
 
 	if(IS_DEV_MODE) {
 		response.headers = {
-			'content-security-policy': contentSecurityPolicy(CSP_PERMISSIVE)
+			'content-security-policy': new ContentSecurityPolicy(DIRECTIVES_PERMISSIVE).toString()
 		};
 	}
 
