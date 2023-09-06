@@ -1,5 +1,5 @@
 <script lang="ts">
-	export let myProperty;
+	export let myProperty: string;
 </script>
 
 <div>
