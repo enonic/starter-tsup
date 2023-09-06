@@ -141,8 +141,9 @@ jar.dependsOn npmBuild
 processResources {
 	exclude '**/.gitkeep'
 	exclude '**/*.json'
-	exclude '**/*.sass'
 	exclude '**/*.png'
+	exclude '**/*.sass'
+	exclude '**/*.svelte'
 	exclude '**/*.ts'
 	exclude '**/*.tsx'
 }

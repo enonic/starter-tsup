@@ -15,7 +15,7 @@ import {
 
 export default function buildStaticConfig(): Options {
 	const DIR_DST_STATIC = `${DIR_DST}/static`;
-	const GLOB_EXTENSIONS_STATIC = '{tsx,ts,jsx,js}';
+	const GLOB_EXTENSIONS_STATIC = '{tsx,ts,jsx,js,svelte}';
 	const FILES_STATIC = globSync(`${DIR_SRC_STATIC}/**/*.${GLOB_EXTENSIONS_STATIC}`);
 	// print(FILES_STATIC, { maxItems: Infinity });
 
