@@ -49,7 +49,7 @@ const duplicateTaskFound = (taskId) => {
 		if (aTaskName === myTaskName && aTaskId !== taskId) {
 			DEBUG_MODE && log.info('Found two tasks with the same name (%s) and different ids (%s, %s)', myTaskName, aTaskId, taskId);
 			if (myStartTime > aStartTime) {
-				log.warning('Aborting task %s with newest startTime: %s', taskId, myStartTime);
+				log.warning('Aborting task %s with newer startTime: %s', taskId, myStartTime);
 				return true;
 			} else if (aStartTime === myStartTime && taskId > aTaskId) {
 				log.warning('Both tasks have the same startTime (%s). Aborting the task with largest taskId: %s', myStartTime, taskId);
@@ -87,12 +87,10 @@ const createSampleProject = () => {
 			readAccess: {
 				public: true
 			},
-			/*
-			This doesn't work because of incorrect type of siteConfig. Uncomment when 7.13.3 is out.
+			// @ts-expect-error Awaiting fix for the type definition https://github.com/enonic/xp/pull/10264
 			siteConfig: [{
 				applicationKey: APP_KEY_VIRTUAL
 			}],
-			 */
 		});
 		DEBUG_MODE && log.info('Project successfully created: %s', toStr(createdProject));
 	} catch (e) {
@@ -143,7 +141,7 @@ const getContext = () => {
 }
 
 export function run(config, taskId) {
-	DEBUG_MODE && log.info('Submitting task from "tasks/task1/task1.ts" with config %s', toStr(config));
+	DEBUG_MODE && log.info('Submitting "tasks/task/task.ts" with config %s', toStr(config));
 
 	if (duplicateTaskFound(taskId)) {
 		return;

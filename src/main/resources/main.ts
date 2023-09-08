@@ -18,9 +18,6 @@ const submitTasks = () => {
 	// Submit (lib.task.submitTask) two named tasks with identical names to showcase how to intercept duplicate task runs
 	submitTask(taskConfig);
 	submitTask(taskConfig);
-
-	// Submit (lib.task.submitTask) an unnamed task to showcase App, Schema and Project APIs
-	//submitTask({ descriptor: 'task1' });
 }
 
 // Call an imported function
