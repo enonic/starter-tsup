@@ -10,6 +10,7 @@
     "react": "^18",
     "react-dom": "^18"
   },
+  "description": "My Enonic XP project",
   "devDependencies": {
     "@enonic-types/global": "^7",
     "@enonic-types/lib-admin": "^7",
@@ -71,7 +72,7 @@
     "tsup": "^7",
     "typescript": "^5"
   },
-  "license": "GPL-3.0",
+  "license": "Apache-2.0",
   "private": true,
   "repository": {
     "type": "git",
@@ -98,5 +99,6 @@
     "watch:sass": "npm run build:sass -- --watch",
     "watch:server": "npm run build:server -- --watch",
     "watch:static": "npm run build:static -- --watch"
-  }
+  },
+  "version": "1.0.0"
 }

@@ -1,4 +1,4 @@
-# tsup starter for Enonic XP
+# Tsup Starter for Enonic XP
 
 ## Usage XP 7
 
@@ -10,8 +10,9 @@ https://developer.enonic.com/start
 Then run the following commands to build and deploy it:
 
 ```bash
-~ $ enonic project create
-... Answer wizard question
+~ $ enonic project create -r starter-tsup
+
+... Answer Wizard questions
 
 ~ $ cd <project-folder>
 ~/new-project $ enonic project deploy
@@ -21,8 +22,6 @@ Then run the following commands to build and deploy it:
 
 | Version | Min XP version |
 |---------|----------------|
-| 1.0.0   | 7.10.0         |
+| 1.0.0   | 7.13.0         |
 
-## Changelog
 
-### 1.0.0
