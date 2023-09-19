@@ -87,9 +87,9 @@ const createSampleProject = () => {
 			readAccess: {
 				public: true
 			},
-			// @ts-expect-error Awaiting fix for the type definition https://github.com/enonic/xp/pull/10264
 			siteConfig: [{
-				applicationKey: APP_KEY_VIRTUAL
+				applicationKey: APP_KEY_VIRTUAL,
+				config: {}
 			}],
 		});
 		DEBUG_MODE && log.info('Project successfully created: %s', toStr(createdProject));

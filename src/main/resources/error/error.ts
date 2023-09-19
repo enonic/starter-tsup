@@ -20,7 +20,6 @@ export function handle404(error: Error): Response {
 	try {
 		const {
 			message,
-			request,
 			status,
 		} = error;
 		response = {
