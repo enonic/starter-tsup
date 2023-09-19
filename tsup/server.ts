@@ -21,7 +21,7 @@ export default function buildServerConfig(): Options {
 				globSync(`${DIR_SRC_STATIC}/**/*.${GLOB_EXTENSIONS_SERVER}`)
 			)
 		}
-	);
+	).map(s => s.replaceAll('\\', '/'));
 	// print(FILES_SERVER, { maxItems: Infinity });
 
 	return {

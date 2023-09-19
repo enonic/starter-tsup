@@ -8,7 +8,7 @@ import { DIR_SRC_ASSETS } from './constants';
 
 export default function buildAssetConfig(): Options {
 	const GLOB_EXTENSIONS_ASSETS = '{tsx,ts,jsx,js}';
-	const FILES_ASSETS = globSync(`${DIR_SRC_ASSETS}/**/*.${GLOB_EXTENSIONS_ASSETS}`);
+	const FILES_ASSETS = globSync(`${DIR_SRC_ASSETS}/**/*.${GLOB_EXTENSIONS_ASSETS}`).map(s => s.replaceAll('\\', '/'));
 	// print(FILES_ASSETS, { maxItems: Infinity });
 	return {
 		bundle: true, // Needed to bundle @enonic/js-utils and dayjs

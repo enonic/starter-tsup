@@ -4,9 +4,9 @@ import type {
 } from '/index.d';
 
 
-// @ts-ignore
+// @ts-expect-error no-types
 import { render } from '/lib/mustache';
-// @ts-ignore
+// @ts-expect-error no-types
 import Router from '/lib/router';
 import {
 	getLauncherPath

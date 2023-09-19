@@ -4,7 +4,7 @@ import type {
 } from '/index.d';
 
 
-//@ts-ignore
+// @ts-expect-error no-types
 import {render} from '/lib/thymeleaf';
 import {
 	getSupportedLocales,
@@ -18,7 +18,7 @@ import {
 import {
 	base64Encode,
 	sha256AsStream,
-	// @ts-ignore
+	// @ts-expect-error no-types
 } from '/lib/text-encoding';
 import { getSiteUrl } from '/lib/urlHelper';
 import {
