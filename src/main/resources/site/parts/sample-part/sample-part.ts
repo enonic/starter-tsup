@@ -4,7 +4,7 @@ import type {
 } from '/index.d';
 
 
-//@ts-ignore
+// @ts-expect-error no-types
 import {render} from '/lib/thymeleaf';
 import {getComponent} from '/lib/xp/portal';
 import {DEBUG_MODE} from '/constants';

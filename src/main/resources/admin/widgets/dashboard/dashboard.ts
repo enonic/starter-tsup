@@ -2,7 +2,7 @@ import type {
 	Response,
 } from '/index.d';
 import { assetUrl } from '/lib/xp/portal';
-//@ts-ignore
+// @ts-expect-error no-types
 import {render} from '/lib/mustache';
 
 export function get (): Response {

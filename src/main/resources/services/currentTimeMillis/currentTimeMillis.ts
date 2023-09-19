@@ -4,7 +4,7 @@ import type {
 } from '/index.d';
 
 
-// @ts-ignore
+// @ts-expect-error no-types
 const {currentTimeMillis} = Java.type('java.lang.System') as {
 	currentTimeMillis: () => number
 }
