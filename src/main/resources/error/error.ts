@@ -50,7 +50,6 @@ export function handleError(error: Error): Response {
 	try {
 		const {
 			message,
-			request,
 			status
 		} = error;
 		response.status = status;

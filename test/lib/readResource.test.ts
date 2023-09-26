@@ -14,10 +14,7 @@ import {
 	jest,
 	test
 } from '@jest/globals';
-// import mockConsole from 'jest-mock-console';
 import { readResource } from '../../src/main/resources/lib/ioResource';
-
-// mockConsole();
 
 console.debug = () => {}; // Suppress 'stream not a string'
 
