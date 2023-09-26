@@ -83,7 +83,7 @@
     "test": "jest --no-cache --coverage",
     "watch": "concurrently -c auto npm:watch:*",
     "watch:asset": "npm run build:asset -- --watch",
-    "watch:browserSync": "npx browser-sync start -f 'src/main/resources/**/*.html' 'src/main/resources/**/*.xml' 'build/resources/main' --reload-delay 0 --no-logSnippet -w",
+    "watch:browserSync": "npx browser-sync start --files \"src/main/resources/**/*.html\" \"src/main/resources/**/*.xml\" \"build/resources/main\" --reload-delay 0 --no-snippet --watch",
     "watch:sass": "npm run build:sass -- --watch",
     "watch:server": "npm run build:server -- --watch",
     "watch:static": "npm run build:static -- --watch"
