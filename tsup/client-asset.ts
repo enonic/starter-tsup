@@ -37,6 +37,6 @@ export default function buildAssetConfig(): Options {
 		silent: ['QUIET', 'WARN'].includes(process.env.LOG_LEVEL_FROM_GRADLE||''),
 		splitting: true,
 		sourcemap: process.env.NODE_ENV === 'development' ? false : true,
-		tsconfig: 'src/main/resources/assets/tsconfig.json',
+		tsconfig:`${DIR_SRC_ASSETS}/tsconfig.json`,
 	};
 }
