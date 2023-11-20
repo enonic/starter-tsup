@@ -57,7 +57,7 @@
     "rimraf": "^5",
     "sass": "^1.69.5",
     "ts-jest": "^29.1.1",
-    "tsup": "^7"
+    "tsup": "^8"
   },
   "homepage": "https://developer.enonic.com/docs/tsup-starter",
   "license": "Apache-2.0",
