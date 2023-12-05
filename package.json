@@ -71,7 +71,7 @@
     "build": "concurrently -c auto -g --timings npm:build:*",
     "minify": "concurrently -c auto -g --timings 'npm:build:browser -- --minify' npm:build:sass 'npm:build:server -- --minify' 'npm:build:static -- --minify'",
     "build:asset": "npx tsup -d build/resources/main/assets",
-    "build:sass": "npx sass src/main/resources/assets/style/sass:build/resources/main/assets/styles --style compressed",
+    "build:sass": "npx sass src/main/resources/assets/styles/sass:build/resources/main/assets/styles --style compressed",
     "build:server": "npx tsup -d build/resources/main",
     "build:static": "npx tsup -d build/resources/main/static",
     "check": "concurrently -c auto -g --timings npm:lint npm:check:types",
