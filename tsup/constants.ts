@@ -1,4 +1,4 @@
-export const STATIC_ROOT = 'static';
+export const STATIC_ROOT = 'posten-static';
 
 export const DIR_DST = 'build/resources/main';
 export const DIR_DST_ASSETS = `${DIR_DST}/assets`;

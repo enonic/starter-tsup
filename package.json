@@ -73,7 +73,7 @@
     "build:asset": "npx tsup -d build/resources/main/assets",
     "build:sass": "npx sass src/main/resources/assets/styles/sass:build/resources/main/assets/styles --style compressed",
     "build:server": "npx tsup -d build/resources/main",
-    "build:static": "npx tsup -d build/resources/main/static",
+    "build:static": "npx tsup -d build/resources/main/posten-static",
     "check": "concurrently -c auto -g --timings npm:lint npm:check:types",
     "check:types": "concurrently -g -r --timings npm:check:types:*",
     "check:types:asset": "npx tsc --noEmit -p src/main/resources/assets/tsconfig.json",

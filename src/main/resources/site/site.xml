@@ -11,7 +11,7 @@
 	</processors>
 	<mappings>
 		<mapping controller="/site/static.js" order="50">
-			<pattern>/static/.+</pattern>
+			<pattern>/posten-static/.+</pattern>
 		</mapping>
 	</mappings>
 </site>
