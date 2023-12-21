@@ -8,13 +8,12 @@ import CopyWithHashPlugin from '@enonic/esbuild-plugin-copy-with-hash';
 import { globSync } from 'glob';
 // import { print } from 'q-i';
 import {
-	DIR_DST,
-	DIR_SRC_STATIC
+	DIR_SRC_STATIC,
+	DIR_DST_STATIC
 } from './constants';
 
 
 export default function buildStaticConfig(): Options {
-	const DIR_DST_STATIC = `${DIR_DST}/static`;
 	const GLOB_EXTENSIONS_STATIC = '{tsx,ts,jsx,js}';
 	const FILES_STATIC = globSync(`${DIR_SRC_STATIC}/**/*.${GLOB_EXTENSIONS_STATIC}`);
 	// print(FILES_STATIC, { maxItems: Infinity });
