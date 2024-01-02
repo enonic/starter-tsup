@@ -88,12 +88,14 @@
     "lint": "eslint --cache src/main/resources/**/*.ts src/main/resources/**/*.tsx",
     "test": "jest --no-cache --coverage",
     "watch": "concurrently -c auto npm:watch:*",
-    "watch:asset": "npm run build:asset -- --watch",
+    "watch:asset": "npx ts-node -P tsconfig.node.json tsup/watch-client-asset.ts",
     "watch:browserSync": "npx browser-sync start --files \"src/main/resources/**/*.html\" \"src/main/resources/**/*.xml\" \"build/resources/main\" --reload-delay 0 --port 3100 --no-snippet --watch",
     "watch:sass": "npm run build:sass -- --watch",
     "watch:server": "npx ts-node -P tsconfig.node.json tsup/watch-server.ts",
-    "watch:static": "npm run build:static -- --watch",
-    "watchChanges:server": "npm run build:server -- --watch"
+    "watch:static": "npx ts-node -P tsconfig.node.json tsup/watch-client-static.ts",
+    "watchChanges:asset": "npm run build:asset -- --watch",
+    "watchChanges:server": "npm run build:server -- --watch",
+    "watchChanges:static": "npm run build:static -- --watch"
   },
   "version": "1.0.0"
 }

@@ -3,6 +3,8 @@
 		"esModuleInterop": true,
 	},
 	"include": [
-		"watch-server.ts"
+		"tsup/watch-client-asset.ts",
+		"tsup/watch-client-static.ts",
+		"tsup/watch-server.ts"
 	]
 }
