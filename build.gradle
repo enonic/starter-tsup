@@ -122,7 +122,7 @@ tasks.register('npmBuild', NpmTask) {
 	args = [
 		'run',
 		'--silent',
-		project.hasProperty('minify') ? 'minify' : 'build'
+		project.hasProperty('dev') || project.hasProperty('development') ? 'build' : 'minify'
 	]
 	dependsOn npmInstall
 	environment = [
