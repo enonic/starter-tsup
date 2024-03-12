@@ -1,0 +1,10 @@
+{
+	"compilerOptions": {
+		"esModuleInterop": true,
+	},
+	"include": [
+		"tsup/watch-client-asset.ts",
+		"tsup/watch-client-static.ts",
+		"tsup/watch-server.ts"
+	]
+}

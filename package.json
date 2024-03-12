@@ -3,7 +3,9 @@
   "bugs": {
     "url": "https://github.com/enonic/starter-tsup/issues"
   },
-  "contributors": ["Christian Andreas Westgaard <cwe@enonic.com>"],
+  "contributors": [
+    "Christian Andreas Westgaard <cwe@enonic.com>"
+  ],
   "dependencies": {
     "@enonic/js-utils": "^1",
     "dayjs": "^1",
@@ -42,8 +44,10 @@
     "@enonic/tsup-plugin-manifest": "^0.0.1",
     "@jest/globals": "^29.6.4",
     "@types/react": "^18",
+    "@types/watch": "^1.0.6",
     "@typescript-eslint/eslint-plugin": "^7",
     "browser-sync": "^3",
+    "colorette": "^2.0.20",
     "concurrently": "^8",
     "esbuild-plugin-globals": "^0.2.0",
     "esbuild-sass-plugin": "^2.16.1",
@@ -57,7 +61,9 @@
     "rimraf": "^5",
     "sass": "^1.71.1",
     "ts-jest": "^29.1.2",
-    "tsup": "^8"
+    "ts-node": "^10.9.2",
+    "tsup": "^8",
+    "watch": "^1.0.2"
   },
   "homepage": "https://developer.enonic.com/docs/tsup-starter",
   "license": "Apache-2.0",
@@ -82,11 +88,14 @@
     "lint": "eslint --cache src/main/resources/**/*.ts src/main/resources/**/*.tsx",
     "test": "jest --no-cache --coverage",
     "watch": "concurrently -c auto npm:watch:*",
-    "watch:asset": "npm run build:asset -- --watch",
+    "watch:asset": "npx ts-node -P tsconfig.node.json tsup/watch-client-asset.ts",
     "watch:browserSync": "npx browser-sync start --files \"src/main/resources/**/*.html\" \"src/main/resources/**/*.xml\" \"build/resources/main\" --reload-delay 0 --port 3100 --no-snippet --watch",
     "watch:sass": "npm run build:sass -- --watch",
-    "watch:server": "npm run build:server -- --watch",
-    "watch:static": "npm run build:static -- --watch"
+    "watch:server": "npx ts-node -P tsconfig.node.json tsup/watch-server.ts",
+    "watch:static": "npx ts-node -P tsconfig.node.json tsup/watch-client-static.ts",
+    "watchChanges:asset": "npm run build:asset -- --watch",
+    "watchChanges:server": "npm run build:server -- --watch",
+    "watchChanges:static": "npm run build:static -- --watch"
   },
   "version": "1.0.0"
 }
