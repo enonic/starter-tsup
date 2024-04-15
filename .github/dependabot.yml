@@ -18,6 +18,10 @@ updates:
       - "alansemenov"
     reviewers:
       - "alansemenov"
+    ignore:
+      - dependency-name: "esbuild-sass-plugin"
+        versions:
+            - "*"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
