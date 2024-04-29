@@ -1,32 +1,49 @@
 {
 	"extends": "../../../../tsconfig.json",
-	"exclude": [
-		"../../../../node_modules/typescript/lib/lib.es5.d.ts",
-	],
+
+	// Specifies an array of filenames or patterns to include in the program.
+	// These filenames are resolved relative to the directory containing the tsconfig.json file.
 	"include": [
 		"./**/*.tsx",
 		"./**/*.ts"
 	],
-	"compilerOptions": {
-		//──────────────────────────────────────────────────────────────────────
-		// Modules
-		//──────────────────────────────────────────────────────────────────────
-		"baseUrl": ".",
-		"moduleResolution": "node",
-		"paths": {},
-		"rootDir": ".",
-		"types": [
-			"react"
-		],
 
-		//──────────────────────────────────────────────────────────────────────
-		// Language and Environment
-		//──────────────────────────────────────────────────────────────────────
+	// Specifies an array of filenames or patterns that should be skipped when
+	// resolving include.
+	// Important: exclude only changes which files are included as a result of
+	// the include setting. A file specified by exclude can still become part of
+	// your codebase due to an import statement in your code, a types inclusion,
+	// a /// <reference directive, or being specified in the files list.
+	// It is not a mechanism that prevents a file from being included in the
+	// codebase - it simply changes what the include setting finds.
+	"exclude": [
+		"../../../../node_modules/typescript/lib/lib.es5.d.ts",
+	],
+
+	"compilerOptions": {
+		// Sets a base directory from which to resolve bare specifier module names.
+		// This resolution has higher priority than lookups from node_modules.
+		// This feature was designed for use in conjunction with AMD module
+		// loaders in the browser, and is not recommended in any other context.
+		// As of TypeScript 4.1, baseUrl is no longer required to be set when
+		// using paths.
+		"baseUrl": ".",
+
 		"jsx": "react",
 		"lib": [
 			"DOM",
 			"ES2020",
 		],
-		"target": "ES2020" // Modern browsers
-	}
+		"moduleResolution": "node",
+
+		// A series of entries which re-map imports to lookup locations relative
+		// to the baseUrl if set, or to the tsconfig file itself otherwise.
+		"paths": {},
+
+		"rootDir": ".",
+		"target": "ES2020", // Modern browsers
+		"types": [
+			"react"
+		],
+	} // compilerOptions
 }

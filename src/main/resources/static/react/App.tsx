@@ -2,7 +2,7 @@
 
 import "./App.sass";
 
-import { toStr } from '@enonic/js-utils';
+import { toStr } from '@enonic/js-utils/value/toStr';
 import dayjs from 'dayjs';
 import React from 'react';
 import { useId } from 'react';

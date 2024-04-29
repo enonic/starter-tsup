@@ -6,7 +6,7 @@ import {
 } from '@jest/globals';
 import { getBaseWebappUrl } from '../../src/main/resources/lib/urlHelper';
 import {VHOST_LIST} from './testData';
-import Log from '@enonic/mock-xp/dist/Log';
+import {Log} from '@enonic/mock-xp';
 
 
 // @ts-ignore TS2339: Property 'log' does not exist on type 'typeof globalThis'.

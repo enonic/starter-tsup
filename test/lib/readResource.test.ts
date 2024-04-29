@@ -6,7 +6,7 @@ import type {
 	readText,
 } from '@enonic-types/lib-io';
 
-import Log from '@enonic/mock-xp/dist/Log';
+import {Log} from '@enonic/mock-xp';
 import {isString} from '@enonic/js-utils';
 import {
 	describe,
@@ -25,7 +25,7 @@ global.app = {
 
 // @ts-ignore TS2339: Property 'log' does not exist on type 'typeof globalThis'.
 global.log = Log.createLogger({
-	loglevel: 'warn'
+	loglevel: 'silent'
 });
 
 const FILES = {
