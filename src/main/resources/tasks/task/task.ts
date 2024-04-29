@@ -1,3 +1,5 @@
+import type {TaskInfo} from '/lib/xp/task';
+
 import {
 	arrayIncludes,
 	PRINCIPAL_ROLE_SYSTEM_ADMIN, TASK_STATE_RUNNING, TASK_STATE_WAITING,
@@ -24,8 +26,8 @@ const CONTENT_TYPE = `${APP_KEY_VIRTUAL}:test` as const;
 const PROJECT_ID = app.name.replace('com.enonic.app.', '').replace(/\./g, '-');
 const SCHEMA_TYPE = 'CONTENT_TYPE';
 
-const duplicateTaskFound = (taskId) => {
-	const task = getTask(taskId);
+const duplicateTaskFound = (taskId: string) => {
+	const task: TaskInfo = getTask(taskId) as TaskInfo;
 	DEBUG_MODE && log.info('Task details (lib-task.get): %s', toStr(task));
 
 	const {
@@ -62,6 +64,13 @@ const duplicateTaskFound = (taskId) => {
 	return false;
 }
 
+interface EnonicException {
+	class: {
+		name:string
+	}
+	message: string
+}
+
 const createVirtualApp = () => {
 	try {
 		DEBUG_MODE && log.info('Trying to create a virtual app (lib-app.createVirtualApplication) with key "%s"', APP_KEY_VIRTUAL);
@@ -70,8 +79,8 @@ const createVirtualApp = () => {
 		});
 		DEBUG_MODE && log.info('Virtual app  successfully created: %s', toStr(virtualApp));
 	} catch (e) {
-		if (e.class.name !== 'com.enonic.xp.node.NodeAlreadyExistAtPathException') {
-			log.error(`e.class.name:${toStr(e.class.name)} e.message:${toStr(e.message)}`, e);
+		if ((e as EnonicException).class.name !== 'com.enonic.xp.node.NodeAlreadyExistAtPathException') {
+			log.error(`e.class.name:${toStr((e as EnonicException).class.name)} e.message:${toStr((e as EnonicException).message)}`, e);
 		} else {
 			log.info('Virtual app "%s" already exists', APP_KEY_VIRTUAL)
 		}
@@ -94,8 +103,8 @@ const createSampleProject = () => {
 		});
 		DEBUG_MODE && log.info('Project successfully created: %s', toStr(createdProject));
 	} catch (e) {
-		if (e.class.name !== 'com.enonic.xp.core.impl.project.ProjectAlreadyExistsException') {
-			log.error(`e.class.name:${toStr(e.class.name)} e.message:${toStr(e.message)}`, e);
+		if ((e as EnonicException).class.name !== 'com.enonic.xp.core.impl.project.ProjectAlreadyExistsException') {
+			log.error(`e.class.name:${toStr((e as EnonicException).class.name)} e.message:${toStr((e as EnonicException).message)}`, e);
 		} else {
 			log.info('Project "%s" already exists', PROJECT_ID)
 		}
@@ -124,8 +133,8 @@ const createVirtualContentType = () => {
 		const schemas = listSchemas({application: `${app.name}`, type: SCHEMA_TYPE} )
 		DEBUG_MODE && log.info('List of all descriptors with type "%s" (lib.schema.listSchemas): %s', SCHEMA_TYPE, toStr(schemas));
 	} catch (e) {
-		if (e.class.name !== 'com.enonic.xp.node.NodeAlreadyExistAtPathException') {
-			log.error(`e.class.name:${toStr(e.class.name)} e.message:${toStr(e.message)}`, e);
+		if ((e as EnonicException).class.name !== 'com.enonic.xp.node.NodeAlreadyExistAtPathException') {
+			log.error(`e.class.name:${toStr((e as EnonicException).class.name)} e.message:${toStr((e as EnonicException).message)}`, e);
 		} else {
 			log.info('Content type "%s" already exists', CONTENT_TYPE)
 		}
@@ -140,7 +149,7 @@ const getContext = () => {
 	};
 }
 
-export function run(config, taskId) {
+export function run(config: Record<string, unknown>, taskId: string) {
 	DEBUG_MODE && log.info('Submitting "tasks/task/task.ts" with config %s', toStr(config));
 
 	if (duplicateTaskFound(taskId)) {
