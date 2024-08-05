@@ -57,7 +57,7 @@
     "q-i": "^2",
     "rimraf": "^6",
     "sass": "^1.77.8",
-    "ts-jest": "^29.2.3",
+    "ts-jest": "^29.2.4",
     "tsup": "^8"
   },
   "homepage": "https://developer.enonic.com/docs/tsup-starter",
