@@ -51,7 +51,7 @@
     "eslint": "^8",
     "eslint-plugin-jsx-a11y": "^6",
     "eslint-plugin-react": "^7",
-    "eslint-plugin-react-hooks": "^4",
+    "eslint-plugin-react-hooks": "^5",
     "glob": "^11.0.0",
     "jest": "^29.7.0",
     "q-i": "^2",
