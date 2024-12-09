@@ -7,8 +7,8 @@
   "dependencies": {
     "@enonic/js-utils": "^1.8.0",
     "dayjs": "^1",
-    "react": "^18",
-    "react-dom": "^18"
+    "react": "^19",
+    "react-dom": "^19"
   },
   "description": "My Enonic XP project",
   "devDependencies": {
@@ -42,7 +42,7 @@
     "@enonic/mock-xp": "^1.0.0",
     "@enonic/tsup-plugin-manifest": "^0.0.1",
     "@jest/globals": "^29.6.4",
-    "@types/react": "^18",
+    "@types/react": "^19",
     "@typescript-eslint/eslint-plugin": "^7",
     "browser-sync": "^3",
     "concurrently": "^9",
