@@ -43,7 +43,7 @@
     "@enonic/tsup-plugin-manifest": "^0.0.1",
     "@jest/globals": "^29.6.4",
     "@types/react": "^19",
-    "@typescript-eslint/eslint-plugin": "^7",
+    "@typescript-eslint/eslint-plugin": "^8",
     "browser-sync": "^3",
     "concurrently": "^9",
     "esbuild-plugin-globals": "^0.2.0",
