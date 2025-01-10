@@ -14,7 +14,10 @@ const VIEW = resolve('./sample-part.html');
 
 
 export function get(/*request: Request*/): Response {
-	DEBUG_MODE && log.info('Hello from the part controller!');
+	if (DEBUG_MODE) {
+		log.info('Hello from the part controller!');
+	}
+
 	const {
 		config: {
 			myProperty = 'Fallback text'

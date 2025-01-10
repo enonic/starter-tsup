@@ -23,10 +23,15 @@ function jsonParseResource(filename: string) {
 	let obj: object;
 	try {
 		obj = JSON.parse(content);
-		DEBUG_MODE && log.debug('jsonParseResource obj:%s', toStr(obj));
+		log.info('Hello from the default error handler!');
+		if (DEBUG_MODE) {
+			log.debug('jsonParseResource obj:%s', toStr(obj));
+		}
 	} catch (e) {
 		log.error(e.message);
-		DEBUG_MODE && log.info("Content dump from '" + filename + "':\n" + content);
+		if (DEBUG_MODE) {
+			log.info("Content dump from '" + filename + "':\n" + content);
+		}
 		throw new Error(`couldn't parse as JSON content of resource: ${filename}`);
 	}
 	return obj;

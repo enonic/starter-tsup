@@ -15,7 +15,9 @@ const VIEW = resolve('./sample-layout.html');
 
 
 export function get(/*request: Request*/): Response {
-	DEBUG_MODE && log.info('Hello from the layout controller!');
+	if (DEBUG_MODE) {
+		log.info('Hello from the layout controller!');
+	}
 
 	const {
 		regions

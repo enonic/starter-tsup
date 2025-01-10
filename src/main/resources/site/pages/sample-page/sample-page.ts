@@ -41,7 +41,9 @@ const VIEW = resolve('./sample-page.html');
 
 
 export function get(r: Request): Response {
-	DEBUG_MODE && log.info('Hello from the page template controller!');
+	if (DEBUG_MODE) {
+		log.info('Hello from the page template controller!');
+	}
 
 	const {
 		displayName,
@@ -98,7 +100,9 @@ root.render(React.createElement(App, { header: "Hello from React inside a site p
 
 	if (IS_PROD_MODE) {
 		const base64 = base64Encode(sha256AsStream(inlineScript));
-		DEBUG_MODE && log.info('inlineScript in base64:%s', base64);
+		if (DEBUG_MODE) {
+			log.info('inlineScript in base64:%s', base64);
+		}
 
 		const csp = CSP_DEFAULT;
 		pushUniqueValue(csp['script-src'], sha256(base64));
