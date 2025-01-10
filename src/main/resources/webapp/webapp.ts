@@ -21,6 +21,7 @@ import {
 	FILEPATH_MANIFEST_NODE_MODULES,
 	GETTER_ROOT
 } from '/constants';
+import {toStr} from '@enonic/js-utils';
 
 const router = Router();
 
@@ -29,7 +30,9 @@ router.all(`/${GETTER_ROOT}/{path:.+}`, (r: Request) => {
 });
 
 const htmlResponse = (request: Request): Response => {
-	DEBUG_MODE && log.info('Hello from the webapp controller!');
+	if (DEBUG_MODE) {
+		log.info('Hello from the webapp controller!');
+	}
 
 	let browserSyncScript = '';
 	if (IS_DEV_MODE) {

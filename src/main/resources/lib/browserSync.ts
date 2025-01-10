@@ -46,7 +46,7 @@ export function isRunning({request}: {request: Request}): boolean {
 				return false;
 			}
 			return true
-		} catch (e) {
+		} catch (_e) {
 			return false;
 		}
 	});

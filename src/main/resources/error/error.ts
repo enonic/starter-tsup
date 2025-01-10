@@ -13,7 +13,9 @@ interface Error {
 }
 
 export function handle404(error: Error): Response {
-	DEBUG_MODE && log.info('Hello from the 404 error handler!');
+	if (DEBUG_MODE) {
+		log.info('Hello from the 404 error handler!');
+	}
 	let response: Response = {
 		status: 404
 	};
@@ -43,7 +45,10 @@ export function handle404(error: Error): Response {
 
 
 export function handleError(error: Error): Response {
-	DEBUG_MODE && log.info('Hello from the default error handler!');
+	if (DEBUG_MODE) {
+		log.info('Hello from the default error handler!');
+	}
+
 	const response: Response = {
 		status: 500
 	};

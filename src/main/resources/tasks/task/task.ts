@@ -28,7 +28,9 @@ const SCHEMA_TYPE = 'CONTENT_TYPE';
 
 const duplicateTaskFound = (taskId: string) => {
 	const task: TaskInfo = getTask(taskId) as TaskInfo;
-	DEBUG_MODE && log.info('Task details (lib-task.get): %s', toStr(task));
+	if (DEBUG_MODE) {
+		log.info('Task details (lib-task.get): %s', toStr(task));
+	}
 
 	const {
 		startTime: myStartTime,
@@ -36,7 +38,9 @@ const duplicateTaskFound = (taskId: string) => {
 	} = task;
 
 	const taskList = listTasks({});
-	DEBUG_MODE && log.info('List of tasks (lib-task.list): %s', toStr(taskList));
+	if (DEBUG_MODE) {
+		log.info('List of tasks (lib-task.list): %s', toStr(taskList));
+	}
 
 	for (let index = 0; index < taskList.length; index++) {
 		const {state} = taskList[index];
@@ -49,7 +53,10 @@ const duplicateTaskFound = (taskId: string) => {
 			startTime: aStartTime,
 		} = taskList[index];
 		if (aTaskName === myTaskName && aTaskId !== taskId) {
-			DEBUG_MODE && log.info('Found two tasks with the same name (%s) and different ids (%s, %s)', myTaskName, aTaskId, taskId);
+			if (DEBUG_MODE) {
+				log.info('Found two tasks with the same name (%s) and different ids (%s, %s)', myTaskName, aTaskId, taskId);
+			}
+
 			if (myStartTime > aStartTime) {
 				log.warning('Aborting task %s with newer startTime: %s', taskId, myStartTime);
 				return true;
@@ -59,7 +66,9 @@ const duplicateTaskFound = (taskId: string) => {
 			}
 		}
 	} // for
-	DEBUG_MODE && log.info('Task with id %s is allowed to run :)', taskId);
+	if (DEBUG_MODE) {
+		log.info('Task with id %s is allowed to run :)', taskId);
+	}
 
 	return false;
 }
@@ -73,11 +82,16 @@ interface EnonicException {
 
 const createVirtualApp = () => {
 	try {
-		DEBUG_MODE && log.info('Trying to create a virtual app (lib-app.createVirtualApplication) with key "%s"', APP_KEY_VIRTUAL);
+		if (DEBUG_MODE) {
+			log.info('Trying to create a virtual app (lib-app.createVirtualApplication) with key "%s"', APP_KEY_VIRTUAL);
+		}
+
 		const virtualApp = createVirtualApplication({
 			key: APP_KEY_VIRTUAL
 		});
-		DEBUG_MODE && log.info('Virtual app  successfully created: %s', toStr(virtualApp));
+		if (DEBUG_MODE) {
+			log.info('Virtual app  successfully created: %s', toStr(virtualApp));
+		}
 	} catch (e) {
 		if ((e as EnonicException).class.name !== 'com.enonic.xp.node.NodeAlreadyExistAtPathException') {
 			log.error(`e.class.name:${toStr((e as EnonicException).class.name)} e.message:${toStr((e as EnonicException).message)}`, e);
@@ -89,7 +103,9 @@ const createVirtualApp = () => {
 
 const createSampleProject = () => {
 	try {
-		DEBUG_MODE && log.info('Trying to create a project (lib-project.create) with Id "%s"', PROJECT_ID);
+		if (DEBUG_MODE) {
+			log.info('Trying to create a project (lib-project.create) with Id "%s"', PROJECT_ID);
+		}
 		const createdProject = createProject({
 			displayName: 'XP Starter',
 			id: PROJECT_ID,
@@ -101,7 +117,9 @@ const createSampleProject = () => {
 				config: {}
 			}],
 		});
-		DEBUG_MODE && log.info('Project successfully created: %s', toStr(createdProject));
+		if (DEBUG_MODE) {
+			log.info('Project successfully created: %s', toStr(createdProject));
+		}
 	} catch (e) {
 		if ((e as EnonicException).class.name !== 'com.enonic.xp.core.impl.project.ProjectAlreadyExistsException') {
 			log.error(`e.class.name:${toStr((e as EnonicException).class.name)} e.message:${toStr((e as EnonicException).message)}`, e);
@@ -113,7 +131,9 @@ const createSampleProject = () => {
 
 const createVirtualContentType = () => {
 	try {
-		DEBUG_MODE && log.info('Trying to create a dynamic content type (lib-schema.createSchema) "%s"', CONTENT_TYPE);
+		if (DEBUG_MODE) {
+			log.info('Trying to create a dynamic content type (lib-schema.createSchema) "%s"', CONTENT_TYPE);
+		}
 		const createdSchema = createSchema({
 			name: CONTENT_TYPE,
 			type: SCHEMA_TYPE,
@@ -128,10 +148,14 @@ const createVirtualContentType = () => {
 	<form/>
 </content-type>`,
 		});
-		DEBUG_MODE && log.info('Content type successfully created: %s', toStr(createdSchema));
+		if (DEBUG_MODE) {
+			log.info('Content type successfully created: %s', toStr(createdSchema));
+		}
 
 		const schemas = listSchemas({application: `${app.name}`, type: SCHEMA_TYPE} )
-		DEBUG_MODE && log.info('List of all descriptors with type "%s" (lib.schema.listSchemas): %s', SCHEMA_TYPE, toStr(schemas));
+		if (DEBUG_MODE) {
+			log.info('List of all descriptors with type "%s" (lib.schema.listSchemas): %s', SCHEMA_TYPE, toStr(schemas));
+		}
 	} catch (e) {
 		if ((e as EnonicException).class.name !== 'com.enonic.xp.node.NodeAlreadyExistAtPathException') {
 			log.error(`e.class.name:${toStr((e as EnonicException).class.name)} e.message:${toStr((e as EnonicException).message)}`, e);
@@ -150,7 +174,9 @@ const getContext = () => {
 }
 
 export function run(config: Record<string, unknown>, taskId: string) {
-	DEBUG_MODE && log.info('Submitting "tasks/task/task.ts" with config %s', toStr(config));
+	if (DEBUG_MODE) {
+		log.info('Submitting "tasks/task/task.ts" with config %s', toStr(config));
+	}
 
 	if (duplicateTaskFound(taskId)) {
 		return;

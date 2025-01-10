@@ -10,7 +10,7 @@ const {currentTimeMillis} = Java.type('java.lang.System') as {
 }
 
 
-export function get(request: Request): Response {
+export function get(): Response {
 	return {
 		body: JSON.stringify({
 			currentTimeMillis: currentTimeMillis()
