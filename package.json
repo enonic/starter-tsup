@@ -3,7 +3,9 @@
   "bugs": {
     "url": "https://github.com/enonic/starter-tsup/issues"
   },
-  "contributors": ["Christian Andreas Westgaard <cwe@enonic.com>"],
+  "contributors": [
+    "Christian Andreas Westgaard <cwe@enonic.com>"
+  ],
   "dependencies": {
     "@enonic/js-utils": "^1.9.0",
     "dayjs": "^1",
@@ -43,12 +45,11 @@
     "@enonic/tsup-plugin-manifest": "^0.0.1",
     "@jest/globals": "^29.6.4",
     "@types/react": "^19",
-    "@typescript-eslint/eslint-plugin": "^8",
     "browser-sync": "^3",
     "concurrently": "^9",
     "esbuild-plugin-globals": "^0.2.0",
     "esbuild-sass-plugin": "^2.16.1",
-    "eslint": "^8",
+    "eslint": "^9",
     "eslint-plugin-jsx-a11y": "^6",
     "eslint-plugin-react": "^7",
     "eslint-plugin-react-hooks": "^5",
@@ -58,7 +59,8 @@
     "rimraf": "^6",
     "sass": "^1.89.1",
     "ts-jest": "^29.3.4",
-    "tsup": "^8"
+    "tsup": "^8",
+    "typescript-eslint": "^8.33.0"
   },
   "homepage": "https://developer.enonic.com/docs/tsup-starter",
   "license": "Apache-2.0",

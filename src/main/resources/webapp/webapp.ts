@@ -21,7 +21,6 @@ import {
 	FILEPATH_MANIFEST_NODE_MODULES,
 	GETTER_ROOT
 } from '/constants';
-import {toStr} from '@enonic/js-utils';
 
 const router = Router();
 
