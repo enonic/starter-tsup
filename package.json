@@ -43,7 +43,7 @@
     "@enonic/esbuild-plugin-copy-with-hash": "^0.2.0",
     "@enonic/mock-xp": "^1.0.0",
     "@enonic/tsup-plugin-manifest": "^0.0.1",
-    "@jest/globals": "^29.6.4",
+    "@jest/globals": "^30.0.2",
     "@types/react": "^19",
     "browser-sync": "^3",
     "concurrently": "^9",
