@@ -54,7 +54,7 @@
     "eslint-plugin-react": "^7",
     "eslint-plugin-react-hooks": "^5",
     "glob": "^11.0.3",
-    "jest": "^30.0.0",
+    "jest": "^30.0.2",
     "q-i": "^2",
     "rimraf": "^6",
     "sass": "^1.89.2",
