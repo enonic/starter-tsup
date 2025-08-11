@@ -60,7 +60,7 @@
     "sass": "^1.90.0",
     "ts-jest": "^29.4.1",
     "tsup": "^8",
-    "typescript-eslint": "^8.38.0"
+    "typescript-eslint": "^8.39.0"
   },
   "homepage": "https://developer.enonic.com/docs/tsup-starter",
   "license": "Apache-2.0",
